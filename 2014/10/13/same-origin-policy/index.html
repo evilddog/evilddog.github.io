@@ -1,0 +1,409 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>浅谈浏览器的同源策略 | evilddog&#39;s blog</title>
+  <meta name="author" content="evilddog">
+  
+  <meta name="description" content="be quieter">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="浅谈浏览器的同源策略"/>
+  <meta property="og:site_name" content="evilddog&#39;s blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">evilddog&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> 浅谈浏览器的同源策略</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <h2 id="概念">概念</h2>
+<p>同源策略(Same Origin Policy，SOP)，由Netscape提出的一个著名的安全策略,也称为单源策略(Single Origin policy).</p>
+<p>它是一种用于Web浏览器编程语言（如JavaScript和Ajax）的安全措施，以保护信息的保密性和完整性。</p>
+<p>简单的说就是限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的交互方式。</p>
+<a id="more"></a>
+
+<p>判定依据 : 如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。</p>
+<p><img src="http://evilddog.qiniudn.com/2014-10-13%2018%3A16%3A53%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png" alt=""></p>
+<p>如下两个网页：</p>
+<pre><code>http:<span class="comment">//www.example.com/sam.html</span>
+https:<span class="comment">//www.example.com/chen.html</span>
+</code></pre><p>它们的协议不一，一个是 http，一个是 https，所以不同源。同理可推端口、主机。</p>
+<h2 id="解决方法">解决方法</h2>
+<h3 id="主域相同而子域不同">主域相同而子域不同</h3>
+<p><strong>对于主域相同而子域不同的例子，可以通过设置document.domain的办法来解决。</strong></p>
+<p>因为javascript允许子域之间使用顶级域名。</p>
+<p>具体的做法是可以在<a href="http://www.a.com/a.html和http://script.a.com/b.html两个文件中分别加上document.domain" target="_blank" rel="external">http://www.a.com/a.html和http://script.a.com/b.html两个文件中分别加上document.domain</a> = ‘a.com’</p>
+<p>某一页面的domain默认等于window.location.hostname。主域名是不带www的域名，例如a.com，主域名前面带前缀的通常都为二级域名或多级域名</p>
+<p>例如www.a.com其实是二级域名。 domain只能设置为主域名，不可以在b.a.com中将domain设置为c.a.com。</p>
+<p>然后通过a.html文件中创建一个iframe，去控制iframe的contentDocument，这样两个js文件之间就可以“交互”了。</p>
+<p>但是依然要注意设置这个属性之后，子域之间可以方便的通信，需注意的是协议和端口号必须相同。</p>
+<ul>
+<li><p>www.a.com上的a.html</p>
+<pre><code>  <span class="built_in">document</span>.domain = <span class="string">'a.com'</span>;
+  <span class="keyword">var</span> ifr = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);
+  ifr.src = <span class="string">'http://script.a.com/b.html'</span>;
+  ifr.style.display = <span class="string">'none'</span>;
+  <span class="built_in">document</span>.body.appendChild(ifr);
+  ifr.onload = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>{
+      <span class="keyword">var</span> doc = ifr.contentDocument || ifr.contentWindow.document;
+      <span class="comment">// 在这里操纵b.html</span>
+      alert(doc.getElementsByTagName(<span class="string">"h1"</span>)[<span class="number">0</span>].childNodes[<span class="number">0</span>].nodeValue);
+  };
+</code></pre></li>
+<li><p>script.a.com上的b.html</p>
+<pre><code>  <span class="built_in">document</span>.domain = <span class="string">'a.com'</span>;
+</code></pre></li>
+</ul>
+<p>当然如果二级域名相同的情况下,如果其中一个被攻击了,那么另外一个就危险了  : )</p>
+<h3 id="对于主域不相同的跨域的情况">对于主域不相同的跨域的情况</h3>
+<hr>
+<h4 id="1-使用HTML5_postMessage——HTML方法">1.使用HTML5 postMessage——<em>HTML方法</em></h4>
+<p><strong><a href="https://developer.mozilla.org/en/dom/window.postmessage" target="_blank" rel="external">postMessage()</a>是HTML5的一个新功能，由于比较新，所以在IE6和IE7中不支持。</strong></p>
+<p>不同域的跨域方法就是利用postMessage():</p>
+<p>函数解释:<br>    otherWindow.postMessage(message, targetOrigin);</p>
+<ul>
+<li>otherWindow: 对接收信息页面的window的引用。可以是页面中iframe的contentWindow属性；window.open的返回值；通过name或下标从window.frames取到的值。</li>
+<li>message: 所要发送的数据，string类型。</li>
+<li>targetOrigin: 用于限制otherWindow，“*”表示不作限制</li>
+</ul>
+<p>a.com中的代码 :</p>
+<pre><code><span class="tag">&lt;<span class="title">iframe</span> <span class="attribute">id</span>=<span class="value">"ifr"</span> <span class="attribute">src</span>=<span class="value">"b.com/index.html"</span>&gt;</span><span class="tag">&lt;/<span class="title">iframe</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+    <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="keyword">var</span> ifr = <span class="built_in">document</span>.getElementById(<span class="string">'ifr'</span>);
+        <span class="keyword">var</span> targetOrigin = <span class="string">'http://b.com'</span>;
+        <span class="comment">// 若写成'http://b.com/c/proxy.html'效果一样</span>
+        <span class="comment">// 若写成'http://c.com'就不会执行postMessage了</span>
+        ifr.contentWindow.postMessage(<span class="string">'I was there!'</span>, targetOrigin);
+    };
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre><p>b.com/index.html中的代码：</p>
+<pre><code>&lt;script type=<span class="string">"text/javascript&gt;
+    window.addEventListener('</span><span class="transposed_variable">message'</span>, <span class="function"><span class="keyword">function</span><span class="params">(event)</span>{</span>
+        <span class="comment">// 通过origin属性判断消息来源地址</span>
+        <span class="keyword">if</span> (<span class="transposed_variable">event.</span>origin == <span class="string">'http://a.com'</span>) {
+            alert(<span class="transposed_variable">event.</span>data); <span class="comment">// 弹出"I was there!"</span>
+            alert(<span class="transposed_variable">event.</span>source); <span class="comment">// 对a.com、index.html中window对象的引用</span>
+            <span class="comment">// 但由于同源策略，这里event.source不可以访问window对象  </span>
+        }
+    }, false);
+&lt;/script&gt;
+</code></pre><hr>
+<h4 id="2-DOM创建script——Javasript方法">2.DOM创建script——<em>Javasript方法</em></h4>
+<p><strong>浏览器默认禁止了跨域访问，但并不禁止在页面中引用其他域的JS文件，并可以自由执行引入的JS文件中的function（包括操作cookie、Dom等等）</strong><br>根据这一点，可以方便地通过创建script节点的方法来实现完全跨域的通信。    </p>
+<pre><code>    js.onload = js.onreadystatechange = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+        <span class="keyword">if</span> (!<span class="keyword">this</span>.readyState || <span class="keyword">this</span>.readyState === <span class="string">'loaded'</span> || <span class="keyword">this</span>.readyState === <span class="string">'complete'</span>) {
+            <span class="comment">// callback在此处执行</span>
+            js.onload = js.onreadystatechange = <span class="literal">null</span>;
+      }
+    };
+</code></pre><hr>
+<h4 id="3-利用iframe和location-hash——Javascipt方法">3.利用iframe和location.hash——<em>Javascipt方法</em></h4>
+<p><strong>location是javascript里边管理地址栏的内置对象，比如location.href就管理页面的url，用location.href=url就可以直接将页面重定向url。而location.hash则可以用来获取或设置页面的标签值。比如<a href="http://a.com/#aaaaa" target="_blank" rel="external">http://a.com/#aaaaa</a> 的location.hash=”#aaaaa”</strong></p>
+<p>这个方法虽然比较麻烦，但是可以解决跨域的脚步置换问题，因为变hash并不会导致页面刷新，所以可以利用hash值来进行数据传递，当然数据容量是有限的。</p>
+<p>域名a.com下的文件cs1.html要和cnblogs.com域名下的cs2.html传递信息。</p>
+<p>cs1.html首先创建自动创建一个隐藏的iframe，iframe的src指向cnblogs.com域名下的cs2.html页面，这时的hash值可以做参数传递用。</p>
+<p>cs2.html响应请求后再将通过修改cs1.html的hash值来传递数据（由于两个页面不在同一个域下<strong>IE、Chrome不允许修改parent.location.hash的值</strong>，所以要借助于a.com域名下的一个代理iframe；<strong>Firefox可以修改</strong>）。</p>
+<p>同时在cs1.html上加一个定时器，隔一段时间来判断location.hash的值有没有变化，一点有变化则获取获取hash值。</p>
+<p>a.com 下的cs1.html文件</p>
+<pre><code>    <span class="function"><span class="keyword">function</span> <span class="title">startRequest</span><span class="params">()</span></span>{
+        <span class="keyword">var</span> ifr = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);
+        ifr.style.display = <span class="string">'none'</span>;
+        ifr.src = <span class="string">'http://www.cnblogs.com/lab/cscript/cs2.html#paramdo'</span>;
+        <span class="built_in">document</span>.body.appendChild(ifr);
+    }
+    <span class="function"><span class="keyword">function</span> <span class="title">checkHash</span><span class="params">()</span> </span>{
+        <span class="keyword">try</span> {
+            <span class="keyword">var</span> data = location.hash ? location.hash.substring(<span class="number">1</span>) : <span class="string">''</span>;
+            <span class="keyword">if</span> (<span class="built_in">console</span>.log) {
+                <span class="built_in">console</span>.log(<span class="string">'Now the data is '</span>+data);
+            }
+        } <span class="keyword">catch</span>(e) {};
+    }
+    setInterval(checkHash, <span class="number">2000</span>);
+    cnblogs.com域名下的cs2.html:
+    <span class="comment">//模拟一个简单的参数处理操作</span>
+    <span class="keyword">switch</span>(location.hash){
+        <span class="keyword">case</span> <span class="string">'#paramdo'</span>:
+        callBack();
+        <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="string">'#paramset'</span>:
+        <span class="comment">//do something……</span>
+        <span class="keyword">break</span>;
+    }
+
+    <span class="function"><span class="keyword">function</span> <span class="title">callBack</span><span class="params">()</span></span>{
+        <span class="keyword">try</span> {
+        parent.location.hash = <span class="string">'somedata'</span>;
+        } <span class="keyword">catch</span> (e) {
+            <span class="comment">// ie、chrome的安全机制无法修改parent.location.hash，</span>
+            <span class="comment">// 所以要利用一个中间的cnblogs域下的代理iframe</span>
+            <span class="keyword">var</span> ifrproxy = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>);
+            ifrproxy.style.display = <span class="string">'none'</span>;
+            ifrproxy.src = <span class="string">'http://a.com/test/cscript/cs3.html#somedata'</span>; <span class="comment">// 注意该文件在"a.com"域下</span>
+            <span class="built_in">document</span>.body.appendChild(ifrproxy);
+        }
+    }
+</code></pre><p>a.com下的域名cs3.html</p>
+<pre><code><span class="comment">//因为parent.parent和自身属于同一个域，所以可以改变其location.hash的值</span>
+<span class="keyword">parent</span>.<span class="keyword">parent</span>.location.hash = <span class="keyword">self</span>.location.hash.substring(<span class="number">1</span>);
+</code></pre><hr>
+<h4 id="4-利用windows-name实现跨域数据传输——Javascript方法">4.利用windows.name实现跨域数据传输——<em>Javascript方法</em></h4>
+<p><strong>该方法是利用iframe的src属性由外域转向本地域，跨域数据即由iframe的window.name从外域传递到本地域。这个就巧妙地绕过了浏览器的跨域访问限制，但同时它又是安全操作</strong></p>
+<p>有三个页面：</p>
+<ul>
+<li>a.com/app.html：应用页面。</li>
+<li>a.com/proxy.html：代理文件，一般是一个没有任何内容的html文件，需要和应用页面在同一域下。</li>
+<li>b.com/data.html：应用页面需要获取数据的页面，可称为数据页面。</li>
+</ul>
+<p>基本操作：</p>
+<ul>
+<li>0x01. 在应用页面（a.com/app.html）中创建一个iframe，把其src指向数据页面（b.com/data.html）。<br>数据页面会把数据附加到这个iframe的window.name上，data.html代码如下： <pre><code>  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+      <span class="built_in">window</span>.name = <span class="string">'I was there!'</span>;    <span class="comment">// 这里是要传输的数据，大小一般为2M，IE和firefox下可以大至32M左右</span>
+      <span class="comment">// 数据格式可以自定义，如json、字符串</span>
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre></li>
+</ul>
+<ul>
+<li><p>0x02. 在应用页面（a.com/app.html）中监听iframe的onload事件，在此事件中设置这个iframe的src指向本地域的代理文件（代理文件和应用页面在同一域下，所以可以相互通信）。app.html部分代码如下： </p>
+<pre><code>  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+      <span class="keyword">var</span> state = <span class="number">0</span>, 
+      iframe = <span class="built_in">document</span>.createElement(<span class="string">'iframe'</span>),
+      loadfn = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{
+          <span class="keyword">if</span> (state === <span class="number">1</span>) {
+              <span class="keyword">var</span> data = iframe.contentWindow.name;    <span class="comment">// 读取数据</span>
+              alert(data);    <span class="comment">//弹出'I was there!'</span>
+          } <span class="keyword">else</span> <span class="keyword">if</span> (state === <span class="number">0</span>) {
+              state = <span class="number">1</span>;
+              iframe.contentWindow.location = <span class="string">"http://a.com/proxy.html"</span>;   
+               <span class="comment">// 设置的代理文件</span>
+          }  
+      };
+      iframe.src = <span class="string">'http://b.com/data.html'</span>;
+      <span class="keyword">if</span> (iframe.attachEvent) {
+          iframe.attachEvent(<span class="string">'onload'</span>, loadfn);
+      } <span class="keyword">else</span> {
+          iframe.onload  = loadfn;
+      }
+      <span class="built_in">document</span>.body.appendChild(iframe);
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre></li>
+<li><p>0x03.获取数据以后销毁这个iframe，释放内存；这也保证了安全（不被其他域frame js访问）。</p>
+<pre><code>  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">type</span>=<span class="value">"text/javascript"</span>&gt;</span><span class="javascript">
+      iframe.contentWindow.document.write(<span class="string">''</span>);
+      iframe.contentWindow.close();
+      <span class="built_in">document</span>.body.removeChild(iframe);
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre></li>
+</ul>
+<h4 id="5-同步XMLHttpRequest请求——XML方法">5.同步XMLHttpRequest请求——<strong>XML方法</strong></h4>
+<p>简单的同步XMLHttpRequest请求：</p>
+<pre><code><span class="keyword">var</span> x = <span class="keyword">new</span> XMLHttpRequest();
+x.open(<span class="string">"POST"</span>, <span class="string">"/some_script.cgi"</span>, <span class="literal">false</span>);
+x.setRequestHeader(<span class="string">"X-Random-Header"</span>, <span class="string">"Hi mom!"</span>);
+x.send(<span class="string">"...POST payload here..."</span>);
+alert(x.responseText);
+</code></pre>	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+				
+    	<li class="prev"><a href="/2014/10/24/http-max-connection/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2014/10/12/escape-alf-nu-write-ups-1/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	10月 13 2014 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="//categories/浏览器安全/">浏览器安全<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="//tags/同源策略/">同源策略<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2014 evilddog
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
