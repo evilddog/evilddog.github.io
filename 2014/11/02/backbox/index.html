@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>backbox | evilddog&#39;s blog</title>
+  <meta name="author" content="evilddog">
+  
+  <meta name="description" content="be quieter">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="backbox"/>
+  <meta property="og:site_name" content="evilddog&#39;s blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  
+  
+    <link href="/favicon.png" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">evilddog&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>About
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">		
+			<h1> backbox</h1>
+		</div>		
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div class="col-md-9">
+	
+
+			
+
+	<!-- content -->
+	<div class="mypage">		
+	    <p>hhhhhhhh最近又在做死，kali被折腾坏掉了，在虚拟机中产生尝试了一下backbox</p>
+<p>因为基于Ubuntu14.04优化了Gnome的桌面，用起来很流畅，占用资源也小，再坏掉我就换CentOS(╯°Д°)╯︵ ┻━┻于是写下配置记录下某些蛋疼的设置</p>
+<a id="more"></a>
+
+<h3 id="sublime-text-2">sublime-text-2</h3>
+<p>从官网下载之后</p>
+<pre><code>tar xf Sublime <span class="built_in">Text</span> <span class="number">2.0</span>.<span class="number">1</span>.tar.bz2
+</code></pre><p>cp到合适的地方</p>
+<pre><code>sudo mv Sublime<span class="command">\ </span>Text<span class="command">\ </span>2 /usr/lib/
+</code></pre><p>如果想在终端中使用sublime</p>
+<pre><code>sudo ln -s <span class="regexp">/usr/</span>lib<span class="regexp">/Sublime\ Text\ 2/</span>sublime_text <span class="regexp">/usr/</span>bin<span class="regexp">/sublime</span>
+</code></pre><p>在粘贴到文件中配置</p>
+<pre><code>[Desktop Entry]
+<span class="variable">Version=</span><span class="number">1.0</span>
+<span class="variable">Name=</span>Sublime Text <span class="number">2</span>
+Only KDE <span class="number">4</span> seems to use GenericName, so we reuse the KDE strings.
+
+<span class="comment"># From Ubuntu's language-pack-kde-XX-base packages, version 9.04-20090413.</span>
+<span class="variable">GenericName=</span>Text Editor
+<span class="variable">Exec=</span>sublime
+<span class="variable">Terminal=</span><span class="constant">false</span>
+<span class="variable">Icon=</span>/usr/lib/Sublime Text <span class="number">2</span>/Icon/<span class="number">48</span>x48/sublime_text.png
+<span class="variable">Type=</span>Application
+<span class="variable">Categories=</span>TextEditor;IDE;Development
+<span class="variable">X-Ayatana-Desktop-Shortcuts=</span>NewWindow
+
+[NewWindow Shortcut Group]
+<span class="variable">Name=</span>New Window
+<span class="variable">Exec=</span>sublime -n
+<span class="variable">TargetEnvironment=</span>Unity
+</code></pre><p>​</p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2014/11/01/swpu-write-up/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+
+  
+</section>
+
+	
+	</div> <!-- col-md-9/col-md-12 -->
+	
+	
+		<div class="col-md-3"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	11月 2 2014 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="//categories/Linux/">Linux<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="//tags/BackBox/">BackBox<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	
+
+</div><!-- row -->
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2014 evilddog
+  
+      with help from <a href="http://zespia.tw/hexo/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+</body>
+   </html>
