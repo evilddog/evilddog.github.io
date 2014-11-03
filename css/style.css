@@ -946,3 +946,14 @@ pre .vhdl .attribute {
 pre .xml .attribute {
   color: #f00;
 }
+.trace-invest {
+  padding: 10px 10px;
+  margin: 0 10px;
+  background-color: #9e457a;
+}
+.trace-invest span a {
+  color: #fff;
+}
+.trace-invest span a:hover {
+  text-decoration: none;
+}
