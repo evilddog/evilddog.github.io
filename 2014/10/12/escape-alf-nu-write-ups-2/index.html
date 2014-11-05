@@ -51,11 +51,11 @@
     
       <li><a href="/404.html">404</a></li>
     
-      <li><a href="/">首页</a></li>
+      <li><a href="/">Home</a></li>
     
-      <li><a href="/archives">归档</a></li>
+      <li><a href="/archives">Achieves</a></li>
     
-      <li><a href="/about">About me</a></li>
+      <li><a href="/about">About</a></li>
     
   </ul>
   <div class="clearfix"></div>
@@ -89,17 +89,19 @@
     </header>
     <div class="entry">
       
-        <h2 id="前言">前言</h2>
+        <hr>
+
+<h2 id="前言">前言</h2>
 <p>这是接<a href="http://evilddog.github.io/2014/10/12/escape-alf-nu-write-ups-2/" target="_blank" rel="external">上一篇</a>的Write-up</p>
-<h2 id="原文">原文</h2>
-<h3 id="Level_9:">Level 9:</h3>
 <a id="more"></a>
 
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{
+<h2 id="原文">原文</h2>
+<h3 id="Level_9:">Level 9:</h3>
+<pre><code><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{
     <span class="comment">// This is sort of a spoiler for the last level :-)</span>
     <span class="keyword">if</span> (<span class="regexp">/[\\&lt;&gt;]/</span>.test(s)) <span class="keyword">return</span> <span class="string">'-'</span>;
-    <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("'</span> + s.toUpperCase() + <span class="string">'")&lt;/script&gt;'</span>;
-}
+    <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("'</span> + s.toUpperCase() + <span class="string">'")</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>';
+}</span>
 </code></pre><p>Some as level 8 but now we cannot use angle brackets (&lt;&gt;) nor backslashes ()</p>
 <p>Solutions:</p>
 <p>Is it possible to use an online non-alphanumeric encoder to encode the following payload so it uses no alpha characters, angle brackets (&lt;&gt;) nor backslashes ()</p>
@@ -530,7 +532,7 @@ function escape(s) {
   <ul class="entry">
     
       <li>
-        <a href="/2014/11/05/curl/">curl</a>
+        <a href="/2014/11/05/curl/">cURL 常用命令</a>
       </li>
     
       <li>
