@@ -80,6 +80,84 @@
   <div class="post-content">
     <header>
       
+        <time datetime="2014-11-05T02:36:54.000Z"><a href="/2014/11/05/curl/">11月 5 2014</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2014/11/05/curl/">curl</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h1 id="0x00_简介">0x00   简介</h1>
+<p><br><br>curl是利用URL语法在命令行方式下工作的开源文件传输工具。</p>
+<p>它支持很多协议：FTP, FTPS, HTTP, HTTPS, GOPHER, TELNET, DICT, FILE 以及 LDAP。curl.</p>
+<p>同样支持HTTPS认证，HTTP POST方法， HTTP PUT方法， FTP上传， kerberos认证，HTTP上传，代理服务器， cookies， 用户名/密码认证， 下载文件断点续传，上载文件断点续传，http代理服务器管道（ proxy tunneling）， 甚至它还支持IPv6， socks5代理服务器，通过http代理服务器上传文件到FTP服务器等等，功能十分强大。</p>
+<hr>
+
+<h1 id="0x01_常用命令">0x01   常用命令</h1>
+<h2 id="下载单个文件">下载单个文件</h2>
+<p>下面的命令将URL的内容和显示在终端</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl http:<span class="comment">//www.baidu.com</span></div></pre></td></tr></table></figure>
+
+<h2 id="通过-o/-O选项保存下载的文件到指定的文件中：">通过-o/-O选项保存下载的文件到指定的文件中：</h2>
+<ul>
+<li>-o：将文件保存为命令行中指定的文件名的文件中</li>
+<li>-O：使用URL中默认的文件名保存文件到本地</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor">#将文件下载到本地并命名为mygettext.html</span></div><div class="line">curl -o mygettext.html http:<span class="comment">//www.gnu.org/software/gettext/manual/gettext.html</span></div><div class="line"><span class="preprocessor"># 将文件保存到本地并命名为gettext.html</span></div><div class="line">curl -O http:<span class="comment">//www.gnu.org/software/gettext/manual/gettext.html</span></div></pre></td></tr></table></figure>
+
+<p>可以用转向字符”&gt;”对输出进行转向输出</p>
+<h2 id="通过-L选项进行重定向">通过-L选项进行重定向</h2>
+<p>默认情况下cURL不会发送HTTP Location headers(重定向).当一个被请求页面移动到另一个站点时，会发送一个HTTP Loaction header作为请求，<br>然后将请求重定向到新的地址上。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">~$ curl http://www.google.com</div><div class="line"><span class="tag">&lt;<span class="title">HTML</span>&gt;</span><span class="tag">&lt;<span class="title">HEAD</span>&gt;</span><span class="tag">&lt;<span class="title">meta</span> <span class="attribute">http-equiv</span>=<span class="value">"content-type"</span> <span class="attribute">content</span>=<span class="value">"text/html;charset=utf-8"</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">TITLE</span>&gt;</span>302 Moved<span class="tag">&lt;/<span class="title">TITLE</span>&gt;</span><span class="tag">&lt;/<span class="title">HEAD</span>&gt;</span><span class="tag">&lt;<span class="title">BODY</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">H1</span>&gt;</span>302 Moved<span class="tag">&lt;/<span class="title">H1</span>&gt;</span></div><div class="line">The document has moved</div><div class="line"><span class="tag">&lt;<span class="title">A</span> <span class="attribute">HREF</span>=<span class="value">"http://www.google.co.jp/?gfe_rd=cr&amp;ei=g9BZVLnLGsum8weI3YDoDA"</span>&gt;</span>here<span class="tag">&lt;/<span class="title">A</span>&gt;</span>.</div><div class="line"><span class="tag">&lt;/<span class="title">BODY</span>&gt;</span><span class="tag">&lt;/<span class="title">HTML</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>上述输出说明所请求的档案被转移到了<a href="http://www.google.co.jp" target="_blank" rel="external">http://www.google.co.jp</a></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="preprocessor"># 让curl使用地址重定向，此时会查询google.com.hk站点</span></div><div class="line">~$ curl -L http:<span class="comment">//www.google.com</span></div></pre></td></tr></table></figure>
+
+<h2 id="断点续传">断点续传</h2>
+<p>通过使用-C选项可对大文件使用断点续传功能</p>
+<p>```</p>
+<h1 id="当文件在下载完成之前中断">当文件在下载完成之前中断</h1>
+<p>$ curl -O <a href="http://www.baidu.com/index.html" target="_blank" rel="external">http://www.baidu.com/index.html</a></p>
+<h6 id="########_20-1%">########             20.1%</h6>
+<h1 id="通过添加-C选项继续对该文件进行下载，已经下载过的文件不会被重新下载">通过添加-C选项继续对该文件进行下载，已经下载过的文件不会被重新下载</h1>
+<p>curl -C - -O <a href="http://www.gnu.org/software/gettext/manual/gettext.html" target="_blank" rel="external">http://www.gnu.org/software/gettext/manual/gettext.html</a></p>
+<h6 id="#########_21-1%">#########            21.1%</h6>
+<h2 id="对CURL使用网络限速">对CURL使用网络限速</h2>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
         <time datetime="2014-11-02T09:02:35.000Z"><a href="/2014/11/02/backbox/">11月 2 2014</a></time>
       
       
@@ -577,6 +655,8 @@
   
     <li><a href="//tags/XSS/">XSS</a><small>2</small></li>
   
+    <li><a href="//tags/curl/">curl</a><small>1</small></li>
+  
     <li><a href="//tags/write-up/">write-up</a><small>1</small></li>
   
     <li><a href="//tags/同源策略/">同源策略</a><small>1</small></li>
@@ -596,7 +676,7 @@
   
     <li><a href="//categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="//categories/Tools/">Tools</a><small>1</small></li>
+    <li><a href="//categories/Tools/">Tools</a><small>2</small></li>
   
     <li><a href="//categories/前端安全/">前端安全</a><small>2</small></li>
   
@@ -610,6 +690,10 @@
 <div class="widget tag">
   <h3 class="title">最新文章</h3>
   <ul class="entry">
+    
+      <li>
+        <a href="/2014/11/05/curl/">curl</a>
+      </li>
     
       <li>
         <a href="/2014/11/02/backbox/">Backbox</a>
