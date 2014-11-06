@@ -96,18 +96,12 @@
 <a id="more"></a>
 
 <p>Nmap特点：</p>
-<pre><code>主机探测：探测网络上的主机，例如列出响应TCP和ICMP请求、icmp请求、开放特别端口的主机。 
-端口扫描：探测目标主机所开放的端口。 
-版本检测：探测目标主机的网络服务，判断其服务名称及版本号。 
-系统检测：探测目标主机的操作系统及网络设备的硬件特性。 
-支持探测脚本的编写：使用Nmap的脚本引擎（NSE）和Lua编程语言。
-</code></pre><p>Nmap 能扫描出目标的详细信息包括、<a href="http://www.debouncer.com/reverse-dns-check" target="_blank" rel="external">DNS反解</a>、设备类型和mac地址。<br><br><br>Nmap用途</p>
-<pre><code>1、通过对设备或者防火墙的探测来审计它的安全性。 
-2、探测目标主机所开放的端口。 
-3、网络存储，网络映射，维护和资产管理。（这个有待深入） 
-4、通过识别新的服务器审计网络的安全性。 
-5、探测网络上的主机。
-</code></pre><p><br></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">主机探测：探测网络上的主机，例如列出响应TCP和ICMP请求、icmp请求、开放特别端口的主机。 </div><div class="line">端口扫描：探测目标主机所开放的端口。 </div><div class="line">版本检测：探测目标主机的网络服务，判断其服务名称及版本号。 </div><div class="line">系统检测：探测目标主机的操作系统及网络设备的硬件特性。 </div><div class="line">支持探测脚本的编写：使用Nmap的脚本引擎（NSE）和Lua编程语言。</div></pre></td></tr></table></figure>
+
+<p>Nmap 能扫描出目标的详细信息包括、<a href="http://www.debouncer.com/reverse-dns-check" target="_blank" rel="external">DNS反解</a>、设备类型和mac地址。<br><br><br>Nmap用途</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">1、通过对设备或者防火墙的探测来审计它的安全性。 </div><div class="line">2、探测目标主机所开放的端口。 </div><div class="line">3、网络存储，网络映射，维护和资产管理。（这个有待深入） </div><div class="line">4、通过识别新的服务器审计网络的安全性。 </div><div class="line">5、探测网络上的主机。</div></pre></td></tr></table></figure>
+
+<p><br></p>
 <hr>
 
 
@@ -120,47 +114,26 @@
 <p>基本原理：（以ICMP echo为例）<br><img src="http://evilddog.qiniudn.com/ICMP-echo.jpg" alt=""></p>
 <p>Nmap的用户位于源端，IP地址192.168.0.5，向目标主机192.168.0.3发送ICMP Echo Request。如果该请求报文没有被防火墙拦截掉，那么目标机会回复ICMP Echo Reply包回来。以此来确定目标主机是否在线。</p>
 <p>默认情况下，Nmap会发送四种不同类型的数据包来探测目标主机是否在线。</p>
-<pre><code>ICMP echo request
-<span class="operator">a</span> TCP SYN packet <span class="built_in">to</span> port <span class="number">443</span>
-<span class="operator">a</span> TCP ACK packet <span class="built_in">to</span> port <span class="number">80</span>
-<span class="operator">an</span> ICMP timestamp request
-</code></pre><p>依次发送四个报文探测目标机是否开启。只要收到其中一个包的回复，那就证明目标机开启。使用四种不同类型的数据包可以避免因防火墙或丢包造成的判断错误。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ICMP echo request</div><div class="line"><span class="operator">a</span> TCP SYN packet <span class="built_in">to</span> port <span class="number">443</span></div><div class="line"><span class="operator">a</span> TCP ACK packet <span class="built_in">to</span> port <span class="number">80</span></div><div class="line"><span class="operator">an</span> ICMP timestamp request</div></pre></td></tr></table></figure>
+
+<p>依次发送四个报文探测目标机是否开启。只要收到其中一个包的回复，那就证明目标机开启。使用四种不同类型的数据包可以避免因防火墙或丢包造成的判断错误。</p>
 <hr>
 
 
 <h3 id="主机发现用法">主机发现用法</h3>
 <p>通常主机发现并不单独使用，而只是作为端口扫描、版本侦测、OS侦测先行步骤。而在某些特殊应用（例如确定大型局域网内活动主机的数量），可能会单独专门适用主机发现功能来完成。不管是作为辅助用法还是专门用途，用户都可以使用Nmap提供的丰富的选项来定制主机发现的探测方式。</p>
-<pre><code>-<span class="ruby"><span class="symbol">sL:</span> <span class="constant">List</span> <span class="constant">Scan</span> 列表扫描，仅将指定的目标的<span class="constant">IP</span>列举出来，不进行主机发现。
-</span>
--<span class="ruby"><span class="symbol">sn:</span> <span class="constant">Ping</span> <span class="constant">Scan</span> 只进行主机发现，不进行端口扫描。
-</span>
--<span class="ruby"><span class="constant">Pn</span><span class="symbol">:</span> 将所有指定的主机视作开启的，跳过主机发现的过程。
-</span>
--<span class="ruby"><span class="constant">PS</span>/<span class="constant">PA</span>/<span class="constant">PU</span>/<span class="constant">PY</span>[portlist]<span class="symbol">:</span> 使用<span class="constant">TCPSYN</span>/<span class="constant">ACK</span>或<span class="constant">SCTP</span> <span class="constant">INIT</span>/<span class="constant">ECHO</span>方式进行发现。
-</span>
--<span class="ruby"><span class="constant">PE</span>/<span class="constant">PP</span>/<span class="constant">PM</span><span class="symbol">:</span> 使用<span class="constant">ICMP</span> echo, timestamp, <span class="keyword">and</span> netmask 请求包发现主机。-<span class="constant">PO</span>[protocollist]<span class="symbol">:</span> 使用<span class="constant">IP</span>协议包探测对方主机是否开启。
-</span>
--<span class="ruby">n/-<span class="constant">R</span><span class="symbol">:</span> -n表示不进行<span class="constant">DNS</span>解析；-<span class="constant">R</span>表示总是进行<span class="constant">DNS</span>解析。
-</span>
--<span class="ruby">-dns-servers &lt;serv1[,serv2],...&gt;<span class="symbol">:</span> 指定<span class="constant">DNS</span>服务器。
-</span>
--<span class="ruby">-system-<span class="symbol">dns:</span> 指定使用系统的<span class="constant">DNS</span>服务器
-</span>
--<span class="ruby">-<span class="symbol">traceroute:</span> 追踪每个路由节点</span>
-</code></pre><p><br></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby"><span class="symbol">sL:</span> <span class="constant">List</span> <span class="constant">Scan</span> 列表扫描，仅将指定的目标的<span class="constant">IP</span>列举出来，不进行主机发现。</span></div><div class="line">-<span class="ruby"><span class="symbol">sn:</span> <span class="constant">Ping</span> <span class="constant">Scan</span> 只进行主机发现，不进行端口扫描。</span></div><div class="line">-<span class="ruby"><span class="constant">Pn</span><span class="symbol">:</span> 将所有指定的主机视作开启的，跳过主机发现的过程。</span></div><div class="line">-<span class="ruby"><span class="constant">PS</span>/<span class="constant">PA</span>/<span class="constant">PU</span>/<span class="constant">PY</span>[portlist]<span class="symbol">:</span> 使用<span class="constant">TCPSYN</span>/<span class="constant">ACK</span>或<span class="constant">SCTP</span> <span class="constant">INIT</span>/<span class="constant">ECHO</span>方式进行发现。</span></div><div class="line">-<span class="ruby"><span class="constant">PE</span>/<span class="constant">PP</span>/<span class="constant">PM</span><span class="symbol">:</span> 使用<span class="constant">ICMP</span> echo, timestamp, <span class="keyword">and</span> netmask 请求包发现主机。-<span class="constant">PO</span>[protocollist]<span class="symbol">:</span> 使用<span class="constant">IP</span>协议包探测</span></div><div class="line">对方主机是否开启。</div><div class="line">-<span class="ruby">n/-<span class="constant">R</span><span class="symbol">:</span> -n表示不进行<span class="constant">DNS</span>解析；-<span class="constant">R</span>表示总是进行<span class="constant">DNS</span>解析。</span></div><div class="line">-<span class="ruby">-dns-servers &lt;serv1[,serv2],...&gt;<span class="symbol">:</span> 指定<span class="constant">DNS</span>服务器。</span></div><div class="line">-<span class="ruby">-system-<span class="symbol">dns:</span> 指定使用系统的<span class="constant">DNS</span>服务器</span></div><div class="line">-<span class="ruby">-<span class="symbol">traceroute:</span> 追踪每个路由节点</span></div></pre></td></tr></table></figure>
+
+<p><br></p>
 <hr>
 
 <h2 id="0x02端口扫描">0x02端口扫描</h2>
 <p>端口扫描是Nmap最基本最核心的功能，用于确定目标主机的TCP/UDP端口的开放情况。</p>
 <p>默认情况下，Nmap会扫描1000个最有可能开放的TCP端口。</p>
 <p>Nmap通过探测将端口划分为6个状态：</p>
-<pre><code><span class="tag">&lt;<span class="title">b</span>&gt;</span>open<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口是开放的。
-<span class="tag">&lt;<span class="title">b</span>&gt;</span>closed<span class="tag">&lt;/<span class="title">b</span>&gt;</span>：端口是关闭的。
-<span class="tag">&lt;<span class="title">b</span>&gt;</span>filtered<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口被防火墙IDS/IPS屏蔽，无法确定其状态。
-<span class="tag">&lt;<span class="title">b</span>&gt;</span>unfiltered<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口没有被屏蔽，但是否开放需要进一步确定。
-<span class="tag">&lt;<span class="title">b</span>&gt;</span>open|filtered<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口是开放的或被屏蔽。
-<span class="tag">&lt;<span class="title">b</span>&gt;</span>losed|filtered <span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口是关闭的或被屏蔽。
-</code></pre><p><br></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">b</span>&gt;</span>open<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口是开放的。</div><div class="line"><span class="tag">&lt;<span class="title">b</span>&gt;</span>closed<span class="tag">&lt;/<span class="title">b</span>&gt;</span>：端口是关闭的。</div><div class="line"><span class="tag">&lt;<span class="title">b</span>&gt;</span>filtered<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口被防火墙IDS/IPS屏蔽，无法确定其状态。</div><div class="line"><span class="tag">&lt;<span class="title">b</span>&gt;</span>unfiltered<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口没有被屏蔽，但是否开放需要进一步确定。</div><div class="line"><span class="tag">&lt;<span class="title">b</span>&gt;</span>open|filtered<span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口是开放的或被屏蔽。</div><div class="line"><span class="tag">&lt;<span class="title">b</span>&gt;</span>losed|filtered <span class="tag">&lt;<span class="title">b</span>/&gt;</span>：端口是关闭的或被屏蔽。</div></pre></td></tr></table></figure>
+
+<p><br></p>
 <h3 id="端口扫描原理:">端口扫描原理:</h3>
 <p>Nmap在端口扫描方面非常强大，提供了十多种探测方式。</p>
 <hr>
@@ -193,35 +166,13 @@
 <h3 id="端口扫描用法">端口扫描用法</h3>
 <p><br></p>
 <h4 id="扫描方式">扫描方式</h4>
-<pre><code>-<span class="ruby">sS/sT/sA/sW/<span class="symbol">sM:</span>指定使用 <span class="constant">TCP</span> <span class="constant">SYN</span>/<span class="constant">Connect</span>()/<span class="constant">ACK</span>/<span class="constant">Window</span>/<span class="constant">Maimon</span> scans的方式来对目标主机进行扫描。
-</span>
--<span class="ruby"><span class="symbol">sU:</span> 指定使用<span class="constant">UDP</span>扫描方式确定目标主机的<span class="constant">UDP</span>端口状况。
-</span>
--<span class="ruby">sN/sF/<span class="symbol">sX:</span> 指定使用<span class="constant">TCP</span> <span class="constant">Null</span>, <span class="constant">FIN</span>, <span class="keyword">and</span> <span class="constant">Xmas</span> scans秘密扫描方式来协助探测对方的<span class="constant">TCP</span>端口状态。
-</span>
--<span class="ruby">-scanflags &lt;flags&gt;<span class="symbol">:</span> 定制<span class="constant">TCP</span>包的flags。
-</span>
--<span class="ruby">sI &lt;zombiehost[<span class="symbol">:probeport</span>]&gt;<span class="symbol">:</span> 指定使用idle scan方式来扫描目标主机（前提需要找到合适的zombie host）
-</span>
--<span class="ruby">sY/<span class="symbol">sZ:</span> 使用<span class="constant">SCTP</span> <span class="constant">INIT</span>/<span class="constant">COOKIE</span>-<span class="constant">ECHO</span>来扫描<span class="constant">SCTP</span>协议端口的开放的情况。
-</span>
--<span class="ruby"><span class="symbol">sO:</span> 使用<span class="constant">IP</span> protocol 扫描确定目标机支持的协议类型。
-</span>
--<span class="ruby">b &lt;<span class="constant">FTP</span> relay host&gt;<span class="symbol">:</span> 使用<span class="constant">FTP</span> bounce scan扫描方式</span>
-</code></pre><p><br></p>
-<h4 id="端口参数和顺序">端口参数和顺序</h4>
-<pre><code>-<span class="ruby">p &lt;port ranges&gt;<span class="symbol">:</span> 扫描指定的端口
-</span>
-实例: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9（其中T代表TCP协议、U代表UDP协议、S代表SCTP协议）
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby">sS/sT/sA/sW/<span class="symbol">sM:</span>指定使用 <span class="constant">TCP</span> <span class="constant">SYN</span>/<span class="constant">Connect</span>()/<span class="constant">ACK</span>/<span class="constant">Window</span>/<span class="constant">Maimon</span> scans的方式来对目标主机进行扫描。</span></div><div class="line">-<span class="ruby"><span class="symbol">sU:</span> 指定使用<span class="constant">UDP</span>扫描方式确定目标主机的<span class="constant">UDP</span>端口状况。</span></div><div class="line">-<span class="ruby">sN/sF/<span class="symbol">sX:</span> 指定使用<span class="constant">TCP</span> <span class="constant">Null</span>, <span class="constant">FIN</span>, <span class="keyword">and</span> <span class="constant">Xmas</span> scans秘密扫描方式来协助探测对方的<span class="constant">TCP</span>端口状态。</span></div><div class="line">-<span class="ruby">-scanflags &lt;flags&gt;<span class="symbol">:</span> 定制<span class="constant">TCP</span>包的flags。</span></div><div class="line">-<span class="ruby">sI &lt;zombiehost[<span class="symbol">:probeport</span>]&gt;<span class="symbol">:</span> 指定使用idle scan方式来扫描目标主机（前提需要找到合适的zombie host）</span></div><div class="line">-<span class="ruby">sY/<span class="symbol">sZ:</span> 使用<span class="constant">SCTP</span> <span class="constant">INIT</span>/<span class="constant">COOKIE</span>-<span class="constant">ECHO</span>来扫描<span class="constant">SCTP</span>协议端口的开放的情况。</span></div><div class="line">-<span class="ruby"><span class="symbol">sO:</span> 使用<span class="constant">IP</span> protocol 扫描确定目标机支持的协议类型。</span></div><div class="line">-<span class="ruby">b &lt;<span class="constant">FTP</span> relay host&gt;<span class="symbol">:</span> 使用<span class="constant">FTP</span> bounce scan扫描方式</span></div></pre></td></tr></table></figure>
 
--<span class="ruby"><span class="constant">F</span><span class="symbol">:</span> <span class="constant">Fast</span> mode – 快速模式，仅扫描<span class="constant">TOP</span> <span class="number">100</span>的端口
-</span>
--<span class="ruby"><span class="symbol">r:</span> 不进行端口随机打乱的操作（如无该参数，nmap会将要扫描的端口以随机顺序方式扫描，以让nmap的扫描不易被对方防火墙检测到）。
-</span>
--<span class="ruby">-top-ports &lt;number&gt;<span class="symbol">:</span>扫描开放概率最高的number个端口（nmap的作者曾经做过大规模地互联网扫描，以此统计出网络上各种端口可能开放的概率。以此排列出最有可能开放端口的列表，具体可以参见文件：nmap-services。默认情况下，nmap会扫描最有可能的<span class="number">1000</span>个<span class="constant">TCP</span>端口）
-</span>
--<span class="ruby">-port-ratio &lt;ratio&gt;<span class="symbol">:</span> 扫描指定频率以上的端口。与上述--top-ports类似，这里以概率作为参数，让概率大于--port-ratio的端口才被扫描。显然参数必须在在<span class="number">0</span>到<span class="number">1</span>之间，具体范围概率情况可以查看nmap-services文件。</span>
-</code></pre><p><br></p>
+<p><br></p>
+<h4 id="端口参数和顺序">端口参数和顺序</h4>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby">p &lt;port ranges&gt;<span class="symbol">:</span> 扫描指定的端口</span></div><div class="line">实例: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9（其中T代表TCP协议、U代表UDP协议、S代</div><div class="line">表SCTP协议）</div><div class="line">-<span class="ruby"><span class="constant">F</span><span class="symbol">:</span> <span class="constant">Fast</span> mode – 快速模式，仅扫描<span class="constant">TOP</span> <span class="number">100</span>的端口</span></div><div class="line">-<span class="ruby"><span class="symbol">r:</span> 不进行端口随机打乱的操作（如无该参数，nmap会将要扫描的端口以随机顺序方式扫描，以让nmap的扫描不易被对方防</span></div><div class="line">火墙检测到）。</div><div class="line">-<span class="ruby">-top-ports &lt;number&gt;<span class="symbol">:</span>扫描开放概率最高的number个端口（nmap的作者曾经做过大规模地互联网扫描，以此统计出网络</span></div><div class="line">上各种端口可能开放的概率。以此排列出最有可能开放端口的列表，具体可以参见文件：nmap-services。默认情况下，nmap</div><div class="line">会扫描最有可能的1000个TCP端口）</div><div class="line">-<span class="ruby">-port-ratio &lt;ratio&gt;<span class="symbol">:</span> 扫描指定频率以上的端口。与上述--top-ports类似，这里以概率作为参数，让概率大于--por</span></div><div class="line">t-ratio的端口才被扫描。显然参数必须在在0到1之间，具体范围概率情况可以查看nmap-services文件。</div></pre></td></tr></table></figure>
+
+<p><br></p>
 <hr>
 
 
@@ -252,16 +203,9 @@
 </ol>
 <p><br></p>
 <h3 id="版本侦测的用法">版本侦测的用法</h3>
-<pre><code>-<span class="ruby"><span class="symbol">sV:</span> 指定让<span class="constant">Nmap</span>进行版本侦测
-</span>
--<span class="ruby">-version-intensity &lt;level&gt;<span class="symbol">:</span> 指定版本侦测强度（<span class="number">0</span>-<span class="number">9</span>），默认为<span class="number">7</span>。数值越高，探测出的服务越准确，但是运行时间会比较长。
-</span>
--<span class="ruby">-version-<span class="symbol">light:</span> 指定使用轻量侦测方式 (intensity <span class="number">2</span>)
-</span>
--<span class="ruby">-version-<span class="symbol">all:</span> 尝试使用所有的probes进行侦测 (intensity <span class="number">9</span>)
-</span>
--<span class="ruby">-version-<span class="symbol">trace:</span> 显示出详细的版本侦测过程信息。</span>
-</code></pre><p><br></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby"><span class="symbol">sV:</span> 指定让<span class="constant">Nmap</span>进行版本侦测</span></div><div class="line">-<span class="ruby">-version-intensity &lt;level&gt;<span class="symbol">:</span> 指定版本侦测强度（<span class="number">0</span>-<span class="number">9</span>），默认为<span class="number">7</span>。数值越高，探测出的服务越准确，但是运行时间会比较长。</span></div><div class="line">-<span class="ruby">-version-<span class="symbol">light:</span> 指定使用轻量侦测方式 (intensity <span class="number">2</span>)</span></div><div class="line">-<span class="ruby">-version-<span class="symbol">all:</span> 尝试使用所有的probes进行侦测 (intensity <span class="number">9</span>)</span></div><div class="line">-<span class="ruby">-version-<span class="symbol">trace:</span> 显示出详细的版本侦测过程信息。</span></div></pre></td></tr></table></figure>
+
+<p><br></p>
 <hr>
 
 <h2 id="0x04操作系统侦测">0x04操作系统侦测</h2>
@@ -274,12 +218,9 @@
 <li>将探测生成的指纹与nmap-os-db中指纹进行对比，查找匹配的系统。如果无法匹配，以概率形式列举出可能的系统。</li>
 </ol>
 <h3 id="OS侦测用法">OS侦测用法</h3>
-<pre><code>-<span class="ruby"><span class="constant">O</span><span class="symbol">:</span> 指定<span class="constant">Nmap</span>进行<span class="constant">OS</span>侦测。  
-</span>
--<span class="ruby">-osscan-<span class="symbol">limit:</span> 限制<span class="constant">Nmap</span>只对确定的主机的进行<span class="constant">OS</span>探测（至少需确知该主机分别有一个open和closed的端口）。  
-</span>
--<span class="ruby">-osscan-<span class="symbol">guess:</span> 大胆猜测对方的主机的系统类型。由此准确性会下降不少，但会尽可能多为用户提供潜在的操作系统。  </span>
-</code></pre><p><br></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">-<span class="ruby"><span class="constant">O</span><span class="symbol">:</span> 指定<span class="constant">Nmap</span>进行<span class="constant">OS</span>侦测。  </span></div><div class="line">-<span class="ruby">-osscan-<span class="symbol">limit:</span> 限制<span class="constant">Nmap</span>只对确定的主机的进行<span class="constant">OS</span>探测（至少需确知该主机分别有一个open和closed的端口）。  </span></div><div class="line">-<span class="ruby">-osscan-<span class="symbol">guess:</span> 大胆猜测对方的主机的系统类型。由此准确性会下降不少，但会尽可能多为用户提供潜在的操作系统。</span></div></pre></td></tr></table></figure>
+
+<p><br></p>
 <hr>
 
 <h2 id="0x05">0x05</h2>

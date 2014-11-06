@@ -101,8 +101,9 @@
 </ul>
 <hr>
 <p>GET方法 查询的key&amp;value是在GET请求的URL中发送的：</p>
-<pre><code>/test/demo_form.asp?<span class="variable">name1=</span>value1&amp;<span class="variable">name2=</span>value2
-</code></pre><p>有关 GET 请求的其他一些特征：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/test/demo_form.asp?<span class="variable">name1=</span>value1&<span class="variable">name2=</span>value2</div></pre></td></tr></table></figure>
+
+<p>有关 GET 请求的其他一些特征：</p>
 <ul>
 <li><p>GET 请求可被缓存</p>
 </li>
@@ -119,11 +120,9 @@
 </ul>
 <hr>
 <p>POST方法查询的Key&amp;value是在POST请求的HTTP消息主体中发送的</p>
-<pre><code>POST test demo_form.asp 
-HTTP/<span class="number">1.1</span> 
-Host:evilddog.github.io
-<span class="variable">name1=</span>value1&amp;<span class="variable">name2=</span>value2
-</code></pre><p>有关 POST 请求的其他一些特征：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">POST test demo_form.asp </div><div class="line">HTTP/<span class="number">1.1</span> </div><div class="line">Host:evilddog.github.io</div><div class="line"><span class="variable">name1=</span>value1&<span class="variable">name2=</span>value2</div></pre></td></tr></table></figure>
+
+<p>有关 POST 请求的其他一些特征：</p>
 <ul>
 <li><p>POST 请求不会被缓存</p>
 </li>

