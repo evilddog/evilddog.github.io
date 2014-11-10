@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://evilddog.github.io/2014/11/10/png-struct/</loc>
+    <lastmod>2014-11-10T13:49:17.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://evilddog.github.io/2014/11/09/file-header/</loc>
     <lastmod>2014-11-09T08:21:18.000Z</lastmod>
   </url>

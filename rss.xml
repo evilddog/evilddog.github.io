@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2014-11-10T05:51:43.298Z</updated>
+  <updated>2014-11-10T13:49:37.357Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -13,6 +13,69 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[PNG图片结构分析和取证]]></title>
+    <link href="http://evilddog.github.io/2014/11/10/png-struct/"/>
+    <id>http://evilddog.github.io/2014/11/10/png-struct/</id>
+    <published>2014-11-10T10:58:02.000Z</published>
+    <updated>2014-11-10T13:49:17.000Z</updated>
+    <content type="html"><![CDATA[<p><br></p>
+<hr>
+
+<h2 id="0x00_废话">0x00 废话</h2>
+<p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br><a id="more"></a><br>因为单独讲解比较无聊,所以会用某CTF的一道水题当作例子分析图片结构</p>
+<p><img src="http://evilddog.qiniudn.com/stego_final.png" alt=""></p>
+<hr>
+
+<h2 id="0x01_PNG文件结构分析:">0x01  PNG文件结构分析:</h2>
+<p>PNG是一种位图文件(bitmap file)存储格式，读成“ping”。PNG用来存储灰度图像时，灰度图像的深度最多16位，存储彩色图像时，彩色图像的深度最多48位，并且还可存储多到16位的α通道数据。</p>
+<h3 id="整个PNG的数据组成是如下结构:">整个PNG的数据组成是如下结构:</h3>
+<p><img src="http://evilddog.qiniudn.com/PNG-struct.png" alt=""></p>
+<h3 id="文件头:">文件头:</h3>
+<p>每一个PNG图片的<a href="http://err02.com/2014/11/09/file-header/" target="_blank" rel="external">文件标志</a>都是如下固定的,长度为八字节(00000000-0000007):<br><img src="http://evilddog.qiniudn.com/PNG-header.png" alt=""></p>
+<p>示例文件结构:<br><img src="http://evilddog.qiniudn.com/png-head-example.png" alt=""></p>
+<p><br></p>
+<h3 id="PNG数据块(Chunk)">PNG数据块(Chunk)</h3>
+<p>有两种,一种是关键数据块,也是标准数据块,还有一种是辅助数据块也叫可选数据块.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">关键数据块定义了4个标准数据块，每个PNG文件都必须包含它们，PNG读写软件也都必须要支持这些数据块。</div><div class="line">PNG文件规范没有要求PNG编译码器对可选数据块进行编码和译码，但规范提倡支持可选数据块。</div></pre></td></tr></table></figure>
+
+<p><br></p>
+<h3 id="PNG数据块类别如下,关键数据块为加深部分:">PNG数据块类别如下,关键数据块为加深部分:</h3>
+<p><img src="http://evilddog.qiniudn.com/data-struct.png" alt=""></p>
+<p><br></p>
+<h3 id="数据块统一结构结构:">数据块统一结构结构:</h3>
+<p>每个数据块由四个部分组成:<br><img src="http://evilddog.qiniudn.com/Screenshot - 2014年11月10日 - 21时15分10秒.png" alt=""></p>
+<p>尤其要注意的是CRC(循环冗余校验码),在每个数据块中它是对Chunk Type Code 和 Chunk Data域中的数据进行计算得到,虽然不可逆,但是我们在一定条件下可以通过爆破得到,计算方式如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x32+x26+x23+x22+x16+x12+x11+x10+x8+x7+x5+x4+x2+x+1</div></pre></td></tr></table></figure>
+
+<p>下面只重点讲解关键数据块</p>
+<p><br></p>
+<h2 id="0x02_IHDR">0x02  IHDR</h2>
+<p>文件头数据块IHDR(header chunk)包含有PNG中储存的图像数据的基本信息,并要作为第一个数据块出现在PNG数据块中</p>
+<p>文件结构如下:<br><img src="http://evilddog.qiniudn.com/IHDR.png" alt=""></p>
+<p><br></p>
+<p>即图中0000008~0000020,实例如下:<br><img src="http://evilddog.qiniudn.com/Screenshot - 2014年11月10日 - 21时21分17秒.png" alt=""></p>
+<p><br></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">初始的4字节为数据块数据的长度<span class="value">:<span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">0</span>D,<span class="number">13</span>字节</span></div><div class="line">接下来是该数据块类型:<span class="number">49</span> <span class="number">48</span> <span class="number">44</span> <span class="number">52</span>,IHDR</div><div class="line">然后是数据块数据:宽-<span class="number">00</span> <span class="number">00</span> <span class="number">05</span> <span class="number">00</span>,<span class="number">1280</span>像素;</div><div class="line">              高-00 00 04 00,1024;</div><div class="line">              像素深度<span class="value">:<span class="number">08</span>,<span class="number">2</span>^<span class="number">8</span>=<span class="number">256</span>,即这是一个<span class="number">256</span>色的图像;</span></div><div class="line">              06,颜色类型,带α通道数据的真彩色图像,8或16;</div><div class="line">最后的是crc<span class="value">:BE <span class="number">93</span> F4 <span class="number">43</span></span></div></pre></td></tr></table></figure>
+
+<h2 id="0x03_IDAT">0x03 IDAT</h2>
+<p>0000020到000336之间都是可选数据块,不再累述,直接跳到IDATA部分;</p>
+<p>图像数据块IDAT(image data chunk)：它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块。</p>
+<p>IDAT存放着图像真正的数据信息，因此，如果能够了解IDAT的结构，我们就可以很方便的生成PNG图像,是最重要的部分</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><br></p>
+<hr>
+
+<h2 id="0x00_废话">0x00 废话</h2>
+<p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br>]]>
+    
+    </summary>
+    
+      <category term="png" scheme="http://evilddog.github.io//tags/png/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[各类文件的文件头]]></title>
