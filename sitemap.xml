@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://evilddog.github.io/2014/11/09/file-header/</loc>
+    <lastmod>2014-11-09T08:21:18.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://evilddog.github.io/2014/10/13/same-origin-policy/</loc>
+    <lastmod>2014-11-09T06:09:09.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://evilddog.github.io/2014/11/05/curl/</loc>
     <lastmod>2014-11-06T01:07:03.000Z</lastmod>
   </url>
@@ -14,11 +24,6 @@
   <url>
     <loc>http://evilddog.github.io/2014/10/31/HTTP/</loc>
     <lastmod>2014-11-05T16:38:26.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://evilddog.github.io/2014/10/13/same-origin-policy/</loc>
-    <lastmod>2014-11-05T16:35:05.000Z</lastmod>
   </url>
   
   <url>

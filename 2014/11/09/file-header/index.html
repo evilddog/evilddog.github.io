@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>各类文件的文件头 | evilddog&#39;s blog</title>
+  <meta name="author" content="evilddog">
+  
+  <meta name="description" content="be quieter">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="各类文件的文件头"/>
+  <meta property="og:site_name" content="evilddog&#39;s blog"/>
+
+  
+    <meta property="og:image" content="undefined"/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/rss.xml" title="evilddog&#39;s blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="/js/jquery.min.js"></script>
+  
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-56327794-1', 'evilddog');
+  ga('send', 'pageview');
+
+</script>
+
+
+</head>
+
+
+<body>
+  <!--[if lte IE 8]> <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'> <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode"><img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0027_Simplified Chinese.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." style='margin-left:auto;margin-right:auto;display: block;'/></a></div> <![endif]-->
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">evilddog&#39;s blog</a></h1>
+  <h2><a href="/">在一群出色的人中间,误以为自己也是其中一员,然后忘了努力</a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/404.html">404</a></li>
+    
+      <li><a href="/about">About</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <div class="post-content">
+    <header>
+      
+        <time datetime="2014-11-09T07:39:21.000Z"><a href="/2014/11/09/file-header/">11月 9 2014</a></time>
+      
+      
+  
+    <h1 class="title">各类文件的文件头</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p><br></p>
+<hr>
+
+<h2 id="0x00_各种常用文件的文件头格式">0x00 各种常用文件的文件头格式</h2>
+<p>MISC还有信息隐藏经常有各种蛋疼的图片隐藏还有修复图片的题目,简直不会,所以记下备忘</p>
+<a id="more"></a>
+
+<h2 id="0x01">0x01</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">File                             Type                          ExtensionsHeader</div><div class="line">               </div><div class="line">JPEG                             jpg<span class="comment">;jpeg                      0xFFD8FF</span></div><div class="line">PNG                              png                           <span class="number">0x89504E470D0A1A0A</span></div><div class="line">GIF                              gif                           <span class="number">47494638</span> </div><div class="line">TIFF                             tif<span class="comment">;tiff                      0x49492A00</span></div><div class="line">TIFF                             tif<span class="comment">;tiff                      0x4D4D002A</span></div><div class="line">Bit   map                        bmp                           BM</div><div class="line">AOL ART                          art                           <span class="number">0x4A47040E000000</span></div><div class="line">PC Paintbrush                    pcx                           <span class="number">0x0A050108</span></div><div class="line">Graphics Metafile                wmf                           <span class="number">0xD7CDC69A</span></div><div class="line">Graphics Metafile                wmf                           <span class="number">0x01000900</span></div><div class="line">Graphics Metafile                wmf                           <span class="number">0x02000900</span></div><div class="line">Enhanced Metafile                emf                           <span class="number">0x0100000058000000</span></div><div class="line">Corel Draw                       cdr                           CDR</div><div class="line">CAD                              dwg                           <span class="number">0x41433130</span></div><div class="line">Adobe Photoshop                  psd                           8BPS</div><div class="line">Rich Text Format                 rtf                           rtf</div><div class="line">XML                              xml                           3C3F786D6C   </div><div class="line">HTML                 html<span class="comment">;htm;php;php3;php4;phtml;shtml        68746D6C3E </span></div><div class="line">Email                            eml                           Delivery-date:</div><div class="line">Outlook Express                  <span class="number">dbx</span>                           <span class="number">0xCFAD12FE</span></div><div class="line">MS Office/OLE2     doc<span class="comment">;xls;dot;ppt;xla;ppa;pps;pot;msi;sdw;db  0xD0CF11E0A1B11AE1</span></div><div class="line">MS Access                        mdb<span class="comment">;mda;mde;mdt               Standard J</span></div><div class="line">WordPerfect                      wpd                           <span class="number">0xFF575043</span></div><div class="line">OpenOffice Writer                sxw                           writer</div><div class="line">OpenOffice Calc                  sxc                           calc</div><div class="line">OpenOffice Math                  sxm                           math</div><div class="line">OpenOffice Impress               sxi                           impress</div><div class="line">OpenOffice Draw                  sxd                           draw</div><div class="line">Adobe FrameMaker                 fm                            &lt;MAKERFILE</div><div class="line">PostScript                eps.or.ps<span class="comment">;ps;eps                     %!PS-Adobe</span></div><div class="line">Adobe Acrobat                    pdf                           %PDF-<span class="number">1</span>.</div><div class="line">Quicken                          qdf                           <span class="number">0xAC9EBD8F</span></div><div class="line">QuickBooks Backup                qbb                           <span class="number">0x458600000600</span></div><div class="line">Sage                sly.or.srt.or.slt<span class="comment">;sly;srt;slt              0x53520100</span></div><div class="line">Sage Backup                      <span class="number">1</span>                             SAGEBACKUP</div><div class="line">Lotus WordPro v9                 lwp                           <span class="number">0x576F726450726F</span></div><div class="line">Lotus <span class="number">123</span> v9                     <span class="number">123</span>                           <span class="number">0x00001A00051004</span></div><div class="line">Lotus <span class="number">123</span> v5                     wk4                           <span class="number">0x00001A0002100400</span></div><div class="line">Lotus <span class="number">123</span> v3                     wk3                           <span class="number">0x00001A0000100400</span></div><div class="line">Lotus <span class="number">123</span> v1                     wk1                           <span class="number">0x2000604060</span></div><div class="line">Windows Password                 pwl                           <span class="number">0xE3828596</span></div><div class="line">ZIP Archive                      zip<span class="comment">;jar                       0x504B0304</span></div><div class="line">ZIP Archive (outdated)           zip                           <span class="number">0x504B3030</span></div><div class="line">RAR Archive                      rar                           Rar!</div><div class="line">GZ Archive                       gz<span class="comment">;tgz                        0x1F8B08</span></div><div class="line">BZIP Archive                     bz2                           BZh</div><div class="line">ARJ Archive                      arj                           <span class="number">0x60EA</span></div><div class="line"><span class="number">7</span>－ZIP Archive                   7z                            7z集<span class="string">'</span></div><div class="line">Wave                             wav                           WAVE</div><div class="line">AVI                              avi                           AVI </div><div class="line">Real Audio                       ram;ra                        .ra?0</div><div class="line">Real Media                       rm                            .RMF</div><div class="line">MPEG                             mpg;mpeg                      0x000001BA</div><div class="line">MPEG                             mpg;mpeg                      0x000001B3</div><div class="line">Quicktime                        mov                           moov</div><div class="line">Windows Media                    asf                           0x3026B2758E66CF11</div><div class="line">MIDI                             mid                           MThd</div><div class="line">ELF Executable                   elf;;                          0x7F454C4601010100</div></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer>
+      
+
+        
+        
+          <div class="alignright post-nav">
+            <em>下一篇: </em><a href="/2014/11/05/curl/">cURL 常用命令</a>
+          </div>
+          <div class="clearfix"></div>
+        
+
+        
+          <div class="copyright">
+            
+              <span class="claim">版权声明：自由转载-非商用-无演绎-保持署名 @ evilddog-2014</span>
+            
+            
+              <span class="from-link">
+                <em>本文链接地址:</em>
+                <a href="/2014/11/09/file-header/">
+                  http://evilddog.github.io/2014/11/09/file-header/
+                </a>
+              </span>
+            
+          </div>
+        
+        
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_sinaweibo_like"></a>
+    
+    
+      <a class="addthis_button_linkedin"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">留言</h1>
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="text" name="q" results="0" placeholder="搜一下">
+    <i class="icon-search"></i>
+    <input type="hidden" name="q" value="site:evilddog.github.io">
+  </form>
+</div>
+
+  <div>
+
+<div class="widget tag">
+    <h3 class="title">友链</h3>
+    <ul class="entry">
+
+          <li>
+            <a href="http://lightless.me/" target="_blank">    Lightless_Blog</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.csdn.net/xboxmicro/" target="_blank">    Panda</a>
+          </li>
+
+          <li>
+            <a href="http://www.nohackair.net/" target="_blank">    Airbasic</a>
+          </li>
+
+          <li>
+            <a href="http://www.evilmoon.net/" target="_blank">    Evilmoon</a>
+          </li>
+
+          <li>
+            <a href="http://homeway.me/" target="_blank">    Grass</a>
+          </li>
+
+          <li>
+            <a href="http://tobe.moe/" target="_blank">     OctaviusLiu</a>
+          </li>
+        
+          <li>
+            <a href="http://Edward-L.github.io/" target="_blank">    Edward-L</a>
+          </li>
+        
+          <li>
+            <a href="http://queengina.com/" target="_blank">    QueenGina</a>
+          </li>
+        
+          <li>
+            <a href="http://veightz.net/" target="_blank">    Veightz</a>
+          </li>
+    <ul/>      
+     
+</div>
+
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">标签</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/BackBox/">BackBox</a><small>1</small></li>
+  
+    <li><a href="/tags/HTTP/">HTTP</a><small>1</small></li>
+  
+    <li><a href="/tags/HTTPS/">HTTPS</a><small>1</small></li>
+  
+    <li><a href="/tags/Nmap/">Nmap</a><small>1</small></li>
+  
+    <li><a href="/tags/XSS/">XSS</a><small>2</small></li>
+  
+    <li><a href="/tags/curl/">curl</a><small>1</small></li>
+  
+    <li><a href="/tags/write-up/">write-up</a><small>1</small></li>
+  
+    <li><a href="/tags/同源策略/">同源策略</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">分类</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/CTF/">CTF</a><small>1</small></li>
+  
+    <li><a href="/categories/HTTP/">HTTP</a><small>2</small></li>
+  
+    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+  
+    <li><a href="/categories/Tools/">Tools</a><small>2</small></li>
+  
+    <li><a href="/categories/前端安全/">前端安全</a><small>2</small></li>
+  
+    <li><a href="/categories/浏览器安全/">浏览器安全</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">最新文章</h3>
+  <ul class="entry">
+    
+      <li>
+        <a href="/2014/11/09/file-header/">各类文件的文件头</a>
+      </li>
+    
+      <li>
+        <a href="/2014/11/05/curl/">cURL 常用命令</a>
+      </li>
+    
+      <li>
+        <a href="/2014/11/02/backbox/">Backbox</a>
+      </li>
+    
+      <li>
+        <a href="/2014/11/01/swpu-write-up/">某石油大学CTFwrite-up</a>
+      </li>
+    
+      <li>
+        <a href="/2014/10/31/HTTP/">浅谈HTTPS</a>
+      </li>
+    
+      <li>
+        <a href="/2014/10/28/nmap-1/">浅谈Nmap基本原理</a>
+      </li>
+    
+      <li>
+        <a href="/2014/10/24/http-max-connection/">浅谈浏览器最大并发连接数问题</a>
+      </li>
+    
+      <li>
+        <a href="/2014/10/13/same-origin-policy/">浅谈浏览器的同源策略</a>
+      </li>
+    
+      <li>
+        <a href="/2014/10/12/escape-alf-nu-write-ups-1/">escape-Write-ups (Part 1)</a>
+      </li>
+    
+      <li>
+        <a href="/2014/10/12/escape-alf-nu-write-ups-2/">escape-Write-ups (Part 2)</a>
+      </li>
+    
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <div id="go-pg-top"><i class="icon-arrow-up"></i></div>
+  <footer id="footer" class="inner">
+<div class="alignright">
+  
+  &copy; 2014 evilddog
+  
+  自豪地使用伟大的<a href="https://pages.github.com/"> Github Page<a/>
+</div>
+<div class="clearfix"></div></footer>
+  <script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+<script type="text/javascript">
+var disqus_shortname = 'evilddog';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" charset="utf-8" src="/js/page.js"></script>
+
+</body>
+
+<div id="fb-root"></div>
+
+</html>
