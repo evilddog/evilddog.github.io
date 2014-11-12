@@ -31,7 +31,7 @@
   m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
   })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-56327794-1', 'evilddog');
+  ga('create', 'UA-56327794-1', 'auto');
   ga('send', 'pageview');
 
 </script>
@@ -91,8 +91,7 @@
 <h1 id="0x00_废话">0x00 废话</h1>
 <p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br><a id="more"></a><br>因为单独讲解比较无聊,所以会用某CTF的一道水题当作例子分析图片结构</p>
 <p><img src="http://evilddog.qiniudn.com/stego_final.png" alt=""></p>
-<hr>
-
+<p><br></p>
 <h1 id="0x01_PNG文件结构分析:">0x01  PNG文件结构分析:</h1>
 <p>PNG是一种位图文件(bitmap file)存储格式，读成“ping”。PNG用来存储灰度图像时，灰度图像的深度最多16位，存储彩色图像时，彩色图像的深度最多48位，并且还可存储多到16位的α通道数据。</p>
 <h2 id="整个PNG的数据组成是如下结构:">整个PNG的数据组成是如下结构:</h2>
@@ -124,6 +123,7 @@
 <p><br></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">初始的4字节为数据块数据的长度<span class="value">:<span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">0</span>D,<span class="number">13</span>字节</span></div><div class="line">接下来是该数据块类型:<span class="number">49</span> <span class="number">48</span> <span class="number">44</span> <span class="number">52</span>,IHDR</div><div class="line">然后是数据块数据:宽-<span class="number">00</span> <span class="number">00</span> <span class="number">05</span> <span class="number">00</span>,<span class="number">1280</span>像素;</div><div class="line">              高-00 00 04 00,1024;</div><div class="line">              像素深度<span class="value">:<span class="number">08</span>,<span class="number">2</span>^<span class="number">8</span>=<span class="number">256</span>,即这是一个<span class="number">256</span>色的图像;</span></div><div class="line">              06,颜色类型,带α通道数据的真彩色图像,8或16;</div><div class="line">最后的是crc<span class="value">:BE <span class="number">93</span> F4 <span class="number">43</span></span></div></pre></td></tr></table></figure>
 
+<p><br></p>
 <h1 id="0x03_IDAT">0x03 IDAT</h1>
 <p>0000020到000336之间都是可选数据块,不再累述,直接跳到IDATA部分;</p>
 <p><img src="" alt=""></p>
@@ -133,12 +133,14 @@
 <p>想深入研究的话请看如下链接</p>
 <p><a href="http://www.web-tinker.com/article/20471.html" target="_blank" rel="external"></a><br><a href="http://jens.quicknote.de/comp/LZ77-JensMueller.pdf" target="_blank" rel="external"></a></p>
 <p>IDAT的结构也一样和其他数据块一样:长度;标识；数据块数据；CTC数据,因为第三块数据块太长了,所以就不上图了</p>
+<p><br></p>
 <h1 id="0x04_IEND">0x04  IEND</h1>
 <p>图像结束数据IEND(image trailer chunk)：它用来标记PNG文件或者数据流已经结束，并且必须要放在文件的尾部。</p>
 <p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">49</span> <span class="number">45</span> <span class="number">4</span><span class="keyword">E</span> <span class="number">44</span> AE <span class="number">42</span> <span class="number">60</span> <span class="number">82</span></div></pre></td></tr></table></figure>
 
 <p>不难明白，由于数据块结构的定义，IEND数据块的长度总是0（00 00 00 00，除非人为加入信息），数据标识总是IEND（49 45 4E 44），因此，CRC码也总是AE 42 60 82。</p>
+<p><br></p>
 <h1 id="0x05_您的好友”赛棍”已上线">0x05  您的好友”赛棍”已上线</h1>
 <p>前面分析的时候我们可以看得到这个图片的阿尔法通道中是有隐藏信息的</p>
 <p>所以我们要先提取出来这个隐藏的图片信息,有两种方法:</p>
