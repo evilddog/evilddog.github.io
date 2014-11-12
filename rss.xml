@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2014-11-11T15:51:36.793Z</updated>
+  <updated>2014-11-12T08:12:08.704Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -19,39 +19,39 @@
     <link href="http://evilddog.github.io/2014/11/10/png-struct/"/>
     <id>http://evilddog.github.io/2014/11/10/png-struct/</id>
     <published>2014-11-10T10:58:02.000Z</published>
-    <updated>2014-11-10T13:49:17.000Z</updated>
+    <updated>2014-11-12T07:43:21.000Z</updated>
     <content type="html"><![CDATA[<p><br></p>
 <hr>
 
-<h2 id="0x00_废话">0x00 废话</h2>
+<h1 id="0x00_废话">0x00 废话</h1>
 <p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br><a id="more"></a><br>因为单独讲解比较无聊,所以会用某CTF的一道水题当作例子分析图片结构</p>
 <p><img src="http://evilddog.qiniudn.com/stego_final.png" alt=""></p>
 <hr>
 
-<h2 id="0x01_PNG文件结构分析:">0x01  PNG文件结构分析:</h2>
+<h1 id="0x01_PNG文件结构分析:">0x01  PNG文件结构分析:</h1>
 <p>PNG是一种位图文件(bitmap file)存储格式，读成“ping”。PNG用来存储灰度图像时，灰度图像的深度最多16位，存储彩色图像时，彩色图像的深度最多48位，并且还可存储多到16位的α通道数据。</p>
-<h3 id="整个PNG的数据组成是如下结构:">整个PNG的数据组成是如下结构:</h3>
+<h2 id="整个PNG的数据组成是如下结构:">整个PNG的数据组成是如下结构:</h2>
 <p><img src="http://evilddog.qiniudn.com/PNG-struct.png" alt=""></p>
-<h3 id="文件头:">文件头:</h3>
+<h2 id="文件头:">文件头:</h2>
 <p>每一个PNG图片的<a href="http://err02.com/2014/11/09/file-header/" target="_blank" rel="external">文件标志</a>都是如下固定的,长度为八字节(00000000-0000007):<br><img src="http://evilddog.qiniudn.com/PNG-header.png" alt=""></p>
 <p>示例文件结构:<br><img src="http://evilddog.qiniudn.com/png-head-example.png" alt=""></p>
 <p><br></p>
-<h3 id="PNG数据块(Chunk)">PNG数据块(Chunk)</h3>
+<h2 id="PNG数据块(Chunk)">PNG数据块(Chunk)</h2>
 <p>有两种,一种是关键数据块,也是标准数据块,还有一种是辅助数据块也叫可选数据块.</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">关键数据块定义了4个标准数据块，每个PNG文件都必须包含它们，PNG读写软件也都必须要支持这些数据块。</div><div class="line">PNG文件规范没有要求PNG编译码器对可选数据块进行编码和译码，但规范提倡支持可选数据块。</div></pre></td></tr></table></figure>
 
 <p><br></p>
-<h3 id="PNG数据块类别如下,关键数据块为加深部分:">PNG数据块类别如下,关键数据块为加深部分:</h3>
+<h2 id="PNG数据块类别如下,关键数据块为加深部分:">PNG数据块类别如下,关键数据块为加深部分:</h2>
 <p><img src="http://evilddog.qiniudn.com/data-struct.png" alt=""></p>
 <p><br></p>
-<h3 id="数据块统一结构结构:">数据块统一结构结构:</h3>
+<h2 id="数据块统一结构:">数据块统一结构:</h2>
 <p>每个数据块由四个部分组成:<br><img src="http://evilddog.qiniudn.com/Screenshot - 2014年11月10日 - 21时15分10秒.png" alt=""></p>
 <p>尤其要注意的是CRC(循环冗余校验码),在每个数据块中它是对Chunk Type Code 和 Chunk Data域中的数据进行计算得到,虽然不可逆,但是我们在一定条件下可以通过爆破得到,计算方式如下:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">x32+x26+x23+x22+x16+x12+x11+x10+x8+x7+x5+x4+x2+x+1</div></pre></td></tr></table></figure>
 
 <p>下面只重点讲解关键数据块</p>
 <p><br></p>
-<h2 id="0x02_IHDR">0x02  IHDR</h2>
+<h1 id="0x02_IHDR">0x02  IHDR</h1>
 <p>文件头数据块IHDR(header chunk)包含有PNG中储存的图像数据的基本信息,并要作为第一个数据块出现在PNG数据块中</p>
 <p>文件结构如下:<br><img src="http://evilddog.qiniudn.com/IHDR.png" alt=""></p>
 <p><br></p>
@@ -59,21 +59,46 @@
 <p><br></p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">初始的4字节为数据块数据的长度<span class="value">:<span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">0</span>D,<span class="number">13</span>字节</span></div><div class="line">接下来是该数据块类型:<span class="number">49</span> <span class="number">48</span> <span class="number">44</span> <span class="number">52</span>,IHDR</div><div class="line">然后是数据块数据:宽-<span class="number">00</span> <span class="number">00</span> <span class="number">05</span> <span class="number">00</span>,<span class="number">1280</span>像素;</div><div class="line">              高-00 00 04 00,1024;</div><div class="line">              像素深度<span class="value">:<span class="number">08</span>,<span class="number">2</span>^<span class="number">8</span>=<span class="number">256</span>,即这是一个<span class="number">256</span>色的图像;</span></div><div class="line">              06,颜色类型,带α通道数据的真彩色图像,8或16;</div><div class="line">最后的是crc<span class="value">:BE <span class="number">93</span> F4 <span class="number">43</span></span></div></pre></td></tr></table></figure>
 
-<h2 id="0x03_IDAT">0x03 IDAT</h2>
+<h1 id="0x03_IDAT">0x03 IDAT</h1>
 <p>0000020到000336之间都是可选数据块,不再累述,直接跳到IDATA部分;</p>
+<p><img src="" alt=""></p>
 <p>图像数据块IDAT(image data chunk)：它存储实际的数据，在数据流中可包含多个连续顺序的图像数据块。</p>
 <p>IDAT存放着图像真正的数据信息，因此，如果能够了解IDAT的结构，我们就可以很方便的生成PNG图像,是最重要的部分</p>
+<p>IDAT 区块是经过压缩的，所以数据不可读 ，压缩算法一般为LZ77滑动窗口算法，如果硬要看里面的数据的话，用zlib库也是可以的</p>
+<p>想深入研究的话请看如下链接</p>
+<p><a href="http://www.web-tinker.com/article/20471.html" target="_blank" rel="external"></a><br><a href="http://jens.quicknote.de/comp/LZ77-JensMueller.pdf" target="_blank" rel="external"></a></p>
+<p>IDAT的结构也一样和其他数据块一样:长度;标识；数据块数据；CTC数据,因为第三块数据块太长了,所以就不上图了</p>
+<h1 id="0x04_IEND">0x04  IEND</h1>
+<p>图像结束数据IEND(image trailer chunk)：它用来标记PNG文件或者数据流已经结束，并且必须要放在文件的尾部。</p>
+<p>如果我们仔细观察PNG文件，我们会发现，文件的结尾12个字符看起来总应该是这样的：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">49</span> <span class="number">45</span> <span class="number">4</span><span class="keyword">E</span> <span class="number">44</span> AE <span class="number">42</span> <span class="number">60</span> <span class="number">82</span></div></pre></td></tr></table></figure>
+
+<p>不难明白，由于数据块结构的定义，IEND数据块的长度总是0（00 00 00 00，除非人为加入信息），数据标识总是IEND（49 45 4E 44），因此，CRC码也总是AE 42 60 82。</p>
+<h1 id="0x05_您的好友”赛棍”已上线">0x05  您的好友”赛棍”已上线</h1>
+<p>前面分析的时候我们可以看得到这个图片的阿尔法通道中是有隐藏信息的</p>
+<p>所以我们要先提取出来这个隐藏的图片信息,有两种方法:</p>
+<p><b>00 : <a href="http://www.wechall.net/forum-t527/Stegsolve_1_3.html" target="_blank" rel="external">Stegsolve</a></b></p>
+<p>通过Stegsolve阿尔法通道2可以很清楚地看到隐藏了二维码:</p>
+<p><img src="http://evilddog.qiniudn.com/阿尔法通道.png" alt=""></p>
+<p>然后保存下来之后再XOR一下就能清楚的看到是一正常的二维码</p>
+<p><img src="http://evilddog.qiniudn.com/flag.png" alt=""></p>
+<p>扫描即得flag</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flag{hctf_3xF<span class="variable">$235</span><span class="comment">#\x5e3}</span></div></pre></td></tr></table></figure>
+
+<p><b>01 : Python</b></p>
 ]]></content>
     <summary type="html">
     <![CDATA[<p><br></p>
 <hr>
 
-<h2 id="0x00_废话">0x00 废话</h2>
+<h1 id="0x00_废话">0x00 废话</h1>
 <p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br>]]>
     
     </summary>
     
       <category term="png" scheme="http://evilddog.github.io//tags/png/"/>
+    
+      <category term="CTF" scheme="http://evilddog.github.io//categories/CTF/"/>
     
   </entry>
   
@@ -261,7 +286,7 @@
     <link href="http://evilddog.github.io/2014/11/01/swpu-write-up/"/>
     <id>http://evilddog.github.io/2014/11/01/swpu-write-up/</id>
     <published>2014-11-01T12:41:57.000Z</published>
-    <updated>2014-11-05T16:33:59.000Z</updated>
+    <updated>2014-11-12T07:41:41.000Z</updated>
     <content type="html"><![CDATA[<hr>
 
 <p>弱渣闲来无事玩一玩某石油大学的CTF，写一篇Write-up填充一下博客空白</p>
@@ -324,7 +349,7 @@
 
 <h1 id="0x04_Base5">0x04 Base5</h1>
 <p>XSS第二道题，看源码，有个翔一样的函数：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   <span class="built_in">window</span>.onerror=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">blue</span><span class="params">()</span></span>{</div><div class="line">	<span class="keyword">if</span>(shit==<span class="string">""</span>){</div><div class="line">		<span class="keyword">var</span> shit=<span class="number">1</span>;</div><div class="line">		<span class="built_in">eval</span>(shit);</div><div class="line">	}</div><div class="line">}</div><div class="line"></div><div class="line">blue();</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   <span class="built_in">window</span>.onerror=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">truereturn <span class="literal">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">blue</span><span class="params">()</span></span>{</div><div class="line">trueif(shit==<span class="string">""</span>){</div><div class="line">truetruevar shit=<span class="number">1</span>;</div><div class="line">truetrueeval(shit);</div><div class="line"><span class="literal">true</span>}</div><div class="line">}</div><div class="line"></div><div class="line">blue();</div></pre></td></tr></table></figure>
 
 <p>还过滤了alert直接闭合掉函数：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"){};var b='</span><span class="transposed_variable">al'</span>+<span class="string">'ert()'</span>;eval(b);<span class="keyword">if</span>(shit=<span class="string">"</span></div></pre></td></tr></table></figure>

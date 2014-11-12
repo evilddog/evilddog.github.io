@@ -147,7 +147,7 @@
 
 <h1 id="0x04_Base5">0x04 Base5</h1>
 <p>XSS第二道题，看源码，有个翔一样的函数：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   <span class="built_in">window</span>.onerror=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">	<span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">blue</span><span class="params">()</span></span>{</div><div class="line">	<span class="keyword">if</span>(shit==<span class="string">""</span>){</div><div class="line">		<span class="keyword">var</span> shit=<span class="number">1</span>;</div><div class="line">		<span class="built_in">eval</span>(shit);</div><div class="line">	}</div><div class="line">}</div><div class="line"></div><div class="line">blue();</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">   <span class="built_in">window</span>.onerror=<span class="function"><span class="keyword">function</span><span class="params">()</span></span>{</div><div class="line">truereturn <span class="literal">true</span>;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">blue</span><span class="params">()</span></span>{</div><div class="line">trueif(shit==<span class="string">""</span>){</div><div class="line">truetruevar shit=<span class="number">1</span>;</div><div class="line">truetrueeval(shit);</div><div class="line"><span class="literal">true</span>}</div><div class="line">}</div><div class="line"></div><div class="line">blue();</div></pre></td></tr></table></figure>
 
 <p>还过滤了alert直接闭合掉函数：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="string">"){};var b='</span><span class="transposed_variable">al'</span>+<span class="string">'ert()'</span>;eval(b);<span class="keyword">if</span>(shit=<span class="string">"</span></div></pre></td></tr></table></figure>
@@ -420,7 +420,7 @@
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/CTF/">CTF</a><small>1</small></li>
+    <li><a href="/categories/CTF/">CTF</a><small>2</small></li>
   
     <li><a href="/categories/HTTP/">HTTP</a><small>2</small></li>
   
