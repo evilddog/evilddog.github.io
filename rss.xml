@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2014-11-19T12:47:29.411Z</updated>
+  <updated>2014-11-21T14:20:06.472Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -13,6 +13,39 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Fri Nov 21 2014 00:00:00 GMT+0800 (CST)]]></title>
+    <link href="http://evilddog.github.io/2014/11/21/2014-11-21/"/>
+    <id>http://evilddog.github.io/2014/11/21/2014-11-21/</id>
+    <published>2014-11-21T13:59:32.000Z</published>
+    <updated>2014-11-21T14:19:54.000Z</updated>
+    <content type="html"><![CDATA[<p><hr><br><a id="more"></a><br><br></p>
+<p>转眼开学三个月过去了,时间真塔马的敢不敢再快一点?</p>
+<p><br><br>最近也一直呆在协会,却感觉自己和别人差距越来越大</p>
+<p><br><br>之前做过几次CTF,也是水的1B,各种纠结郁闷想不开</p>
+<p><br><br>想一想这三个月干了什么,便又是一声无奈,一声叹息</p>
+<p><br><br>最近也是比较忙,比如明天必挂的大物和概率论(逃</p>
+<p><br><br>比如协会一些比赛事情,还有生活上的……</p>
+<p><br><br>接触的越来越多,想学的越来越多,可是什么都学不进去</p>
+<p><br><br>学校的课程也是,每个月总有那么二十多天不想去上课</p>
+<p><br><br>可是又没有什么办法,最近通宵较多,洗个澡都快困死了</p>
+<p><br><br>各种不愉快的事情,理发店小哥都说,白头发越来越多了</p>
+<p><br><br>不敢想象未来会怎样,甚至不知道连未来都有没有</p>
+<p><br><br>什么都抓不住,什么都不想放弃,但还是什么都没留下</p>
+<p><br><br>牢骚发完,回去休息,和世界说声晚安,明天考试</p>
+<p><b><hr><b></b></b></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p><hr><br>]]>
+    
+    </summary>
+    
+      <category term="Life" scheme="http://evilddog.github.io//tags/Life/"/>
+    
+      <category term="被狗吃了的青春" scheme="http://evilddog.github.io//categories/%E8%A2%AB%E7%8B%97%E5%90%83%E4%BA%86%E7%9A%84%E9%9D%92%E6%98%A5/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[PNG图片结构分析和取证]]></title>
