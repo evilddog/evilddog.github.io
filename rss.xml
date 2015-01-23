@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2014-11-25T13:19:27.556Z</updated>
+  <updated>2015-01-23T09:21:57.715Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -13,6 +13,47 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[常用bash技巧]]></title>
+    <link href="http://evilddog.github.io/2015/01/23/bash-linux-skill/"/>
+    <id>http://evilddog.github.io/2015/01/23/bash-linux-skill/</id>
+    <published>2015-01-23T08:32:33.000Z</published>
+    <updated>2015-01-23T08:39:13.000Z</updated>
+    <content type="html"><![CDATA[<p>常用的shell键盘操作,备忘用</p>
+<a id="more"></a>
+
+<p><br></p>
+<h3 id="移动光标">移动光标</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Ctrl<span class="operator">-a</span> 移动光标到行首。</div><div class="line">Ctrl<span class="operator">-e</span> 移动光标到行尾。</div><div class="line">Ctrl<span class="operator">-f</span> 光标前移一个字符;和右箭头作用一样。</div><div class="line">Ctrl-b 光标后移一个字符;和左箭头作用一样。</div><div class="line">Alt<span class="operator">-f</span> 光标前移一个字。</div><div class="line">Alt-b 光标后移一个字。</div><div class="line">Ctrl<span class="operator">-l</span> 清空屏幕,移动光标到左上角。clear 命令完成同样的工作。</div></pre></td></tr></table></figure>
+
+<h3 id="修改文本">修改文本</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Ctrl<span class="operator">-d</span> 删除光标位置的字符。</div><div class="line">Ctrl-t 光标位置的字符和光标前面的字符互换位置。</div><div class="line">Alt-t 光标位置的字和其前面的字互换位置。</div><div class="line">Alt<span class="operator">-l</span> 把从光标位置到字尾的字符转换成小写字母。</div><div class="line">Alt-u 把从光标位置到字尾的字符转换成大写字母。</div></pre></td></tr></table></figure>
+
+<h3 id="剪切和粘贴文本">剪切和粘贴文本</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Ctrl-k 剪切从光标位置到行尾的文本。</div><div class="line">Ctrl-u 剪切从光标位置到行首的文本。</div><div class="line">Alt<span class="operator">-d</span> 剪切从光标位置到词尾的文本。</div><div class="line">Alt-Backspace 剪切从光标位置到词头的文本。如果光标在一个单词的开头,剪切前一个单词。</div><div class="line">Ctrl-y把剪切环中的文本粘贴到光标位置。</div></pre></td></tr></table></figure>
+
+<h3 id="搜索历史命令">搜索历史命令</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">Ctrl-p 移动到上一个历史条目。类似于上箭头按键。</span></span></div><div class="line">Ctrl-n 移动到下一个历史条目。类似于下箭头按键。</div><div class="line">Alt-&lt; 移动到历史列表开头。</div><div class="line">Alt-&gt; 移动到历史列表结尾,即当前命令行。</div><div class="line"><span class="constant">Ctrl</span>-r 反向递增搜索。从当前命令行开始,向上递增搜索。</div><div class="line"><span class="constant">Alt</span>-p 反向搜索,不是递增顺序。输入要查找的字符串,然后按下<span class="constant">Enter</span>,执行搜索。</div><div class="line"><span class="constant">Alt</span>-n 向前搜索,非递增顺序。</div><div class="line"><span class="constant">Ctrl</span>-o 执行历史列表中的当前项,并移到下一个。如果你想要执行历史列表中一系列的命令,这很方便。</div></pre></td></tr></table></figure>
+
+<h3 id="历史命令展开">历史命令展开</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">!<span class="built_in">number</span> 重复历史列表中第 <span class="built_in">number</span> 行的命令。</div><div class="line">!<span class="keyword">string</span> 重复最近历史列表中,以这个字符串开头的命令。</div><div class="line">!?<span class="keyword">string</span> 重复最近历史列表中,包含这个字符串的命令。</div></pre></td></tr></table></figure>
+
+<h3 id="Bang_(!)_命令">Bang (!) 命令</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span>：执行上一条命令</div><div class="line"><span class="exclamation_mark">!</span><span class="function_or_atom">blah</span>：执行最近的以 <span class="function_or_atom">blah</span> 开头的命令，如 <span class="exclamation_mark">!</span><span class="function_or_atom">ls</span></div><div class="line"><span class="exclamation_mark">!</span><span class="function_or_atom">blah:p</span>：仅打印输出，而不执行</div><div class="line"><span class="exclamation_mark">!</span>$：上一条命令的最后一个参数，与 <span class="variable">Alt</span> + . 相同</div><div class="line"><span class="exclamation_mark">!</span>$:<span class="function_or_atom">p</span>：打印输出 <span class="exclamation_mark">!</span>$ 的内容</div><div class="line"><span class="exclamation_mark">!</span>*：上一条命令的所有参数</div><div class="line"><span class="exclamation_mark">!</span>*:<span class="function_or_atom">p</span>：打印输出 <span class="exclamation_mark">!</span>* 的内容</div><div class="line">^<span class="function_or_atom">blah</span>：删除上一条命令中的 <span class="function_or_atom">blah</span></div><div class="line">^<span class="function_or_atom">blah</span>^<span class="function_or_atom">foo</span>：将上一条命令中的 <span class="function_or_atom">blah</span> 替换为 <span class="function_or_atom">foo</span></div><div class="line">^<span class="function_or_atom">blah</span>^<span class="function_or_atom">foo</span>^：将上一条命令中所有的 <span class="function_or_atom">blah</span> 都替换为 <span class="function_or_atom">foo</span></div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>常用的shell键盘操作,备忘用</p>
+]]>
+    
+    </summary>
+    
+      <category term="Bash" scheme="http://evilddog.github.io//tags/Bash/"/>
+    
+      <category term="Linux" scheme="http://evilddog.github.io//categories/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[2014 - 11 - 21]]></title>
@@ -954,7 +995,7 @@ https:<span class="comment">//www.example.com/chen.html</span>
 <p>…</p>
 <p>Ok so if you have already solve them or need some hits, here are my solutions</p>
 <h3 id="Level_0:">Level 0:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</span></span></div><div class="line"><span class="literal">true</span><span class="comment">// Warmup.  </span></div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>';</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line"><span class="literal">true</span><span class="comment">// Warmup.  </span></div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>There is no encoding so the easiest solution is to close “log” call and inject our “alert”</p>
 <p>Solution:</p>
@@ -1077,7 +1118,7 @@ https:<span class="comment">//www.example.com/chen.html</span>
 
 <h2 id="原文">原文</h2>
 <h3 id="Level_9:">Level 9:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line"><span class="literal">true</span><span class="comment">// This is sort of a spoiler for the last level :-)</span></div><div class="line">trueif (<span class="regexp">/[\\&lt;&gt;]/</span>.test(s)) <span class="keyword">return</span> <span class="string">'-'</span>;</div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span> + s.toUpperCase() + <span class="string">'")&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</span></span></div><div class="line"><span class="literal">true</span><span class="comment">// This is sort of a spoiler for the last level :-)</span></div><div class="line">trueif (<span class="regexp">/[\\&lt;&gt;]/</span>.test(s)) <span class="keyword">return</span> <span class="string">'-'</span>;</div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span> + s.toUpperCase() + <span class="string">'")</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>';</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>Some as level 8 but now we cannot use angle brackets (&lt;&gt;) nor backslashes ()</p>
 <p>Solutions:</p>

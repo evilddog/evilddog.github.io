@@ -107,7 +107,7 @@
 <p>…</p>
 <p>Ok so if you have already solve them or need some hits, here are my solutions</p>
 <h3 id="Level_0:">Level 0:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</span></span></div><div class="line"><span class="literal">true</span><span class="comment">// Warmup.  </span></div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>';</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line"><span class="literal">true</span><span class="comment">// Warmup.  </span></div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>There is no encoding so the easiest solution is to close “log” call and inject our “alert”</p>
 <p>Solution:</p>
@@ -338,6 +338,8 @@
   
     <li><a href="/tags/BackBox/">BackBox</a><small>1</small></li>
   
+    <li><a href="/tags/Bash/">Bash</a><small>1</small></li>
+  
     <li><a href="/tags/HTTP/">HTTP</a><small>1</small></li>
   
     <li><a href="/tags/HTTPS/">HTTPS</a><small>1</small></li>
@@ -369,7 +371,7 @@
   
     <li><a href="/categories/HTTP/">HTTP</a><small>2</small></li>
   
-    <li><a href="/categories/Linux/">Linux</a><small>1</small></li>
+    <li><a href="/categories/Linux/">Linux</a><small>2</small></li>
   
     <li><a href="/categories/Tools/">Tools</a><small>2</small></li>
   
@@ -387,6 +389,10 @@
 <div class="widget tag">
   <h3 class="title">最新文章</h3>
   <ul class="entry">
+    
+      <li>
+        <a href="2015/01/23/bash-linux-skill/">常用bash技巧</a>
+      </li>
     
       <li>
         <a href="2014/11/21/2014-11-21/">2014 - 11 - 21</a>
@@ -432,10 +438,6 @@
         <a href="2014/10/12/escape-alf-nu-write-ups-1/">escape-Write-ups (Part 1)</a>
       </li>
     
-      <li>
-        <a href="2014/10/12/escape-alf-nu-write-ups-2/">escape-Write-ups (Part 2)</a>
-      </li>
-    
   </ul>
 </div>
 
@@ -446,7 +448,7 @@
   <footer id="footer" class="inner">
 <div class="alignright">
   
-  &copy; 2014 evilddog
+  &copy; 2015 evilddog
   
   自豪地使用伟大的<a href="https://pages.github.com/"> Github Page <a/>
 </div>

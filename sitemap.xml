@@ -2,6 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://evilddog.github.io/about/index.html</loc>
+    <lastmod>2015-01-23T08:57:30.000Z</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://evilddog.github.io/2015/01/23/bash-linux-skill/</loc>
+    <lastmod>2015-01-23T08:39:13.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://evilddog.github.io/2014/11/21/2014-11-21/</loc>
     <lastmod>2014-11-21T14:21:39.000Z</lastmod>
   </url>
@@ -59,11 +69,6 @@
   <url>
     <loc>http://evilddog.github.io/2014/11/02/backbox/</loc>
     <lastmod>2014-11-05T16:14:07.000Z</lastmod>
-  </url>
-  
-  <url>
-    <loc>http://evilddog.github.io/about/index.html</loc>
-    <lastmod>2014-11-03T10:52:47.000Z</lastmod>
   </url>
   
   <url>
