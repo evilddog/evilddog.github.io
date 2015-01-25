@@ -5,14 +5,12 @@
   
   <title>PNG图片结构分析和取证 | evilddog&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x00 废话
-最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 png 取证的一片文章,于是顺便学习一下PNG图片结构问题.">
+  <meta name="description" content="关于png的图片结构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PNG图片结构分析和取证">
 <meta property="og:url" content="http://evilddog.github.io/2014/11/10/png-struct/">
 <meta property="og:site_name" content="evilddog's blog">
-<meta property="og:description" content="0x00 废话
-最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 png 取证的一片文章,于是顺便学习一下PNG图片结构问题.">
+<meta property="og:description" content="关于png的图片结构">
 <meta property="og:image" content="http://evilddog.qiniudn.com/stego_final.png">
 <meta property="og:image" content="http://evilddog.qiniudn.com/PNG-struct.png">
 <meta property="og:image" content="http://evilddog.qiniudn.com/PNG-header.png">
@@ -25,8 +23,7 @@
 <meta property="og:image" content="http://evilddog.qiniudn.com/flag.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PNG图片结构分析和取证">
-<meta name="twitter:description" content="0x00 废话
-最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 png 取证的一片文章,于是顺便学习一下PNG图片结构问题.">
+<meta name="twitter:description" content="关于png的图片结构">
 
   
     <link rel="alternative" href="/atom.xml" title="evilddog&#39;s blog" type="application/atom+xml">
@@ -134,7 +131,7 @@ ga('send', 'pageview');
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
+						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/find/" style="font-size: 10.00px;">find</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
 					</div>
 				</section>
 				
@@ -241,11 +238,9 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><br></p>
-<hr>
-
+        <p>关于png的图片结构<br><a id="more"></a></p>
 <h1 id="0x00_废话">0x00 废话</h1>
-<p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br><a id="more"></a><br>因为单独讲解比较无聊,所以会用某CTF的一道水题当作例子分析图片结构</p>
+<p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br>因为单独讲解比较无聊,所以会用某CTF的一道水题当作例子分析图片结构</p>
 <p><img src="http://evilddog.qiniudn.com/stego_final.png" alt=""></p>
 <p><br></p>
 <h1 id="0x01_PNG文件结构分析:">0x01  PNG文件结构分析:</h1>

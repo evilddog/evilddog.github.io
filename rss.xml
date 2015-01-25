@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2015-01-23T14:46:36.182Z</updated>
+  <updated>2015-01-25T07:31:19.242Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -13,6 +13,116 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[关于find命令 -name 的报错问题]]></title>
+    <link href="http://evilddog.github.io/2015/01/25/find-paths-must-precede-expression/"/>
+    <id>http://evilddog.github.io/2015/01/25/find-paths-must-precede-expression/</id>
+    <published>2015-01-25T06:43:32.000Z</published>
+    <updated>2015-01-25T07:16:53.000Z</updated>
+    <content type="html"><![CDATA[<p>关于find一些坑<br><a id="more"></a><br>今天在用find命令时候的时候一直会造成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">find</span>: <span class="tag">paths</span> <span class="tag">must</span> <span class="tag">precede</span> <span class="tag">expression</span>: 2<span class="class">.txt</span></div><div class="line"><span class="tag">Usage</span>: <span class="tag">find</span> <span class="attr_selector">[-H]</span> <span class="attr_selector">[-L]</span> <span class="attr_selector">[-P]</span> <span class="attr_selector">[-Olevel]</span> <span class="attr_selector">[-D help|tree|search|stat|rates|opt|exec]</span> <span class="attr_selector">[path...]</span> <span class="attr_selector">[expression]</span></div></pre></td></tr></table></figure>
+
+<p>命令如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ <span class="keyword">ls</span></div><div class="line">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  tmp  tool  Videos</div><div class="line">$ sudo find /home/evilddog/ -type f -name <span class="variable">*.</span>txt -<span class="keyword">exec</span> <span class="keyword">ls</span> -l <span class="string">'{}'</span> \; &gt; <span class="number">1.</span>txt</div><div class="line">$ sudo find /home/evilddog/ -type f -name <span class="variable">*.</span>txt -<span class="keyword">exec</span> <span class="keyword">ls</span> -l <span class="string">'{}'</span> \; &gt; <span class="number">2.</span>txt</div><div class="line">$ sudo find /home/evilddog/ -type f -name <span class="variable">*.</span>txt -<span class="keyword">exec</span> <span class="keyword">ls</span> -l <span class="string">'{}'</span> \; &gt; <span class="number">3.</span>txt</div><div class="line">find: paths must precede <span class="keyword">expression</span>: <span class="number">2.</span>txt</div><div class="line">Usage: find [-H] [-L] [-P] [-Olevel] [-D <span class="keyword">help</span>|tree|search|stat|rates|opt|<span class="keyword">exec</span>] [path...] [<span class="keyword">expression</span>]</div></pre></td></tr></table></figure>
+
+<p>比较头疼,后来查了一个Stackoverflow才知道<br><strong>-name</strong>后面的参数 <strong>*.txt</strong> 并不一定会直接传给 find命令，而是现在当前目录下进行匹配,分析下前面的三条命令</p>
+<ul>
+<li>首先当前目录下没有*.txt的文件,-name会把匹配条件直接传递给find命令,所以会得到我们想要的结果,然后将结果新建文件1.txt并且输出到1.txt文件</li>
+<li>在执行第二条命令时,因为当前目录下已经存在1.txt文件所以,fin命令替换成</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo <span class="keyword">find</span> /home/evilddog/ -<span class="built_in">type</span> <span class="keyword">f</span> -name <span class="number">1</span>.txt -exec <span class="keyword">ls</span> -<span class="keyword">l</span> <span class="string">'{}'</span> \; &gt; <span class="number">2</span>.txt</div></pre></td></tr></table></figure>
+
+<ul>
+<li>所以在执行第三条命令的时候因为默认匹配当前目录下的文件之后再将匹配条件传递给find命令,所以会报参数错误</li>
+</ul>
+<p>所以我们只要把 <strong>-name</strong> 后的匹配条件用引号括起来就好了<strong> ‘*.txt ‘</strong></p>
+<hr>
+
+<h3 id="PS_:_find常用命令参数:">PS : find常用命令参数:</h3>
+<p><strong>-cmin n</strong> </p>
+<blockquote>
+<p>匹配的文件和目录的内容或属性最后修改时间正好在 n 分钟之前。指定少于 n 分钟之前,使用 -n,指定多于 n 分钟之前,使用 +n。</p>
+</blockquote>
+<p><strong>-cnewer file</strong></p>
+<blockquote>
+<p>匹配的文件和目录的内容或属性最后修改时间早于那些文<br>件。</p>
+</blockquote>
+<p><strong>-ctime n</strong></p>
+<blockquote>
+<p>匹配的文件和目录的内容和属性最后修改时间在 n*24 小时之前。</p>
+</blockquote>
+<p><strong>-empty</strong></p>
+<blockquote>
+<p>匹配空文件和目录。</p>
+</blockquote>
+<p><strong>-group name</strong></p>
+<blockquote>
+<p>匹配的文件和目录属于一个组。组可以用组名或组 ID 来表示。</p>
+</blockquote>
+<p><strong>-iname pattern</strong></p>
+<blockquote>
+<p>就像 -name 测试条件,但是大小写敏感。</p>
+</blockquote>
+<p><strong>-inum n</strong></p>
+<blockquote>
+<p>匹配的文件的 inode 号是 n。这对于找到某个特殊 inode 的所有硬链接很有帮助。</p>
+</blockquote>
+<p><strong>-mmin n</strong></p>
+<blockquote>
+<p>匹配的文件或目录的内容被修改于 n 分钟之前。</p>
+</blockquote>
+<p><strong>-mtime n</strong></p>
+<blockquote>
+<p>匹配的文件或目录的内容被修改于 n*24 小时之前。</p>
+</blockquote>
+<p><strong>-name pattern</strong></p>
+<blockquote>
+<p>用指定的通配符模式匹配的文件和目录。</p>
+</blockquote>
+<p><strong>-newer file</strong></p>
+<blockquote>
+<p>匹配的文件和目录的内容早于指定的文件。当编写 shell 脚本,做文件备份时,非常有帮助。每次你制作一个备份,更新文件(比如说日志),然后使用 find 命令来决定自从上次更新,哪一个文件已经更改了。</p>
+</blockquote>
+<p><strong>-nouser</strong></p>
+<blockquote>
+<p>匹配的文件和目录不属于一个有效用户。这可以用来查找属于删除帐户的文件或监测攻击行为。</p>
+</blockquote>
+<p><strong>-nogroup</strong></p>
+<blockquote>
+<p>匹配的文件和目录不属于一个有效的组。</p>
+</blockquote>
+<p><strong>-perm mode</strong></p>
+<blockquote>
+<p>匹配的文件和目录的权限已经设置为指定的 mode。mode可以用八进制或符号表示法。</p>
+</blockquote>
+<p><strong>-samefile name</strong></p>
+<blockquote>
+<p>相似于 -inum 测试条件。匹配和文件 name 享有同样 inode号的文件。</p>
+</blockquote>
+<p><strong>-size n</strong></p>
+<blockquote>
+<p>匹配的文件大小为 n。</p>
+</blockquote>
+<p><strong> -type c </strong></p>
+<blockquote>
+<p>匹配的文件类型是 c。</p>
+</blockquote>
+<p><strong> -user name </strong></p>
+<blockquote>
+<p>匹配的文件或目录属于某个用户。这个用户可以通过用户名或用户 ID 来表示。</p>
+</blockquote>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>关于find一些坑<br>]]>
+    
+    </summary>
+    
+      <category term="find" scheme="http://evilddog.github.io//tags/find/"/>
+    
+      <category term="Linux" scheme="http://evilddog.github.io//categories/Linux/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[常用bash技巧]]></title>
@@ -93,12 +203,10 @@
     <link href="http://evilddog.github.io/2014/11/10/png-struct/"/>
     <id>http://evilddog.github.io/2014/11/10/png-struct/</id>
     <published>2014-11-10T10:58:02.000Z</published>
-    <updated>2014-11-12T08:15:57.000Z</updated>
-    <content type="html"><![CDATA[<p><br></p>
-<hr>
-
+    <updated>2015-01-25T07:18:46.000Z</updated>
+    <content type="html"><![CDATA[<p>关于png的图片结构<br><a id="more"></a></p>
 <h1 id="0x00_废话">0x00 废话</h1>
-<p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br><a id="more"></a><br>因为单独讲解比较无聊,所以会用某CTF的一道水题当作例子分析图片结构</p>
+<p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br>因为单独讲解比较无聊,所以会用某CTF的一道水题当作例子分析图片结构</p>
 <p><img src="http://evilddog.qiniudn.com/stego_final.png" alt=""></p>
 <p><br></p>
 <h1 id="0x01_PNG文件结构分析:">0x01  PNG文件结构分析:</h1>
@@ -164,11 +272,7 @@
 <p><b>01 : Python</b></p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><br></p>
-<hr>
-
-<h1 id="0x00_废话">0x00 废话</h1>
-<p>最近比赛略忙,一大堆作业(摔,没有时间学点新的东西,意外抓到一只成信工的大牛,帅此牛write-up的时候发现 <a href="http://appleu0.sinaapp.com/?p=194" target="_blank" rel="external">png</a> 取证的一片文章,于是顺便学习一下PNG图片结构问题.<br>]]>
+    <![CDATA[<p>关于png的图片结构<br>]]>
     
     </summary>
     
@@ -183,25 +287,16 @@
     <link href="http://evilddog.github.io/2014/11/09/file-header/"/>
     <id>http://evilddog.github.io/2014/11/09/file-header/</id>
     <published>2014-11-09T07:39:21.000Z</published>
-    <updated>2014-11-09T08:21:18.000Z</updated>
-    <content type="html"><![CDATA[<p><br></p>
-<hr>
-
+    <updated>2015-01-25T07:22:33.000Z</updated>
+    <content type="html"><![CDATA[<p>the hex header of some common files<br><a id="more"></a></p>
 <h2 id="0x00_各种常用文件的文件头格式">0x00 各种常用文件的文件头格式</h2>
 <p>MISC还有信息隐藏经常有各种蛋疼的图片隐藏还有修复图片的题目,简直不会,所以记下备忘</p>
-<a id="more"></a>
-
 <h2 id="0x01">0x01</h2>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">File                             Type                          ExtensionsHeader</div><div class="line">               </div><div class="line">JPEG                             jpg<span class="comment">;jpeg                      0xFFD8FF</span></div><div class="line">PNG                              png                           <span class="number">0x89504E470D0A1A0A</span></div><div class="line">GIF                              gif                           <span class="number">47494638</span> </div><div class="line">TIFF                             tif<span class="comment">;tiff                      0x49492A00</span></div><div class="line">TIFF                             tif<span class="comment">;tiff                      0x4D4D002A</span></div><div class="line">Bit   map                        bmp                           BM</div><div class="line">AOL ART                          art                           <span class="number">0x4A47040E000000</span></div><div class="line">PC Paintbrush                    pcx                           <span class="number">0x0A050108</span></div><div class="line">Graphics Metafile                wmf                           <span class="number">0xD7CDC69A</span></div><div class="line">Graphics Metafile                wmf                           <span class="number">0x01000900</span></div><div class="line">Graphics Metafile                wmf                           <span class="number">0x02000900</span></div><div class="line">Enhanced Metafile                emf                           <span class="number">0x0100000058000000</span></div><div class="line">Corel Draw                       cdr                           CDR</div><div class="line">CAD                              dwg                           <span class="number">0x41433130</span></div><div class="line">Adobe Photoshop                  psd                           8BPS</div><div class="line">Rich Text Format                 rtf                           rtf</div><div class="line">XML                              xml                           3C3F786D6C   </div><div class="line">HTML                 html<span class="comment">;htm;php;php3;php4;phtml;shtml        68746D6C3E </span></div><div class="line">Email                            eml                           Delivery-date:</div><div class="line">Outlook Express                  <span class="number">dbx</span>                           <span class="number">0xCFAD12FE</span></div><div class="line">MS Office/OLE2     doc<span class="comment">;xls;dot;ppt;xla;ppa;pps;pot;msi;sdw;db  0xD0CF11E0A1B11AE1</span></div><div class="line">MS Access                        mdb<span class="comment">;mda;mde;mdt               Standard J</span></div><div class="line">WordPerfect                      wpd                           <span class="number">0xFF575043</span></div><div class="line">OpenOffice Writer                sxw                           writer</div><div class="line">OpenOffice Calc                  sxc                           calc</div><div class="line">OpenOffice Math                  sxm                           math</div><div class="line">OpenOffice Impress               sxi                           impress</div><div class="line">OpenOffice Draw                  sxd                           draw</div><div class="line">Adobe FrameMaker                 fm                            &lt;MAKERFILE</div><div class="line">PostScript                eps.or.ps<span class="comment">;ps;eps                     %!PS-Adobe</span></div><div class="line">Adobe Acrobat                    pdf                           %PDF-<span class="number">1</span>.</div><div class="line">Quicken                          qdf                           <span class="number">0xAC9EBD8F</span></div><div class="line">QuickBooks Backup                qbb                           <span class="number">0x458600000600</span></div><div class="line">Sage                sly.or.srt.or.slt<span class="comment">;sly;srt;slt              0x53520100</span></div><div class="line">Sage Backup                      <span class="number">1</span>                             SAGEBACKUP</div><div class="line">Lotus WordPro v9                 lwp                           <span class="number">0x576F726450726F</span></div><div class="line">Lotus <span class="number">123</span> v9                     <span class="number">123</span>                           <span class="number">0x00001A00051004</span></div><div class="line">Lotus <span class="number">123</span> v5                     wk4                           <span class="number">0x00001A0002100400</span></div><div class="line">Lotus <span class="number">123</span> v3                     wk3                           <span class="number">0x00001A0000100400</span></div><div class="line">Lotus <span class="number">123</span> v1                     wk1                           <span class="number">0x2000604060</span></div><div class="line">Windows Password                 pwl                           <span class="number">0xE3828596</span></div><div class="line">ZIP Archive                      zip<span class="comment">;jar                       0x504B0304</span></div><div class="line">ZIP Archive (outdated)           zip                           <span class="number">0x504B3030</span></div><div class="line">RAR Archive                      rar                           Rar!</div><div class="line">GZ Archive                       gz<span class="comment">;tgz                        0x1F8B08</span></div><div class="line">BZIP Archive                     bz2                           BZh</div><div class="line">ARJ Archive                      arj                           <span class="number">0x60EA</span></div><div class="line"><span class="number">7</span>－ZIP Archive                   7z                            7z集<span class="string">'</span></div><div class="line">Wave                             wav                           WAVE</div><div class="line">AVI                              avi                           AVI </div><div class="line">Real Audio                       ram;ra                        .ra?0</div><div class="line">Real Media                       rm                            .RMF</div><div class="line">MPEG                             mpg;mpeg                      0x000001BA</div><div class="line">MPEG                             mpg;mpeg                      0x000001B3</div><div class="line">Quicktime                        mov                           moov</div><div class="line">Windows Media                    asf                           0x3026B2758E66CF11</div><div class="line">MIDI                             mid                           MThd</div><div class="line">ELF Executable                   elf;;                          0x7F454C4601010100</div></pre></td></tr></table></figure>
 
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><br></p>
-<hr>
-
-<h2 id="0x00_各种常用文件的文件头格式">0x00 各种常用文件的文件头格式</h2>
-<p>MISC还有信息隐藏经常有各种蛋疼的图片隐藏还有修复图片的题目,简直不会,所以记下备忘</p>
-]]>
+    <![CDATA[<p>the hex header of some common files<br>]]>
     
     </summary>
     
@@ -212,9 +307,8 @@
     <link href="http://evilddog.github.io/2014/11/05/curl/"/>
     <id>http://evilddog.github.io/2014/11/05/curl/</id>
     <published>2014-11-05T02:36:54.000Z</published>
-    <updated>2015-01-23T14:46:30.000Z</updated>
-    <content type="html"><![CDATA[<hr>
-
+    <updated>2015-01-25T07:31:13.000Z</updated>
+    <content type="html"><![CDATA[<p>一个神器<br><a id="more"></a></p>
 <h1 id="0x00_简介">0x00   简介</h1>
 <p>curl是利用URL语法在命令行方式下工作的开源文件传输工具。</p>
 <h1 id="0x01_常用命令">0x01   常用命令</h1>
@@ -300,12 +394,8 @@
 
 ]]></content>
     <summary type="html">
-    <![CDATA[<hr>
-
-<h1 id="0x00_简介">0x00   简介</h1>
-<p>curl是利用URL语法在命令行方式下工作的开源文件传输工具。</p>
-<h1 id="0x01_常用命令">0x01   常用命令</h1>
-<h2 id="—-_下载单个文件">—- 下载单个文]]>
+    <![CDATA[<p>一个神器<br>]]>
+    
     </summary>
     
       <category term="curl" scheme="http://evilddog.github.io//tags/curl/"/>
@@ -319,11 +409,10 @@
     <link href="http://evilddog.github.io/2014/11/02/backbox/"/>
     <id>http://evilddog.github.io/2014/11/02/backbox/</id>
     <published>2014-11-02T09:02:35.000Z</published>
-    <updated>2014-11-05T16:14:07.000Z</updated>
-    <content type="html"><![CDATA[<p><hr><br>hhhhhhhh最近又在做死，kali被折腾坏掉了，在虚拟机中产生尝试了一下backbox</p>
+    <updated>2015-01-25T07:19:54.000Z</updated>
+    <content type="html"><![CDATA[<p>backbox的一些配置<br><a id="more"></a></p>
+<p><hr><br>hhhhhhhh最近又在做死，kali被折腾坏掉了，在虚拟机中产生尝试了一下backbox</p>
 <p>因为基于Ubuntu14.04优化了Gnome的桌面，用起来很流畅，占用资源也小，再坏掉我就换CentOS(╯°Д°)╯︵ ┻━┻于是写下配置记录下某些蛋疼的设置</p>
-<a id="more"></a>
-
 <h3 id="sublime-text-2">sublime-text-2</h3>
 <p>从官网下载之后</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar xf Sublime <span class="built_in">Text</span> <span class="number">2.0</span>.<span class="number">1</span>.tar.bz2</div></pre></td></tr></table></figure>
@@ -339,9 +428,7 @@
 
 ]]></content>
     <summary type="html">
-    <![CDATA[<p><hr><br>hhhhhhhh最近又在做死，kali被折腾坏掉了，在虚拟机中产生尝试了一下backbox</p>
-<p>因为基于Ubuntu14.04优化了Gnome的桌面，用起来很流畅，占用资源也小，再坏掉我就换CentOS(╯°Д°)╯︵ ┻━┻于是写下配置记录下某些蛋疼的设置</p>
-]]>
+    <![CDATA[<p>backbox的一些配置<br>]]>
     
     </summary>
     
@@ -543,13 +630,10 @@
     <link href="http://evilddog.github.io/2014/10/31/HTTP/"/>
     <id>http://evilddog.github.io/2014/10/31/HTTP/</id>
     <published>2014-10-31T03:13:41.000Z</published>
-    <updated>2014-11-05T16:38:26.000Z</updated>
-    <content type="html"><![CDATA[<hr>
-
+    <updated>2015-01-25T07:20:45.000Z</updated>
+    <content type="html"><![CDATA[<p>HTTPS的扯淡<br><a id="more"></a></p>
 <h2 id="0x01_HTTPS概述">0x01 HTTPS概述</h2>
 <p>HTTPS(Hyper Text Transfer Protocol over Secure Socket Layer)是在安全的传输层上发送的HTTP。HTTPS不是直接将未加密的HTTP报文发送给TCP。先将其发送给一个安全层，对其进行加密。</p>
-<a id="more"></a>
-
 <p>HTTP安全层是通过SSl以及TLS实现的。本文直接使用SSL来表示SSL或者TLS。</p>
 <p><img src="http://evilddog.qiniudn.com/HTTP-HTTPS.png" alt=""></p>
 <p><br></p>
@@ -582,11 +666,7 @@
 <p>其实HTTPS中的SSl以及TLS是一个相当复杂的过程有兴趣可以<a href="http://kb.cnblogs.com/page/162080/" target="_blank" rel="external">戳一下</a>，笔者只是浅谈一下HTTP和HTTPS的区别</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<hr>
-
-<h2 id="0x01_HTTPS概述">0x01 HTTPS概述</h2>
-<p>HTTPS(Hyper Text Transfer Protocol over Secure Socket Layer)是在安全的传输层上发送的HTTP。HTTPS不是直接将未加密的HTTP报文发送给TCP。先将其发送给一个安全层，对其进行加密。</p>
-]]>
+    <![CDATA[<p>HTTPS的扯淡<br>]]>
     
     </summary>
     
@@ -601,13 +681,14 @@
     <link href="http://evilddog.github.io/2014/10/28/nmap-1/"/>
     <id>http://evilddog.github.io/2014/10/28/nmap-1/</id>
     <published>2014-10-28T06:25:44.000Z</published>
-    <updated>2014-11-05T16:41:00.000Z</updated>
-    <content type="html"><![CDATA[<hr>
+    <updated>2015-01-25T07:21:19.000Z</updated>
+    <content type="html"><![CDATA[<p>nmap的科普</p>
+<a id="more"></a>
+
+<hr>
 
 <h2 id="0x00_Nmap介绍">0x00 Nmap介绍</h2>
 <p>Nmap  （网络映射器）是由 Gordon Lyon设计，用来探测计算机网络上的主机和服务的一种安全扫描器。为了绘制网络拓扑图，Nmap的发送特制的数据包到目标主机，然后对返回数据包进行分析。Nmap是一款枚举和测试网络的强大工具。</p>
-<a id="more"></a>
-
 <p>Nmap特点：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">主机探测：探测网络上的主机，例如列出响应TCP和ICMP请求、icmp请求、开放特别端口的主机。 </div><div class="line">端口扫描：探测目标主机所开放的端口。 </div><div class="line">版本检测：探测目标主机的网络服务，判断其服务名称及版本号。 </div><div class="line">系统检测：探测目标主机的操作系统及网络设备的硬件特性。 </div><div class="line">支持探测脚本的编写：使用Nmap的脚本引擎（NSE）和Lua编程语言。</div></pre></td></tr></table></figure>
 
@@ -739,10 +820,7 @@
 <h2 id="0x05">0x05</h2>
 ]]></content>
     <summary type="html">
-    <![CDATA[<hr>
-
-<h2 id="0x00_Nmap介绍">0x00 Nmap介绍</h2>
-<p>Nmap  （网络映射器）是由 Gordon Lyon设计，用来探测计算机网络上的主机和服务的一种安全扫描器。为了绘制网络拓扑图，Nmap的发送特制的数据包到目标主机，然后对返回数据包进行分析。Nmap是一款枚举和测试网络的强大工具。</p>
+    <![CDATA[<p>nmap的科普</p>
 ]]>
     
     </summary>
@@ -758,12 +836,10 @@
     <link href="http://evilddog.github.io/2014/10/24/http-max-connection/"/>
     <id>http://evilddog.github.io/2014/10/24/http-max-connection/</id>
     <published>2014-10-24T03:13:06.000Z</published>
-    <updated>2014-11-05T16:23:34.000Z</updated>
-    <content type="html"><![CDATA[<hr>
-
-<p>偶然刷知乎刷到一个无人关注，无人回答的<a href="http://www.zhihu.com/question/22935511" target="_blank" rel="external">问题</a>,然后觉得自己答不上来(逃</p>
+    <updated>2015-01-25T07:30:24.000Z</updated>
+    <content type="html"><![CDATA[<p>浅谈浏览器与服务器之间的HTTP传输连接数</p>
+<p><a id="more"></a><br>偶然刷知乎刷到一个无人关注，无人回答的<a href="http://www.zhihu.com/question/22935511" target="_blank" rel="external">问题</a>,然后觉得自己答不上来(逃</p>
 <p>于是转向度娘和谷歌,觉得看起来简单的问题牵扯到到东西挺多的,便一边查一边记下来</p>
-<p><a id="more"></a></p>
 <p><hr></p>
 <h2 id="首先说一说HTTP的短链接和长连接">首先说一说HTTP的短链接和长连接</h2>
 <p>一个典型的网页，是由一个HTML文件和内嵌的各类元素组成的，这些元素包括页面内的图片，CSS文件，Javascript 文件等等。每一个内嵌的元素在 HTTP 协议的层面上任何一个文件是没有区别的,都需要浏览器去服务器上传输过来。</p>
@@ -817,10 +893,7 @@
 <p>原因就是国内迅雷，暴风影音，快车，QQ旋风等多线程下载器的流行，这也是为什么在进行大流量文件传输过程时下载器的速度要远比浏览器要快的主要原因，当然还有带宽等其他因素影响</p>
 ]]></content>
     <summary type="html">
-    <![CDATA[<hr>
-
-<p>偶然刷知乎刷到一个无人关注，无人回答的<a href="http://www.zhihu.com/question/22935511" target="_blank" rel="external">问题</a>,然后觉得自己答不上来(逃</p>
-<p>于是转向度娘和谷歌,觉得看起来简单的问题牵扯到到东西挺多的,便一边查一边记下来</p>
+    <![CDATA[<p>浅谈浏览器与服务器之间的HTTP传输连接数</p>
 <p>]]>
     
     </summary>
@@ -836,13 +909,12 @@
     <link href="http://evilddog.github.io/2014/10/13/same-origin-policy/"/>
     <id>http://evilddog.github.io/2014/10/13/same-origin-policy/</id>
     <published>2014-10-13T05:58:01.000Z</published>
-    <updated>2014-11-09T06:09:09.000Z</updated>
-    <content type="html"><![CDATA[<hr>
+    <updated>2015-01-25T07:28:42.000Z</updated>
+    <content type="html"><![CDATA[<p>Same Origin Policy of Exploer</p>
+<a id="more"></a>
 
 <h1 id="0x01_概念">0x01  概念</h1>
 <p>同源策略(Same Origin Policy，SOP)，由Netscape提出的一个著名的安全策略,也称为单源策略(Single Origin policy).</p>
-<a id="more"></a>
-
 <p>它是一种用于Web浏览器编程语言（如JavaScript和Ajax）的安全措施，以保护信息的保密性和完整性。</p>
 <p>简单的说就是限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的交互方式。</p>
 <p>判定依据 : 如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。</p>
@@ -949,10 +1021,7 @@ https:<span class="comment">//www.example.com/chen.html</span>
 
 ]]></content>
     <summary type="html">
-    <![CDATA[<hr>
-
-<h1 id="0x01_概念">0x01  概念</h1>
-<p>同源策略(Same Origin Policy，SOP)，由Netscape提出的一个著名的安全策略,也称为单源策略(Single Origin policy).</p>
+    <![CDATA[<p>Same Origin Policy of Exploer</p>
 ]]>
     
     </summary>

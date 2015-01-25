@@ -5,19 +5,16 @@
   
   <title>浅谈浏览器的同源策略 | evilddog&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x01  概念
-同源策略(Same Origin Policy，SOP)，由Netscape提出的一个著名的安全策略,也称为单源策略(Single Origin policy).">
+  <meta name="description" content="Same Origin Policy of Exploer">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈浏览器的同源策略">
 <meta property="og:url" content="http://evilddog.github.io/2014/10/13/same-origin-policy/">
 <meta property="og:site_name" content="evilddog's blog">
-<meta property="og:description" content="0x01  概念
-同源策略(Same Origin Policy，SOP)，由Netscape提出的一个著名的安全策略,也称为单源策略(Single Origin policy).">
+<meta property="og:description" content="Same Origin Policy of Exploer">
 <meta property="og:image" content="http://evilddog.qiniudn.com/2014-10-13%2018%3A16%3A53%E7%9A%84%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈浏览器的同源策略">
-<meta name="twitter:description" content="0x01  概念
-同源策略(Same Origin Policy，SOP)，由Netscape提出的一个著名的安全策略,也称为单源策略(Single Origin policy).">
+<meta name="twitter:description" content="Same Origin Policy of Exploer">
 
   
     <link rel="alternative" href="/atom.xml" title="evilddog&#39;s blog" type="application/atom+xml">
@@ -125,7 +122,7 @@ ga('send', 'pageview');
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
+						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/find/" style="font-size: 10.00px;">find</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
 					</div>
 				</section>
 				
@@ -232,12 +229,11 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
+        <p>Same Origin Policy of Exploer</p>
+<a id="more"></a>
 
 <h1 id="0x01_概念">0x01  概念</h1>
 <p>同源策略(Same Origin Policy，SOP)，由Netscape提出的一个著名的安全策略,也称为单源策略(Single Origin policy).</p>
-<a id="more"></a>
-
 <p>它是一种用于Web浏览器编程语言（如JavaScript和Ajax）的安全措施，以保护信息的保密性和完整性。</p>
 <p>简单的说就是限制了一个源（origin）中加载文本或脚本与来自其它源（origin）中资源的交互方式。</p>
 <p>判定依据 : 如果两个页面拥有相同的协议（protocol），端口（如果指定），和主机，那么这两个页面就属于同一个源（origin）。</p>

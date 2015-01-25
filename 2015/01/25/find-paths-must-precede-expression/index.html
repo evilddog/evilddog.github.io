@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Backbox | evilddog&#39;s blog</title>
+  <title>关于find命令 -name 的报错问题 | evilddog&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="backbox的一些配置">
+  <meta name="description" content="关于find一些坑">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Backbox">
-<meta property="og:url" content="http://evilddog.github.io/2014/11/02/backbox/">
+<meta property="og:title" content="关于find命令 -name 的报错问题">
+<meta property="og:url" content="http://evilddog.github.io/2015/01/25/find-paths-must-precede-expression/">
 <meta property="og:site_name" content="evilddog's blog">
-<meta property="og:description" content="backbox的一些配置">
+<meta property="og:description" content="关于find一些坑">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Backbox">
-<meta name="twitter:description" content="backbox的一些配置">
+<meta name="twitter:title" content="关于find命令 -name 的报错问题">
+<meta name="twitter:description" content="关于find一些坑">
 
   
     <link rel="alternative" href="/atom.xml" title="evilddog&#39;s blog" type="application/atom+xml">
@@ -195,11 +195,11 @@ ga('send', 'pageview');
 		</header>				
 	</div>
 </nav>
-      <article id="post-backbox" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-find-paths-must-precede-expression" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2014/11/02/backbox/" class="article-date">
-  	<time datetime="2014-11-02T09:02:35.000Z" itemprop="datePublished">11月 2 2014</time>
+      <a href="/2015/01/25/find-paths-must-precede-expression/" class="article-date">
+  	<time datetime="2015-01-25T06:43:32.000Z" itemprop="datePublished">1月 25 2015</time>
 </a>
       
   <div class="article-category">
@@ -207,7 +207,7 @@ ga('send', 'pageview');
   </div>
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BackBox/">BackBox</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/find/">find</a></li></ul>
 
     </div>
   
@@ -220,7 +220,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Backbox
+      关于find命令 -name 的报错问题
     </h1>
   
 
@@ -228,22 +228,98 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>backbox的一些配置<br><a id="more"></a></p>
-<p><hr><br>hhhhhhhh最近又在做死，kali被折腾坏掉了，在虚拟机中产生尝试了一下backbox</p>
-<p>因为基于Ubuntu14.04优化了Gnome的桌面，用起来很流畅，占用资源也小，再坏掉我就换CentOS(╯°Д°)╯︵ ┻━┻于是写下配置记录下某些蛋疼的设置</p>
-<h3 id="sublime-text-2">sublime-text-2</h3>
-<p>从官网下载之后</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar xf Sublime <span class="built_in">Text</span> <span class="number">2.0</span>.<span class="number">1</span>.tar.bz2</div></pre></td></tr></table></figure>
+        <p>关于find一些坑<br><a id="more"></a><br>今天在用find命令时候的时候一直会造成</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">find</span>: <span class="tag">paths</span> <span class="tag">must</span> <span class="tag">precede</span> <span class="tag">expression</span>: 2<span class="class">.txt</span></div><div class="line"><span class="tag">Usage</span>: <span class="tag">find</span> <span class="attr_selector">[-H]</span> <span class="attr_selector">[-L]</span> <span class="attr_selector">[-P]</span> <span class="attr_selector">[-Olevel]</span> <span class="attr_selector">[-D help|tree|search|stat|rates|opt|exec]</span> <span class="attr_selector">[path...]</span> <span class="attr_selector">[expression]</span></div></pre></td></tr></table></figure>
 
-<p>cp到合适的地方</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mv Sublime<span class="command">\ </span>Text<span class="command">\ </span>2 /usr/lib/</div></pre></td></tr></table></figure>
+<p>命令如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ <span class="keyword">ls</span></div><div class="line">Desktop  Documents  Downloads  Music  Pictures  Public  Templates  tmp  tool  Videos</div><div class="line">$ sudo find /home/evilddog/ -type f -name <span class="variable">*.</span>txt -<span class="keyword">exec</span> <span class="keyword">ls</span> -l <span class="string">'{}'</span> \; &gt; <span class="number">1.</span>txt</div><div class="line">$ sudo find /home/evilddog/ -type f -name <span class="variable">*.</span>txt -<span class="keyword">exec</span> <span class="keyword">ls</span> -l <span class="string">'{}'</span> \; &gt; <span class="number">2.</span>txt</div><div class="line">$ sudo find /home/evilddog/ -type f -name <span class="variable">*.</span>txt -<span class="keyword">exec</span> <span class="keyword">ls</span> -l <span class="string">'{}'</span> \; &gt; <span class="number">3.</span>txt</div><div class="line">find: paths must precede <span class="keyword">expression</span>: <span class="number">2.</span>txt</div><div class="line">Usage: find [-H] [-L] [-P] [-Olevel] [-D <span class="keyword">help</span>|tree|search|stat|rates|opt|<span class="keyword">exec</span>] [path...] [<span class="keyword">expression</span>]</div></pre></td></tr></table></figure>
 
-<p>如果想在终端中使用sublime</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo ln -s <span class="regexp">/usr/</span>lib<span class="regexp">/Sublime\ Text\ 2/</span>sublime_text <span class="regexp">/usr/</span>bin<span class="regexp">/sublime</span></div></pre></td></tr></table></figure>
+<p>比较头疼,后来查了一个Stackoverflow才知道<br><strong>-name</strong>后面的参数 <strong>*.txt</strong> 并不一定会直接传给 find命令，而是现在当前目录下进行匹配,分析下前面的三条命令</p>
+<ul>
+<li>首先当前目录下没有*.txt的文件,-name会把匹配条件直接传递给find命令,所以会得到我们想要的结果,然后将结果新建文件1.txt并且输出到1.txt文件</li>
+<li>在执行第二条命令时,因为当前目录下已经存在1.txt文件所以,fin命令替换成</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo <span class="keyword">find</span> /home/evilddog/ -<span class="built_in">type</span> <span class="keyword">f</span> -name <span class="number">1</span>.txt -exec <span class="keyword">ls</span> -<span class="keyword">l</span> <span class="string">'{}'</span> \; &gt; <span class="number">2</span>.txt</div></pre></td></tr></table></figure>
 
-<p>在粘贴到文件中配置</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">[Desktop Entry]</div><div class="line"><span class="variable">Version=</span><span class="number">1.0</span></div><div class="line"><span class="variable">Name=</span>Sublime Text <span class="number">2</span></div><div class="line">Only KDE <span class="number">4</span> seems to use GenericName, so we reuse the KDE strings.</div><div class="line"></div><div class="line"><span class="comment"># From Ubuntu's language-pack-kde-XX-base packages, version 9.04-20090413.</span></div><div class="line"><span class="variable">GenericName=</span>Text Editor</div><div class="line"><span class="variable">Exec=</span>sublime</div><div class="line"><span class="variable">Terminal=</span><span class="constant">false</span></div><div class="line"><span class="variable">Icon=</span>/usr/lib/Sublime Text <span class="number">2</span>/Icon/<span class="number">48</span>x48/sublime_text.png</div><div class="line"><span class="variable">Type=</span>Application</div><div class="line"><span class="variable">Categories=</span>TextEditor;IDE;Development</div><div class="line"><span class="variable">X-Ayatana-Desktop-Shortcuts=</span>NewWindow</div><div class="line">       </div><div class="line">[NewWindow Shortcut Group]</div><div class="line"><span class="variable">Name=</span>New Window</div><div class="line"><span class="variable">Exec=</span>sublime -n</div><div class="line"><span class="variable">TargetEnvironment=</span>Unity</div></pre></td></tr></table></figure>
+<ul>
+<li>所以在执行第三条命令的时候因为默认匹配当前目录下的文件之后再将匹配条件传递给find命令,所以会报参数错误</li>
+</ul>
+<p>所以我们只要把 <strong>-name</strong> 后的匹配条件用引号括起来就好了<strong> ‘*.txt ‘</strong></p>
+<hr>
 
+<h3 id="PS_:_find常用命令参数:">PS : find常用命令参数:</h3>
+<p><strong>-cmin n</strong> </p>
+<blockquote>
+<p>匹配的文件和目录的内容或属性最后修改时间正好在 n 分钟之前。指定少于 n 分钟之前,使用 -n,指定多于 n 分钟之前,使用 +n。</p>
+</blockquote>
+<p><strong>-cnewer file</strong></p>
+<blockquote>
+<p>匹配的文件和目录的内容或属性最后修改时间早于那些文<br>件。</p>
+</blockquote>
+<p><strong>-ctime n</strong></p>
+<blockquote>
+<p>匹配的文件和目录的内容和属性最后修改时间在 n*24 小时之前。</p>
+</blockquote>
+<p><strong>-empty</strong></p>
+<blockquote>
+<p>匹配空文件和目录。</p>
+</blockquote>
+<p><strong>-group name</strong></p>
+<blockquote>
+<p>匹配的文件和目录属于一个组。组可以用组名或组 ID 来表示。</p>
+</blockquote>
+<p><strong>-iname pattern</strong></p>
+<blockquote>
+<p>就像 -name 测试条件,但是大小写敏感。</p>
+</blockquote>
+<p><strong>-inum n</strong></p>
+<blockquote>
+<p>匹配的文件的 inode 号是 n。这对于找到某个特殊 inode 的所有硬链接很有帮助。</p>
+</blockquote>
+<p><strong>-mmin n</strong></p>
+<blockquote>
+<p>匹配的文件或目录的内容被修改于 n 分钟之前。</p>
+</blockquote>
+<p><strong>-mtime n</strong></p>
+<blockquote>
+<p>匹配的文件或目录的内容被修改于 n*24 小时之前。</p>
+</blockquote>
+<p><strong>-name pattern</strong></p>
+<blockquote>
+<p>用指定的通配符模式匹配的文件和目录。</p>
+</blockquote>
+<p><strong>-newer file</strong></p>
+<blockquote>
+<p>匹配的文件和目录的内容早于指定的文件。当编写 shell 脚本,做文件备份时,非常有帮助。每次你制作一个备份,更新文件(比如说日志),然后使用 find 命令来决定自从上次更新,哪一个文件已经更改了。</p>
+</blockquote>
+<p><strong>-nouser</strong></p>
+<blockquote>
+<p>匹配的文件和目录不属于一个有效用户。这可以用来查找属于删除帐户的文件或监测攻击行为。</p>
+</blockquote>
+<p><strong>-nogroup</strong></p>
+<blockquote>
+<p>匹配的文件和目录不属于一个有效的组。</p>
+</blockquote>
+<p><strong>-perm mode</strong></p>
+<blockquote>
+<p>匹配的文件和目录的权限已经设置为指定的 mode。mode可以用八进制或符号表示法。</p>
+</blockquote>
+<p><strong>-samefile name</strong></p>
+<blockquote>
+<p>相似于 -inum 测试条件。匹配和文件 name 享有同样 inode号的文件。</p>
+</blockquote>
+<p><strong>-size n</strong></p>
+<blockquote>
+<p>匹配的文件大小为 n。</p>
+</blockquote>
+<p><strong> -type c </strong></p>
+<blockquote>
+<p>匹配的文件类型是 c。</p>
+</blockquote>
+<p><strong> -user name </strong></p>
+<blockquote>
+<p>匹配的文件或目录属于某个用户。这个用户可以通过用户名或用户 ID 来表示。</p>
+</blockquote>
 
       
     </div>
@@ -252,18 +328,9 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2014/11/05/curl/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">&lt;</strong>
-      <div class="article-nav-title">
-        
-          cURL 常用命令
-        
-      </div>
-    </a>
   
-  
-    <a href="/2014/11/01/swpu-write-up/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">某石油大学CTFwrite-up</div>
+    <a href="/2015/01/23/bash-linux-skill/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">常用bash技巧</div>
       <strong class="article-nav-caption">&gt;</strong>
     </a>
   

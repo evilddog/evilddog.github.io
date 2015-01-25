@@ -5,22 +5,19 @@
   
   <title>浅谈浏览器最大并发连接数问题 | evilddog&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="偶然刷知乎刷到一个无人关注，无人回答的问题,然后觉得自己答不上来(逃
-于是转向度娘和谷歌,觉得看起来简单的问题牵扯到到东西挺多的,便一边查一边记下来">
+  <meta name="description" content="浅谈浏览器与服务器之间的HTTP传输连接数">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈浏览器最大并发连接数问题">
 <meta property="og:url" content="http://evilddog.github.io/2014/10/24/http-max-connection/">
 <meta property="og:site_name" content="evilddog's blog">
-<meta property="og:description" content="偶然刷知乎刷到一个无人关注，无人回答的问题,然后觉得自己答不上来(逃
-于是转向度娘和谷歌,觉得看起来简单的问题牵扯到到东西挺多的,便一边查一边记下来">
+<meta property="og:description" content="浅谈浏览器与服务器之间的HTTP传输连接数">
 <meta property="og:image" content="http://evilddog.qiniudn.com/xianzhuo.jpg">
 <meta property="og:image" content="http://images.cnitblog.com/i/592959/201407/170853222245220.jpg">
 <meta property="og:image" content="http://evilddog.qiniudn.com/http-keep-alive.png">
 <meta property="og:image" content="http://evilddog.qiniudn.com/firefox.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈浏览器最大并发连接数问题">
-<meta name="twitter:description" content="偶然刷知乎刷到一个无人关注，无人回答的问题,然后觉得自己答不上来(逃
-于是转向度娘和谷歌,觉得看起来简单的问题牵扯到到东西挺多的,便一边查一边记下来">
+<meta name="twitter:description" content="浅谈浏览器与服务器之间的HTTP传输连接数">
 
   
     <link rel="alternative" href="/atom.xml" title="evilddog&#39;s blog" type="application/atom+xml">
@@ -128,7 +125,7 @@ ga('send', 'pageview');
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
+						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/find/" style="font-size: 10.00px;">find</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
 					</div>
 				</section>
 				
@@ -235,11 +232,9 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-
-<p>偶然刷知乎刷到一个无人关注，无人回答的<a href="http://www.zhihu.com/question/22935511" target="_blank" rel="external">问题</a>,然后觉得自己答不上来(逃</p>
+        <p>浅谈浏览器与服务器之间的HTTP传输连接数</p>
+<p><a id="more"></a><br>偶然刷知乎刷到一个无人关注，无人回答的<a href="http://www.zhihu.com/question/22935511" target="_blank" rel="external">问题</a>,然后觉得自己答不上来(逃</p>
 <p>于是转向度娘和谷歌,觉得看起来简单的问题牵扯到到东西挺多的,便一边查一边记下来</p>
-<p><a id="more"></a></p>
 <p><hr></p>
 <h2 id="首先说一说HTTP的短链接和长连接">首先说一说HTTP的短链接和长连接</h2>
 <p>一个典型的网页，是由一个HTML文件和内嵌的各类元素组成的，这些元素包括页面内的图片，CSS文件，Javascript 文件等等。每一个内嵌的元素在 HTTP 协议的层面上任何一个文件是没有区别的,都需要浏览器去服务器上传输过来。</p>

@@ -5,14 +5,12 @@
   
   <title>浅谈Nmap基本原理 | evilddog&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="0x00 Nmap介绍
-Nmap  （网络映射器）是由 Gordon Lyon设计，用来探测计算机网络上的主机和服务的一种安全扫描器。为了绘制网络拓扑图，Nmap的发送特制的数据包到目标主机，然后对返回数据包进行分析。Nmap是一款枚举和测试网络的强大工具。">
+  <meta name="description" content="nmap的科普">
 <meta property="og:type" content="article">
 <meta property="og:title" content="浅谈Nmap基本原理">
 <meta property="og:url" content="http://evilddog.github.io/2014/10/28/nmap-1/">
 <meta property="og:site_name" content="evilddog's blog">
-<meta property="og:description" content="0x00 Nmap介绍
-Nmap  （网络映射器）是由 Gordon Lyon设计，用来探测计算机网络上的主机和服务的一种安全扫描器。为了绘制网络拓扑图，Nmap的发送特制的数据包到目标主机，然后对返回数据包进行分析。Nmap是一款枚举和测试网络的强大工具。">
+<meta property="og:description" content="nmap的科普">
 <meta property="og:image" content="http://evilddog.qiniudn.com/ICMP-echo.jpg">
 <meta property="og:image" content="http://evilddog.qiniudn.com/tcp-syn.jpg">
 <meta property="og:image" content="http://evilddog.qiniudn.com/tcp-syn-close.jpg">
@@ -26,8 +24,7 @@ Nmap  （网络映射器）是由 Gordon Lyon设计，用来探测计算机网�
 <meta property="og:image" content="http://evilddog.qiniudn.com/tcp-udp-open.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浅谈Nmap基本原理">
-<meta name="twitter:description" content="0x00 Nmap介绍
-Nmap  （网络映射器）是由 Gordon Lyon设计，用来探测计算机网络上的主机和服务的一种安全扫描器。为了绘制网络拓扑图，Nmap的发送特制的数据包到目标主机，然后对返回数据包进行分析。Nmap是一款枚举和测试网络的强大工具。">
+<meta name="twitter:description" content="nmap的科普">
 
   
     <link rel="alternative" href="/atom.xml" title="evilddog&#39;s blog" type="application/atom+xml">
@@ -135,7 +132,7 @@ ga('send', 'pageview');
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud">
-						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
+						<a href="/tags/BackBox/" style="font-size: 10.00px;">BackBox</a><a href="/tags/Bash/" style="font-size: 10.00px;">Bash</a><a href="/tags/HTTP/" style="font-size: 10.00px;">HTTP</a><a href="/tags/HTTPS/" style="font-size: 10.00px;">HTTPS</a><a href="/tags/Life/" style="font-size: 10.00px;">Life</a><a href="/tags/Nmap/" style="font-size: 10.00px;">Nmap</a><a href="/tags/XSS/" style="font-size: 20.00px;">XSS</a><a href="/tags/curl/" style="font-size: 10.00px;">curl</a><a href="/tags/find/" style="font-size: 10.00px;">find</a><a href="/tags/png/" style="font-size: 10.00px;">png</a><a href="/tags/write-up/" style="font-size: 10.00px;">write-up</a><a href="/tags/同源策略/" style="font-size: 10.00px;">同源策略</a>
 					</div>
 				</section>
 				
@@ -242,12 +239,13 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
+        <p>nmap的科普</p>
+<a id="more"></a>
+
+<hr>
 
 <h2 id="0x00_Nmap介绍">0x00 Nmap介绍</h2>
 <p>Nmap  （网络映射器）是由 Gordon Lyon设计，用来探测计算机网络上的主机和服务的一种安全扫描器。为了绘制网络拓扑图，Nmap的发送特制的数据包到目标主机，然后对返回数据包进行分析。Nmap是一款枚举和测试网络的强大工具。</p>
-<a id="more"></a>
-
 <p>Nmap特点：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">主机探测：探测网络上的主机，例如列出响应TCP和ICMP请求、icmp请求、开放特别端口的主机。 </div><div class="line">端口扫描：探测目标主机所开放的端口。 </div><div class="line">版本检测：探测目标主机的网络服务，判断其服务名称及版本号。 </div><div class="line">系统检测：探测目标主机的操作系统及网络设备的硬件特性。 </div><div class="line">支持探测脚本的编写：使用Nmap的脚本引擎（NSE）和Lua编程语言。</div></pre></td></tr></table></figure>
 
