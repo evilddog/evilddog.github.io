@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2015-02-08T12:06:05.203Z</updated>
+  <updated>2015-02-08T14:14:05.343Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -13,6 +13,75 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[Python Requests]]></title>
+    <link href="http://evilddog.github.io/2015/02/08/python-requests/"/>
+    <id>http://evilddog.github.io/2015/02/08/python-requests/</id>
+    <published>2015-02-08T12:51:18.000Z</published>
+    <updated>2015-02-08T14:13:57.000Z</updated>
+    <content type="html"><![CDATA[<p>Python第三方Requests库<br><a id="more"></a></p>
+<p>urllib urllib2 urllib3 …..太恶心…  没有Requests方便,遂记下</p>
+<h3 id="HTTP操作请求">HTTP操作请求</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> import requests</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.get(<span class="string">'http://httpbin.org/get'</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.post(<span class="string">"http://httpbin.org/post"</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.put(<span class="string">"http://httpbin.org/put"</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.delete(<span class="string">"http://httpbin.org/delete"</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.head(<span class="string">"http://httpbin.org/get"</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.options(<span class="string">"http://httpbin.org/get"</span>)</span></div></pre></td></tr></table></figure>
+
+<h3 id="GET传递参数">GET传递参数</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line">r = requests.get(url=<span class="string">'http://www.itwhy.org'</span>)    <span class="comment"># 最基本的GET请求</span></div><div class="line">print(r.status_code)    <span class="comment"># 获取返回状态</span></div><div class="line">r = requests.get(url=<span class="string">'http://dict.baidu.com/s'</span>, params={<span class="string">'wd'</span>:<span class="string">'python'</span>})   <span class="comment">#带参数的GET请求</span></div><div class="line">print(r.url)</div><div class="line">print(r.text)</div></pre></td></tr></table></figure>
+
+<h3 id="发送JSON编码的数据">发送JSON编码的数据</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> json </div><div class="line">r = requests.post(<span class="string">'https://api.github.com/some/endpoint'</span>, data=json.dumps({<span class="string">'some'</span>: <span class="string">'data'</span>}))</div><div class="line">print(r.json())</div></pre></td></tr></table></figure>
+
+<h3 id="上传文件">上传文件</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">url = <span class="string">'http://httpbin.org/post'</span></div><div class="line">files = {<span class="string">'file'</span>: open(<span class="string">'/home/evilddog/1.jpg'</span>, <span class="string">'rb'</span>)}</div><div class="line"><span class="comment">#files = {'file': ('fuck.jpg', open('/home/evilddog/1.jpg', 'rb'))}     #显式的设置文件名</span></div><div class="line">r = requests.post(url, files=files)</div><div class="line">print(r.text)</div></pre></td></tr></table></figure>
+
+<h3 id="甚至把字符串当文件上传">甚至把字符串当文件上传</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"> </div><div class="line">url = <span class="string">'http://httpbin.org/post'</span></div><div class="line">files = {<span class="string">'file'</span>: (<span class="string">'test.txt'</span>, <span class="string">b'Hello Requests.'</span>)}     <span class="comment">#必需显式的设置文件名</span></div><div class="line">r = requests.post(url, files=files)</div><div class="line">print(r.text)</div></pre></td></tr></table></figure>
+
+<h3 id="检测HTTP状态码">检测HTTP状态码</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.get(<span class="string">'http://httpbin.org/get'</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r.status_code</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r.status_code == requests.codes.ok    <span class="comment">#requests.codes.ok表示HTTP为200</span></span></div></pre></td></tr></table></figure>
+
+<h3 id="获取HTTP-header">获取HTTP-header</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.get(<span class="string">'http://httpbin.org/get'</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r.headers</span></div><div class="line"><span class="constant">CaseInsensitiveDict</span>({<span class="string">'content-length'</span><span class="symbol">:</span> <span class="string">'286'</span>, <span class="string">'server'</span><span class="symbol">:</span> <span class="string">'nginx'</span>, <span class="string">'connection'</span><span class="symbol">:</span> <span class="string">'keep-alive'</span>, <span class="string">'access-control-allow-credentials'</span><span class="symbol">:</span> <span class="string">'true'</span>, <span class="string">'date'</span><span class="symbol">:</span> <span class="string">'Sun, 08 Feb 2015 13:14:09 GMT'</span>, <span class="string">'access-control-allow-origin'</span><span class="symbol">:</span> <span class="string">'*'</span>, <span class="string">'content-type'</span><span class="symbol">:</span> <span class="string">'application/json'</span>})</div></pre></td></tr></table></figure>
+
+<h3 id="访问headers内容">访问headers内容</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r.headers[<span class="string">'Content-Type'</span>]</span></div><div class="line"><span class="string">'application/json; charset=utf-8'</span>    <span class="comment">#不存在会显示None</span></div></pre></td></tr></table></figure>
+
+<h3 id="发送包含cookie打请求">发送包含cookie打请求</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> url = <span class="string">'http://httpbin.org/cookies'</span></span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> cookies = dict(cookies_are=<span class="string">'working'</span>)</span></div><div class="line">r = requests.get(url, cookies=cookies)</div><div class="line">print(r.json())</div></pre></td></tr></table></figure>
+
+<h3 id="追踪重定向与请求历史">追踪重定向与请求历史</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="prompt">&gt;&gt;&gt; </span>r = requests.get(<span class="string">'http://google.com'</span>)</div><div class="line"><span class="prompt">&gt;&gt;&gt; </span>r.url</div><div class="line"><span class="string">u'http://www.google.com/'</span></div><div class="line"><span class="prompt">&gt;&gt;&gt; </span>r.history</div><div class="line">(&lt;Response [<span class="number">301</span>]&gt;,)      <span class="comment">#Response.history 是一个:class:Request 对象的列表，为了完成请求而创建了这些对象。这个对象列表按照从最老到最近的请求进行排序。</span></div></pre></td></tr></table></figure>
+
+<h3 id="GET和OPTIONS禁用重定向处理">GET和OPTIONS禁用重定向处理</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.get(<span class="string">'http://github.com'</span>, allow_redirects=<span class="constant">False</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r.status_code</span></div><div class="line"><span class="input"><span class="prompt">301</span></span></div><div class="line">&gt;&gt;&gt; r.history</div><div class="line">[]</div></pre></td></tr></table></figure>
+
+<h3 id="POST，PUT，PATCH，DELETE或HEAD启用重定向">POST，PUT，PATCH，DELETE或HEAD启用重定向</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r = requests.post(<span class="string">'http://github.com'</span>, allow_redirects=<span class="constant">True</span>)</span></div><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> r.url</span></div><div class="line"><span class="input"><span class="prompt">'https://github.com/'</span></span></div><div class="line">&gt;&gt;&gt; r.history</div><div class="line">[&lt;<span class="constant">Response</span> [<span class="number">301</span>]&gt;]</div></pre></td></tr></table></figure>
+
+<h3 id="设置超超时时间">设置超超时时间</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> requests.get(<span class="string">'http://github.com'</span>, timeout=<span class="number">0</span>.<span class="number">001</span>)</span></div></pre></td></tr></table></figure>
+
+<h3 id="SSL证书验证">SSL证书验证</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> requests.get(<span class="string">'https://github.com'</span>, verify=<span class="constant">True</span>)     <span class="comment">#设置为False，Requests忽略对SSL证书的验证</span></span></div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">&gt;&gt;&gt;</span> requests.get(<span class="string">'https://kennethreitz.com'</span>, cert=(<span class="string">'/path/server.crt'</span>, <span class="string">'/path/key'</span>))      <span class="comment">#指定一个本地证书用作客户端证书，可以是单个文件（包含密钥和证书）或一个包含两个文件路径的元组:</span></span></div></pre></td></tr></table></figure>
+
+<h3 id="指定userAgent">指定userAgent</h3>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">mport requests</div><div class="line"><span class="keyword">import</span> json </div><div class="line">data = {<span class="string">'some'</span>: <span class="string">'data'</span>}</div><div class="line">headers = {<span class="string">'content-type'</span>: <span class="string">'application/json'</span>,</div><div class="line">           <span class="string">"Mozilla/5.0 (X11; Linux x86_64; rv:37.0) Gecko/20100101 Firefox/37.0"</span>}</div><div class="line">r = requests.post(<span class="string">'https://api.github.com/some/endpoint'</span>, data=data, headers=headers)</div><div class="line">print(r.text)</div><div class="line"><span class="comment">#因为requests没有urllib2那种可以指定userAgent打方法,所以可以通过添加user-agent到headers字典打方式指定UA头</span></div></pre></td></tr></table></figure>
+
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Python第三方Requests库<br>]]>
+    
+    </summary>
+    
+      <category term="Request" scheme="http://evilddog.github.io//tags/Request/"/>
+    
+      <category term="Python" scheme="http://evilddog.github.io//categories/Python/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[UnicodeEncodeError: 'ascii' codec can't encode characters]]></title>
