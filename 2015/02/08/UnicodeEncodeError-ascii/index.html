@@ -3,17 +3,17 @@
 <head>
   <meta charset="utf-8">
   
-  <title>常用bash技巧 | evilddog&#39;s blog</title>
+  <title>UnicodeEncodeError: &#39;ascii&#39; codec can&#39;t encode characters | evilddog&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="常用的shell键盘操作,备忘用">
+  <meta name="description" content="Requests的一个小bug">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常用bash技巧">
-<meta property="og:url" content="http://evilddog.github.io/2015/01/23/bash-linux-skill/">
+<meta property="og:title" content="UnicodeEncodeError: 'ascii' codec can't encode characters">
+<meta property="og:url" content="http://evilddog.github.io/2015/02/08/UnicodeEncodeError-ascii/">
 <meta property="og:site_name" content="evilddog's blog">
-<meta property="og:description" content="常用的shell键盘操作,备忘用">
+<meta property="og:description" content="Requests的一个小bug">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常用bash技巧">
-<meta name="twitter:description" content="常用的shell键盘操作,备忘用">
+<meta name="twitter:title" content="UnicodeEncodeError: 'ascii' codec can't encode characters">
+<meta name="twitter:description" content="Requests的一个小bug">
 
   
     <link rel="alternative" href="/atom.xml" title="evilddog&#39;s blog" type="application/atom+xml">
@@ -207,19 +207,19 @@ ga('send', 'pageview');
 		</header>				
 	</div>
 </nav>
-      <article id="post-bash-linux-skill" class="article article-type-post" itemscope itemprop="blogPost">
+      <article id="post-UnicodeEncodeError-ascii" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/01/23/bash-linux-skill/" class="article-date">
-  	<time datetime="2015-01-23T08:32:33.000Z" itemprop="datePublished">1月 23 2015</time>
+      <a href="/2015/02/08/UnicodeEncodeError-ascii/" class="article-date">
+  	<time datetime="2015-02-08T11:43:06.000Z" itemprop="datePublished">2月 8 2015</time>
 </a>
       
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+    <a class="article-category-link" href="/categories/Python/">Python</a>
   </div>
 
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Bash/">Bash</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
     </div>
   
@@ -232,7 +232,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      常用bash技巧
+      UnicodeEncodeError: &#39;ascii&#39; codec can&#39;t encode characters
     </h1>
   
 
@@ -240,28 +240,29 @@ ga('send', 'pageview');
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>常用的shell键盘操作,备忘用</p>
-<a id="more"></a>
+        <p>Requests的一个小bug<br><a id="more"></a></p>
+<p>今天写spider遇到一个非常蛋疼的事情</p>
+<p>明明在文件头标注了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div></pre></td></tr></table></figure>
 
-<p><br></p>
-<h3 id="移动光标">移动光标</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Ctrl<span class="operator">-a</span> 移动光标到行首。</div><div class="line">Ctrl<span class="operator">-e</span> 移动光标到行尾。</div><div class="line">Ctrl<span class="operator">-f</span> 光标前移一个字符;和右箭头作用一样。</div><div class="line">Ctrl-b 光标后移一个字符;和左箭头作用一样。</div><div class="line">Alt<span class="operator">-f</span> 光标前移一个字。</div><div class="line">Alt-b 光标后移一个字。</div><div class="line">Ctrl<span class="operator">-l</span> 清空屏幕,移动光标到左上角。clear 命令完成同样的工作。</div></pre></td></tr></table></figure>
+<p>但是在运行文件的时候依然会报错</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UnicodeEncodeError: <span class="attribute">'ascii</span>' codec can<span class="attribute">'t</span> encode characters <span class="keyword">in</span> position <span class="number">601</span>-<span class="number">609</span>: ordinal <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">128</span>)</div></pre></td></tr></table></figure>
 
-<h3 id="修改文本">修改文本</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Ctrl<span class="operator">-d</span> 删除光标位置的字符。</div><div class="line">Ctrl-t 光标位置的字符和光标前面的字符互换位置。</div><div class="line">Alt-t 光标位置的字和其前面的字互换位置。</div><div class="line">Alt<span class="operator">-l</span> 把从光标位置到字尾的字符转换成小写字母。</div><div class="line">Alt-u 把从光标位置到字尾的字符转换成大写字母。</div></pre></td></tr></table></figure>
+<p>而且在不同的库有的报错,有的不报错先贴代码</p>
+<h3>这是用requests库写的脚本</h3>
 
-<h3 id="剪切和粘贴文本">剪切和粘贴文本</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Ctrl-k 剪切从光标位置到行尾的文本。</div><div class="line">Ctrl-u 剪切从光标位置到行首的文本。</div><div class="line">Alt<span class="operator">-d</span> 剪切从光标位置到词尾的文本。</div><div class="line">Alt-Backspace 剪切从光标位置到词头的文本。如果光标在一个单词的开头,剪切前一个单词。</div><div class="line">Ctrl-y把剪切环中的文本粘贴到光标位置。</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#! /usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests, os</div><div class="line">os.system(<span class="string">"&gt; 1.html"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">with</span> open(<span class="string">'1.html'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">        url = <span class="string">'http://www.baidu.com'</span></div><div class="line">        r = requests.get(url)</div><div class="line">        r.encoding = <span class="string">'utf-8'</span></div><div class="line">        a = r.text</div><div class="line">        f.write(a)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    write()</div></pre></td></tr></table></figure>
 
-<h3 id="搜索历史命令">搜索历史命令</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="input"><span class="prompt">Ctrl-p 移动到上一个历史条目。类似于上箭头按键。</span></span></div><div class="line">Ctrl-n 移动到下一个历史条目。类似于下箭头按键。</div><div class="line">Alt-&lt; 移动到历史列表开头。</div><div class="line">Alt-&gt; 移动到历史列表结尾,即当前命令行。</div><div class="line"><span class="constant">Ctrl</span>-r 反向递增搜索。从当前命令行开始,向上递增搜索。</div><div class="line"><span class="constant">Alt</span>-p 反向搜索,不是递增顺序。输入要查找的字符串,然后按下<span class="constant">Enter</span>,执行搜索。</div><div class="line"><span class="constant">Alt</span>-n 向前搜索,非递增顺序。</div><div class="line"><span class="constant">Ctrl</span>-o 执行历史列表中的当前项,并移到下一个。如果你想要执行历史列表中一系列的命令,这很方便。</div></pre></td></tr></table></figure>
+<h3>这是用自带urllib2标准库的版本</h3>
 
-<h3 id="历史命令展开">历史命令展开</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">!<span class="built_in">number</span> 重复历史列表中第 <span class="built_in">number</span> 行的命令。</div><div class="line">!<span class="keyword">string</span> 重复最近历史列表中,以这个字符串开头的命令。</div><div class="line">!?<span class="keyword">string</span> 重复最近历史列表中,包含这个字符串的命令。</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#! /usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> urllib2, os</div><div class="line"></div><div class="line">os.system(<span class="string">"&gt; 2.html"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">with</span> open(<span class="string">'2.html'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">        url = <span class="string">'http://www.baidu.com'</span></div><div class="line">        request = urllib2.Request(url)</div><div class="line">        receive = urllib2.urlopen(request)</div><div class="line">        b = receive.read()</div><div class="line">        f.write(b)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    write()</div></pre></td></tr></table></figure>
 
-<h3 id="Bang_(!)_命令">Bang (!) 命令</h3>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="exclamation_mark">!</span><span class="exclamation_mark">!</span>：执行上一条命令</div><div class="line"><span class="exclamation_mark">!</span><span class="function_or_atom">blah</span>：执行最近的以 <span class="function_or_atom">blah</span> 开头的命令，如 <span class="exclamation_mark">!</span><span class="function_or_atom">ls</span></div><div class="line"><span class="exclamation_mark">!</span><span class="function_or_atom">blah:p</span>：仅打印输出，而不执行</div><div class="line"><span class="exclamation_mark">!</span>$：上一条命令的最后一个参数，与 <span class="variable">Alt</span> + . 相同</div><div class="line"><span class="exclamation_mark">!</span>$:<span class="function_or_atom">p</span>：打印输出 <span class="exclamation_mark">!</span>$ 的内容</div><div class="line"><span class="exclamation_mark">!</span>*：上一条命令的所有参数</div><div class="line"><span class="exclamation_mark">!</span>*:<span class="function_or_atom">p</span>：打印输出 <span class="exclamation_mark">!</span>* 的内容</div><div class="line">^<span class="function_or_atom">blah</span>：删除上一条命令中的 <span class="function_or_atom">blah</span></div><div class="line">^<span class="function_or_atom">blah</span>^<span class="function_or_atom">foo</span>：将上一条命令中的 <span class="function_or_atom">blah</span> 替换为 <span class="function_or_atom">foo</span></div><div class="line">^<span class="function_or_atom">blah</span>^<span class="function_or_atom">foo</span>^：将上一条命令中所有的 <span class="function_or_atom">blah</span> 都替换为 <span class="function_or_atom">foo</span></div></pre></td></tr></table></figure>
+<p>报错的就是第三方库requests版本</p>
+<p>按照别人的方法是在文件中加入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</div><div class="line"></div><div class="line"><span class="comment">#还要先reload(sys)一下才能使用setdefaultencoding()简直蛋碎一地</span></div></pre></td></tr></table></figure>
 
+<p>然后程序可以正常运行,但是我们看一下urllib2的版本的defaultencoding依然也是ascii</p>
+<p>至今原因不明</p>
 
       
     </div>
@@ -270,18 +271,9 @@ ga('send', 'pageview');
     
 <nav id="article-nav">
   
-    <a href="/2015/01/25/find-paths-must-precede-expression/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">&lt;</strong>
-      <div class="article-nav-title">
-        
-          关于find命令 -name 的报错问题
-        
-      </div>
-    </a>
   
-  
-    <a href="/2014/11/21/2014-11-21/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">2014 - 11 - 21</div>
+    <a href="/2015/01/25/find-paths-must-precede-expression/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">关于find命令 -name 的报错问题</div>
       <strong class="article-nav-caption">&gt;</strong>
     </a>
   

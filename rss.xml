@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2015-02-05T10:00:43.784Z</updated>
+  <updated>2015-02-08T12:06:05.203Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -13,6 +13,47 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[UnicodeEncodeError: 'ascii' codec can't encode characters]]></title>
+    <link href="http://evilddog.github.io/2015/02/08/UnicodeEncodeError-ascii/"/>
+    <id>http://evilddog.github.io/2015/02/08/UnicodeEncodeError-ascii/</id>
+    <published>2015-02-08T11:43:06.000Z</published>
+    <updated>2015-02-08T12:05:57.000Z</updated>
+    <content type="html"><![CDATA[<p>Requests的一个小bug<br><a id="more"></a></p>
+<p>今天写spider遇到一个非常蛋疼的事情</p>
+<p>明明在文件头标注了</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div></pre></td></tr></table></figure>
+
+<p>但是在运行文件的时候依然会报错</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">UnicodeEncodeError: <span class="attribute">'ascii</span>' codec can<span class="attribute">'t</span> encode characters <span class="keyword">in</span> position <span class="number">601</span>-<span class="number">609</span>: ordinal <span class="keyword">not</span> <span class="keyword">in</span> <span class="keyword">range</span>(<span class="number">128</span>)</div></pre></td></tr></table></figure>
+
+<p>而且在不同的库有的报错,有的不报错先贴代码</p>
+<h3>这是用requests库写的脚本</h3>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#! /usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> requests, os</div><div class="line">os.system(<span class="string">"&gt; 1.html"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">with</span> open(<span class="string">'1.html'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">        url = <span class="string">'http://www.baidu.com'</span></div><div class="line">        r = requests.get(url)</div><div class="line">        r.encoding = <span class="string">'utf-8'</span></div><div class="line">        a = r.text</div><div class="line">        f.write(a)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    write()</div></pre></td></tr></table></figure>
+
+<h3>这是用自带urllib2标准库的版本</h3>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#! /usr/bin/env python</span></div><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> urllib2, os</div><div class="line"></div><div class="line">os.system(<span class="string">"&gt; 2.html"</span>)</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">with</span> open(<span class="string">'2.html'</span>, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">        url = <span class="string">'http://www.baidu.com'</span></div><div class="line">        request = urllib2.Request(url)</div><div class="line">        receive = urllib2.urlopen(request)</div><div class="line">        b = receive.read()</div><div class="line">        f.write(b)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    write()</div></pre></td></tr></table></figure>
+
+<p>报错的就是第三方库requests版本</p>
+<p>按照别人的方法是在文件中加入</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">'utf-8'</span>)</div><div class="line"></div><div class="line"><span class="comment">#还要先reload(sys)一下才能使用setdefaultencoding()简直蛋碎一地</span></div></pre></td></tr></table></figure>
+
+<p>然后程序可以正常运行,但是我们看一下urllib2的版本的defaultencoding依然也是ascii</p>
+<p>至今原因不明</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>Requests的一个小bug<br>]]>
+    
+    </summary>
+    
+      <category term="Python" scheme="http://evilddog.github.io//tags/Python/"/>
+    
+      <category term="Python" scheme="http://evilddog.github.io//categories/Python/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[关于find命令 -name 的报错问题]]></title>
