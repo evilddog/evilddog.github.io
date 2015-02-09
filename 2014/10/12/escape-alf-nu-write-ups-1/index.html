@@ -265,7 +265,7 @@ ga('send', 'pageview');
 <p>…</p>
 <p>Ok so if you have already solve them or need some hits, here are my solutions</p>
 <h3 id="Level_0:">Level 0:</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</div><div class="line"><span class="literal">true</span><span class="comment">// Warmup.  </span></div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");&lt;/script&gt;'</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="xml"><span class="javascript"><span class="function"><span class="keyword">function</span> <span class="title">escape</span><span class="params">(s)</span> </span>{</span></span></div><div class="line"><span class="literal">true</span><span class="comment">// Warmup.  </span></div><div class="line">truereturn <span class="string">'&lt;script&gt;console.log("'</span>+s+<span class="string">'");</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>';</div><div class="line">}</div></pre></td></tr></table></figure>
 
 <p>There is no encoding so the easiest solution is to close “log” call and inject our “alert”</p>
 <p>Solution:</p>

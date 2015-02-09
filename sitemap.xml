@@ -2,6 +2,11 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://evilddog.github.io/2015/02/09/XSS-Cheat-sheets/</loc>
+    <lastmod>2015-02-09T08:00:44.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://evilddog.github.io/2015/02/08/python-requests/</loc>
     <lastmod>2015-02-08T14:13:57.000Z</lastmod>
   </url>
