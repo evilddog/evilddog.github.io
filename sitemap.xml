@@ -2,8 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://evilddog.github.io/2015/02/16/linux-shell-wale/</loc>
+    <lastmod>2015-02-16T12:36:20.000Z</lastmod>
+  </url>
+  
+  <url>
     <loc>http://evilddog.github.io/2015/02/09/XSS-Cheat-sheets/</loc>
-    <lastmod>2015-02-09T08:17:38.000Z</lastmod>
+    <lastmod>2015-02-09T08:18:38.000Z</lastmod>
   </url>
   
   <url>
