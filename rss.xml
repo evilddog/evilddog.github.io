@@ -4,7 +4,7 @@
   <subtitle><![CDATA[在一群出色的人中间,误以为自己也是其中一员,然后忘了努力]]></subtitle>
   <link href="/rss.xml" rel="self"/>
   <link href="http://evilddog.github.io/"/>
-  <updated>2015-03-31T11:00:00.900Z</updated>
+  <updated>2015-04-12T14:14:12.086Z</updated>
   <id>http://evilddog.github.io/</id>
   
   <author>
@@ -13,6 +13,67 @@
   </author>
   
   <generator uri="http://zespia.tw/hexo/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[CentOS-6.7部署Nginx + uWSGI + Flask]]></title>
+    <link href="http://evilddog.github.io/2015/04/12/nginx-flask-configuration/"/>
+    <id>http://evilddog.github.io/2015/04/12/nginx-flask-configuration/</id>
+    <published>2015-04-12T13:41:54.000Z</published>
+    <updated>2015-04-12T14:13:58.000Z</updated>
+    <content type="html"><![CDATA[<p>CentOS-6.7部署Nginx + uWSGI + Flask<br><br></p>
+<a id="more"></a>
+
+<h1 id="0x00"><strong>0x00</strong></h1>
+<p>这个坑太痛苦了……一堆乱七八糟的博客瞎扯淡,最后还是自己翻官方文档解决了</p>
+<p><br><br><br></p>
+<h1 id="0x01"><strong>0x01</strong></h1>
+<p>安装各种组件和环境</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root<span class="variable">@aliyun</span> ~]<span class="comment"># yum -y install gcc gcc-c++ make autoconf automake</span></div><div class="line">[root<span class="variable">@aliyun</span> ~]<span class="comment"># yum -y install zlib zlib-devel openssl openssl-devel pcre pcre-devel</span></div><div class="line">[root<span class="variable">@aliyun</span> ~]<span class="comment"># yum -y install python-devel python-setuptools libxml2-devel</span></div><div class="line">[root<span class="variable">@aliyun</span> ~]<span class="comment"># yum install nginx</span></div><div class="line">[root<span class="variable">@aliyun</span> ~]<span class="comment"># pip install virtualenv uwsgi</span></div><div class="line">[root<span class="variable">@aliyun</span> ~]<span class="comment"># pip install flask</span></div></pre></td></tr></table></figure>
+
+<p><br><br><br></p>
+<h1 id="0x02"><strong>0x02</strong></h1>
+<p>在/var/run创建一个简单的flask项目</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">mkdir</span> /var/run/flask-uwsgi && <span class="keyword">cd</span> /var/run/flask-uwsgi</div><div class="line">virtualenv env</div><div class="line">. env/bin/activate</div><div class="line"><span class="built_in">mkdir</span> app && <span class="keyword">cd</span> app</div><div class="line"><span class="keyword">vim</span> __init__.<span class="keyword">py</span></div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#! /usr/bin/python</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</div><div class="line">app = Flask(__name__)</div><div class="line"></div><div class="line"><span class="decorator">@app.route("/")</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">"Hello!"</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    app.run()</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cd</span> .. && <span class="keyword">vim</span> run.<span class="keyword">py</span></div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#! /usr/bin/python</span></div><div class="line"></div><div class="line"><span class="keyword">from</span> app <span class="keyword">import</span> app</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</div><div class="line">    app.run(host=<span class="string">'0.0.0.0'</span>, debug=<span class="string">'True'</span>)</div></pre></td></tr></table></figure>
+
+<p><br><br><br></p>
+<h1 id="0x03*"><strong>0x03*</strong></h1>
+<p>在nginx配置目录<strong>/etc/nginx</strong>下增加flask和uwsgi的配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">server {</div><div class="line">  listen  <span class="number">80</span>;</div><div class="line">  server_name <span class="number">121.42</span><span class="number">.158</span><span class="number">.198</span>; </div><div class="line">  location / {</div><div class="line">    include      uwsgi_params;</div><div class="line">    uwsgi_pass   <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">9090</span>;</div><div class="line">    uwsgi_param UWSGI_PYHOME /var/run/flask-uwsgi/env;	<span class="comment">#flask项目环境目录</span></div><div class="line">    uwsgi_param UWSGI_CHDIR  /var/run/flask-uwsgi;	<span class="comment">#flask项目启动文件目录</span></div><div class="line">    uwsgi_param UWSGI_SCRIPT run:app;	<span class="comment">#run是我的启动文件名无后缀</span></div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>然后在nginx默认配置中导入配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">...</span></div><div class="line">    include flask_uwsgi.conf;</div><div class="line"><span class="keyword">...</span></div></pre></td></tr></table></figure>
+
+<p><br><br><br></p>
+<h1 id="0x04"><strong>0x04</strong></h1>
+<p>最后方便flask服务开启我们创建一个启动脚本<br>/usr/local/bin/uwsgiserver</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="shebang">#!/bin/bash</span></div><div class="line">PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin</div><div class="line"><span class="keyword">export</span> PATH</div><div class="line"> </div><div class="line"><span class="comment"># Check if user is root</span></div><div class="line"><span class="keyword">if</span> [ $(id -u) != <span class="string">"0"</span> ]; <span class="keyword">then</span></div><div class="line">trueprintf <span class="string">"Error: You must be root to run this script!\n"</span></div><div class="line">trueexit <span class="number">1</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"> </div><div class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"start"</span> ]; <span class="keyword">then</span></div><div class="line">truepsid=`ps aux|grep <span class="string">"uwsgi"</span>|grep -v <span class="string">"grep"</span>|wc <span class="operator">-l</span>`</div><div class="line">trueif [ <span class="variable">$psid</span> <span class="operator">-gt</span> <span class="number">2</span> ];<span class="keyword">then</span></div><div class="line">truetrueecho <span class="string">"uwsgi is running!"</span></div><div class="line">truetrueexit <span class="number">0</span></div><div class="line">trueelse</div><div class="line">truetrue/usr/bin/uwsgi <span class="operator">-s</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">9090</span> -M -p <span class="number">4</span> -t <span class="number">30</span> --limit-as <span class="number">128</span> -R <span class="number">10000</span> <span class="operator">-d</span> /var/log/uwsgi.log</div><div class="line">truetrue/usr/bin/nginx <span class="operator">-s</span> reload</div><div class="line">truefi</div><div class="line">trueecho <span class="string">"Start uwsgi service [OK]"</span></div><div class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"stop"</span> ];<span class="keyword">then</span></div><div class="line">truekillall -<span class="number">9</span> uwsgi</div><div class="line">trueecho <span class="string">"Stop uwsgi service [OK]"</span></div><div class="line"><span class="keyword">elif</span> [ <span class="string">"<span class="variable">$1</span>"</span> = <span class="string">"restart"</span> ];<span class="keyword">then</span></div><div class="line">truekillall -<span class="number">9</span> uwsgi</div><div class="line"><span class="literal">true</span>/usr/bin/uwsgi <span class="operator">-s</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">9090</span> -M -p <span class="number">4</span> -t <span class="number">30</span> --limit-as <span class="number">128</span> -R <span class="number">10000</span> <span class="operator">-d</span> /var/log/uwsgi.log</div><div class="line"><span class="literal">true</span>/usr/bin/nginx <span class="operator">-s</span> reload</div><div class="line">trueecho <span class="string">"Restart uwsgi service [OK]"</span></div><div class="line"><span class="keyword">else</span></div><div class="line">trueecho <span class="string">"Usages: uwsgiserver [start|stop|restart]"</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+
+<p>完成</p>
+<p>启动uWSGI：uwsgiserver start<br>启动Nginx：service nginx start</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<p>CentOS-6.7部署Nginx + uWSGI + Flask<br><br></p>
+]]>
+    
+    </summary>
+    
+      <category term="Linux" scheme="http://evilddog.github.io//tags/Linux/"/>
+    
+      <category term="Flask" scheme="http://evilddog.github.io//categories/Flask/"/>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[Android开发笔记 - I]]></title>
