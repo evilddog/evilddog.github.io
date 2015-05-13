@@ -1,9 +1,3 @@
-title: PNG图片结构分析和取证
-date: 2014-11-10 18:58:02
-tags: png
-categories: CTF
-
----
 
 关于png的图片结构
 <!--more -->

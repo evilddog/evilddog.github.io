@@ -1,8 +1,4 @@
-title: 浅谈浏览器最大并发连接数问题
-date: 2014-10-24 11:13:06
-tags: HTTP
-categories: HTTP
----
+
 浅谈浏览器与服务器之间的HTTP传输连接数
 
 <!--more-->

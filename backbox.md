@@ -1,8 +1,4 @@
-title: Backbox
-date: 2014-11-02 17:02:35
-tags: BackBox
-categories: Linux
----
+
 backbox的一些配置
 <!--more -->
 

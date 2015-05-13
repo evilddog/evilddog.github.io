@@ -1,9 +1,4 @@
-title: 关于find命令 -name 的报错问题
-date: 2015-01-25 14:43:32
-tags: find
-categories: Linux
 
----
 关于find一些坑
 <!--more-->
 今天在用find命令时候的时候一直会造成

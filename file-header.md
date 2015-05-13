@@ -1,8 +1,3 @@
-title: 各类文件的文件头
-date: 2014-11-09 15:39:21
-tags:
-
----
 
 the hex header of some common files
 <!--more -->

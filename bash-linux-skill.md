@@ -1,8 +1,3 @@
-title: 常用bash技巧
-date: 2015-01-23 16:32:33
-tags: Bash
-categories: Linux
----
 
 常用的shell键盘操作,备忘用
 

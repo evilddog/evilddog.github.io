@@ -1,8 +1,4 @@
-title: Python Requests
-date: 2015-02-08 20:51:18
-tags: Request
-categories: Python
----
+
 Python第三方Requests库
 <!--more-->
 

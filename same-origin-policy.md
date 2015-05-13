@@ -1,8 +1,4 @@
-title: 浅谈浏览器的同源策略 
-date: 2014-10-13 13:58:01
-tags: 同源策略
-categories: 浏览器安全
----
+
 Same Origin Policy of Exploer
 
 <!--more-->

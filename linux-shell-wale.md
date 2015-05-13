@@ -1,8 +1,3 @@
-title: linux-shell-wale
-date: 2015-02-16 16:11:52
-tags: Shell
-categories: Linux
----
 
 常用shell命令收藏
 

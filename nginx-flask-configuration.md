@@ -1,8 +1,4 @@
-title: CentOS-6.7部署Nginx + uWSGI + Flask
-date: 2015-04-12 21:41:54
-tags: Linux
-categories: Flask
----
+
 CentOS-6.7部署Nginx + uWSGI + Flask
 <br/>
 

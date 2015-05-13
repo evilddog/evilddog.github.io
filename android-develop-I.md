@@ -1,8 +1,4 @@
-title: Android开发笔记 - I
-date: 2015-03-15 22:29:27
-tags: Android
-categories: Android
----
+
 
 Note for Android
 <br/>

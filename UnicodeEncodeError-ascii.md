@@ -1,8 +1,4 @@
-title: "UnicodeEncodeError: 'ascii' codec can't encode characters"
-date: 2015-02-08 19:43:06
-tags: Python
-categories: Python
----
+
 Requests的一个小bug
 <!--more-->
 

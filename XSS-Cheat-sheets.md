@@ -1,8 +1,4 @@
-title: XSS-Cheat-sheets
-date: 2015-02-09 14:34:50
-tags: XSS
-categories: XSS-Cheat-sheets
----
+
 XSS测试Shellcode和JS events handle
 <!--more-->
 ###常用测试代码

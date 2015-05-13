@@ -1,10 +1,3 @@
-title: 某石油大学CTFwrite-up
-date: 2014-11-01 20:41:57
-tags: write-up
-categories: CTF
-
----
-<hr/>
 
 弱渣闲来无事玩一玩某石油大学的CTF，写一篇Write-up填充一下博客空白
 

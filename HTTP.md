@@ -1,8 +1,3 @@
-title: 浅谈HTTPS
-date: 2014-10-31 11:13:41
-tags: HTTPS
-categories: HTTP
----
 
 HTTPS的扯淡
 <!--more -->

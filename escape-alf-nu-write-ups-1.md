@@ -1,8 +1,3 @@
-title: escape-Write-ups (Part 1)
-date: 2014-10-12 14:00:48
-tags: XSS
-categories: 前端安全
----
 
 <hr/>
 
