@@ -4,6 +4,6 @@ A weak guy
 
 Security
 
-[weibo@evilddog](weibo.com@evilddog)
+[weibo@evilddog](http://weibo.com/evilddog)
 
 
